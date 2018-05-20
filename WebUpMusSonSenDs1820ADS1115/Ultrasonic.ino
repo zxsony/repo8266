@@ -22,7 +22,6 @@ void CheckUltrasonic (void){
     digitalWrite(ledCurrent, HIGH);
     if (mp3En){
 
-
     switch (ktoid){
       case 1:
         if (mp3En){
