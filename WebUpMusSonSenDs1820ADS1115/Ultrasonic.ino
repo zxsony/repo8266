@@ -6,7 +6,7 @@ void averageUltrasonic (void){
   //delay(1);
   }
   ultrasonicValue = ultrasonicValue / 3;
-}
+  }
 void CheckUltrasonic (void){
   if (ultrasonicValue>10) {
     ledCurrent = ledPinBR2;
