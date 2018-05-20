@@ -15,19 +15,7 @@ void updateCurrent (){
 void checkLastUpdate (){
   if (currentSecsSince1900 - lastSynchroDevice > timeCheck){
 
-
-//  parseLongWord(lastSynchroDevice);
-//  Serial.println(timeString);
-//  parseLongWord(currentSecsSince1900);
-//  Serial.println(timeString);
-  
-  //Serial.println(currentSecsSince1900);
-  //Serial.println(lastSynchroDevice);
-  
-  //Serial.println("\nSynchro. Get NTP data...");
-  //dataRecive = 0;
   loopUDP();
-  //sendReciveUDP();
   
   if (dataRecive) {
     lastSynchroDevice = startSecsSince1900 + (currentTimeDevice / 1000) + 3600*3 - startTimeDevice/1000;
