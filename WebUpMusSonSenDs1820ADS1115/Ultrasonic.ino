@@ -68,7 +68,7 @@ void CheckUltrasonic (void){
           ktoid ++;    
           break;
         }
-    case 6:
+      case 6:
         if (mp3En){
           mp3_set_volume (30);
           delay(100);
@@ -76,13 +76,13 @@ void CheckUltrasonic (void){
           delay(500);
           ktoid = 1;    
           break;
-        }
+      }
        //ktoid ++;
-  }
+    }
       
-    }
+  }
 
-    }
+}
     digitalWrite(ledCurrent, LOW);
   }
 }
