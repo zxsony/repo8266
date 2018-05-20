@@ -1,0 +1,116 @@
+
+void GetServerIndex (void){
+  serverIndex = "<html><head><title>ESP8266</title><meta http-equiv='Content-Type' content='text/html; charset=utf-8' />"
+  "<meta http-equiv='Refresh' content='1' />"
+  "<style>pre {-moz-tab-size: 3;}</style><style type='text/css'>TABLE {color:black;font-size:250%;font-weight:bold;} body{background-color: black;}</style></head>"
+  //"<h1>Контроллер ESP 8266<BR>"
+  //"<h2><pre><a href='/u'>";
+  "<table border='1' bgcolor='White'><tr><td><a href='/u'>";
+  serverIndex += deviceId;
+  serverIndex += "</a></td><td><a href='/info'>";
+  serverIndex += ver;
+  serverIndex += "</a></td><td><a href='/update2'>Upd.2</a>";
+  serverIndex += "</td></tr></table><table border='1' bgcolor='Gainsboro'>";
+  
+  serverIndex += "<tr><td>APIP:</td><td>";
+  serverIndex += WiFi.softAPIP().toString();
+  serverIndex += "</td></tr><tr><td>IP:</td><td>";
+  serverIndex += WiFi.localIP().toString();
+  serverIndex += "</td></tr><tr><td>RSSI:</td><td>";
+  long rssi = WiFi.RSSI();
+  serverIndex += WiFi.RSSI();
+    
+  serverIndex += "</td></tr></table><table border='1' bgcolor='LightCyan' ><tr><td>NtpS:</td><td>";//<font size='8'>
+  serverIndex += ntpRegion;
+      
+  serverIndex += "</td></tr></table><table border='1' bgcolor='Moccasin' ><tr><td>Time:</td><td>";//</font>
+  serverIndex += currentTimeDeviceString;
+  serverIndex += "</td></tr><tr><td>CDT:</td><td>0";
+
+  //parseLongWord((timeCheck + lastSynchroDevice)- currentSecsSince1900);
+  serverIndex += countDownTimeString;
+  serverIndex += "</td></tr></table>";
+  //serverIndex += lastSynchroDeviceString;
+  //serverIndex += (millis()/1000) - (soundDelay/1000) ;
+
+  if (mp3En){
+    serverIndex += "<table border='1' bgcolor='Plum' ><tr><td>SoundDelay</td><td>";
+    serverIndex += (millis()/1000) - (soundDelay/1000) ;
+    serverIndex += "</td></tr></table>";
+  }
+
+  if (ultrasonicEn){
+    //TODO add table
+      serverIndex += "<tr><td>UltrasonicValue</td><td>";
+      serverIndex += ultrasonicValue;
+      serverIndex += "</td></tr><tr><td>UltrasonicOnCounter</td><td>";
+      serverIndex += ultrasonicOnCounter;
+      serverIndex += "</td></tr>";
+  }
+
+  //--------------------------------------------------
+//serverIndex += "<BR><BR>timeH:";
+//serverIndex += timeH;
+//serverIndex += " timeM:";
+//serverIndex += timeM;
+//serverIndex += " Delay:";
+//serverIndex += ((millis()/1000) - soundDelay/1000)>60; 
+  //--------------------------------------------------
+  if (sensorEn){
+    serverIndex += "<table border='1' bgcolor='Plum' ><tr><td>LedSensorValue</td><td>";
+    //serverIndex += "<tr><td>LedSensorValue</td><td>";
+    serverIndex += ledSensorValue;
+    serverIndex += "</td></tr><tr><td>SwitchOnCounter</td><td>";
+    serverIndex += switchOnCounter;
+    serverIndex += "</td></tr><tr><td>SwitchOn</td><td>";
+    if (switchOn){
+    serverIndex += "On";  
+    }
+    else {
+    serverIndex += "Off";   
+    }
+    //serverIndex += switchOn;
+    serverIndex += "</td></tr></table>";
+  }
+  if (TempEn){
+    serverIndex += "<table border='1' bgcolor='PaleGreen' ><tr><td>ds1820 temp1:</td><td>";
+    serverIndex += dsTemp1;
+    serverIndex += "</td></tr><tr><td>ds1820 temp2:</td><td>";
+    serverIndex += dsTemp2;
+    serverIndex += "</td></tr></table>";
+  }
+  
+  #ifdef AM2320
+    serverIndex += "<table border='1' bgcolor='DarkSeaGreen' ><tr><td>am2320 hum1:</td><td>";
+    serverIndex += am2320h;
+    serverIndex += "</td></tr><tr><td>am2320 temp1:</td><td>";
+    serverIndex += am2320t;
+    serverIndex += "</td></tr></table>";
+  #endif
+  
+  #ifdef ADS1115
+    serverIndex += "<table border='1' bgcolor='SkyBlue' ><tr><td>ads1115(0)Gas</td><td>0";
+    serverIndex += float((adc0 * 0.1875)/1000);
+    serverIndex += "</td></tr><tr><td>ads1115(1)DGa</td><td>0";
+    serverIndex += float((adc1 * 0.1875)/1000);
+    serverIndex += "</td></tr><tr><td>ads1115(2)3.3</td><td>0";
+    serverIndex += float((adc2 * 0.1875)/1000);
+    serverIndex += "</td></tr><tr><td>ads1115(3)5.0</td><td>0";
+    serverIndex += float((adc3 * 0.1875)/1000);
+    serverIndex += "</td></tr></table>";
+  #endif
+
+
+
+  //serverIndex += "</b><BR><BR>"
+  //"<form method='POST' action='/update' enctype='multipart/form-data'>"
+//  "<a href='/redled'>Red</a><BR>"
+//  "<a href='/blueled'>Blue</a><BR>"
+//  "<a href='/greenled'>Green</a><BR>"
+  "<a href='/update2'>Update2</a><BR>"
+  "<b>";
+  //serverIndex += "</b><BR>"
+//  "<input type='file' name='update'>"
+//  "<input type='submit' value='Update'>"
+  "</form></pre></h2></html>";
+  }
