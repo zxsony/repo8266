@@ -81,10 +81,6 @@ void CheckUltrasonic (void){
        //ktoid ++;
   }
       
-//      mp3_set_volume (20);
-//      delay(100);
-//      mp3_play (6);
-//      delay(1000);  
     }
 
     }
