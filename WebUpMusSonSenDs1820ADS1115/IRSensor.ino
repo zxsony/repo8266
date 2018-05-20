@@ -1,3 +1,4 @@
+
 void CheckIRSensor (void){
 
 if((((millis()) - soundDelay)>300000)){
@@ -11,8 +12,7 @@ if((((millis()) - soundDelay)>300000)){
       ledCurrent = ledPinR;
       digitalWrite(ledCurrent, HIGH);
       if (mp3En){
-  
-  
+   
       switch (ktoid){
         case 1:
           if (mp3En){
