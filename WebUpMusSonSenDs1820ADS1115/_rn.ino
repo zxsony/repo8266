@@ -1,5 +1,3 @@
-﻿
-
 /*
   To upload through terminal you can use: curl -F "image=@firmware.bin" esp8266-webupdate.local/update
   2.2.2 Добавлен табличный вид
