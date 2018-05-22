@@ -1,5 +1,4 @@
 
-
 #include <Adafruit_ADS1015.h>
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
