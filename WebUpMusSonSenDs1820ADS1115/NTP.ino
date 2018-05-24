@@ -1,5 +1,4 @@
 
-
 unsigned long sendNTPpacket(IPAddress& address) {
   memset(packetBuffer, 0, NTP_PACKET_SIZE);
   packetBuffer[0] = 0b11100011;
