@@ -49,7 +49,7 @@ unsigned long _tempADC1115Delay = millis();
       Serial.println(millis() - AM2320Delay);
       #endif
     }
-    am2320h = ((float)(((am2320buf[2] << 8) + am2320buf[3]) / 10.0) + 20.1);//16.3-89 14.16-82.46 20.1-90.6
+    am2320h = ((float)(((am2320buf[2] << 8) + am2320buf[3]) / 10.0) + 15.7);//16.3-89 14.16-82.46 20.1-90.6 29,4-15,7
     am2320t = ((float)(((am2320buf[4] << 8) + am2320buf[5]) / 10.0) - 0.33);// 26.77-(-.33) 
   }
   #ifdef ADS1115
