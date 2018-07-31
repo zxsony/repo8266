@@ -20,7 +20,7 @@ const char* host = "esp8266-webupdate";
 #define board2
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.3.2";
+String ver = "v2.3.3";
 //////////////////////
 #ifdef board1
   bool mp3En = 1;
@@ -63,8 +63,10 @@ String ver = "v2.3.2";
   bool ultrasonicEn = 0;
   bool sensorEn = 0;
   bool ntpEn = 0;
-  const char* ssid = "Pusko-Naladka";
-  const char* password = "1234578906";
+  const char* ssid = OTK2";
+  const char* password = "Lift80Lift";
+//  const char* ssid = "Pusko-Naladka";
+//  const char* password = "1234578906";
 //  const char* ssid = "NVRAM WARNING";
 //  const char* password = "Lift80Lift";
   
