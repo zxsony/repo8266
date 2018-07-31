@@ -115,6 +115,7 @@ int ultrasonicValue = 0;
 int ultrasonicOnCounter = 0;
 bool ledSensorState = false;
 bool iRSensorState = false;
+int iRSensorOnCounter = 0;
 bool LightActivityState1 = false;
 bool LightActivityState2 = false;
 bool LightActivityState3 = false;

@@ -7,7 +7,8 @@ if((((millis()) - soundDelay)>300000)){
 }
 
     if(digitalRead(IRSensorIn) == HIGH and iRSensorState == false and SecurityEn == true){
-
+      iRSensorOnCounter ++;
+      
       iRSensorState = true;
       ledCurrent = ledPinR;
       digitalWrite(ledCurrent, HIGH);

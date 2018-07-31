@@ -34,18 +34,26 @@ void GetServerIndex (void){
   //serverIndex += (millis()/1000) - (soundDelay/1000) ;
 
   if (mp3En){
-    serverIndex += "<table border='1' bgcolor='Plum' ><tr><td>SoundDelay</td><td>";
+    serverIndex += "<table border='1' bgcolor='Moccasin' ><tr><td>SoundDelay</td><td>";
     serverIndex += (millis()/1000) - (soundDelay/1000) ;
     serverIndex += "</td></tr></table>";
   }
 
+  #ifdef IRSensorEn
+    serverIndex += "<table border='1' bgcolor='DarkSeaGreen' ><tr><td>iRSensCounter</td><td>";
+    serverIndex += iRSensorOnCounter;
+    serverIndex += "</td></tr></table>";
+  #endif
+
   if (ultrasonicEn){
-    //TODO add table
-      serverIndex += "<tr><td>UltrasonicValue</td><td>";
+    //TODO check work table
+      serverIndex += "<table border='1' bgcolor='Plum' ><tr><td>UltrasonicValue</td><td>";
+      
+      //serverIndex += "<tr><td>UltrasonicValue</td><td>";
       serverIndex += ultrasonicValue;
-      serverIndex += "</td></tr><tr><td>UltrasonicOnCounter</td><td>";
+      serverIndex += "</td></tr><tr><td>UltrasonicCounter</td><td>";
       serverIndex += ultrasonicOnCounter;
-      serverIndex += "</td></tr>";
+      serverIndex += "</td></tr></table>";
   }
 
   //--------------------------------------------------
@@ -57,12 +65,13 @@ void GetServerIndex (void){
 //serverIndex += ((millis()/1000) - soundDelay/1000)>60; 
   //--------------------------------------------------
   if (sensorEn){
-    serverIndex += "<table border='1' bgcolor='Plum' ><tr><td>LedSensorValue</td><td>";
+    serverIndex += "<table border='1' bgcolor='SkyBlue' ><tr><td>LedOnCounter</td><td>";//LedSensorValue
     //serverIndex += "<tr><td>LedSensorValue</td><td>";
-    serverIndex += ledSensorValue;
-    serverIndex += "</td></tr><tr><td>SwitchOnCounter</td><td>";
-    serverIndex += switchOnCounter;
-    serverIndex += "</td></tr><tr><td>SwitchOn</td><td>";
+    serverIndex += switchOnCounter;//ledSensorValue
+    serverIndex += "</td></tr></table>";
+    serverIndex += "<table border='1' bgcolor='Plum' ><tr><td>LedSensValue</td><td>";//LedOnCounter
+    serverIndex += ledSensorValue;//switchOnCounter
+    serverIndex += "</td></tr><tr><td>LedOn</td><td>";
     if (switchOn){
     serverIndex += "On";  
     }
@@ -99,7 +108,10 @@ void GetServerIndex (void){
     serverIndex += float((adc3 * 0.1875)/1000);
     serverIndex += "</td></tr></table>";
   #endif
-
+  
+    serverIndex += "<table border='1' bgcolor='Moccasin' ><tr><td>UpTime, min</td><td>";
+    serverIndex += (millis()/1000)/60 ;
+    serverIndex += "</td></tr></table>";
 
 
   //serverIndex += "</b><BR><BR>"
