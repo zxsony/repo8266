@@ -22,8 +22,18 @@ void GetServerIndex (void){
     
   serverIndex += "</td></tr></table><table border='1' bgcolor='LightCyan' ><tr><td>NtpS:</td><td>";//<font size='8'>
   serverIndex += ntpRegion;
-      
-  serverIndex += "</td></tr></table><table border='1' bgcolor='Moccasin' ><tr><td>Time:</td><td>";//</font>
+  serverIndex += "</td></tr></table>";
+
+  serverIndex += "<table border='1' bgcolor='Moccasin' ><tr><td>UT(d|h|m)</td><td>";
+  serverIndex += (((millis()/1000)/60)/60)/24 ;
+  serverIndex += "d</td><td>";
+  serverIndex += ((millis()/1000)/60)/60 ;
+  serverIndex += "h</td><td>";
+  serverIndex += (millis()/1000)/60 ;
+  serverIndex += "m";
+  serverIndex += "</td></tr></table>";
+  
+  serverIndex += "<table border='1' bgcolor='Moccasin' ><tr><td>Time:</td><td>";//</font>
   serverIndex += currentTimeDeviceString;
   serverIndex += "</td></tr><tr><td>CDT:</td><td>0";
 
@@ -32,6 +42,9 @@ void GetServerIndex (void){
   serverIndex += "</td></tr></table>";
   //serverIndex += lastSynchroDeviceString;
   //serverIndex += (millis()/1000) - (soundDelay/1000) ;
+
+
+  
 
   if (mp3En){
     serverIndex += "<table border='1' bgcolor='Moccasin' ><tr><td>SoundDelay</td><td>";
@@ -109,9 +122,7 @@ void GetServerIndex (void){
     serverIndex += "</td></tr></table>";
   #endif
   
-    serverIndex += "<table border='1' bgcolor='Moccasin' ><tr><td>UpTime, min</td><td>";
-    serverIndex += (millis()/1000)/60 ;
-    serverIndex += "</td></tr></table>";
+
 
 
   //serverIndex += "</b><BR><BR>"
