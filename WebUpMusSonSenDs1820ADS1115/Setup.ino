@@ -3,6 +3,10 @@ void setup(void){
   startTimeDevice = millis();
   secondTick.attach(1, ISRwatchdog);
   synCheck = 3600;//3600
+#ifdef AM2320
+  AM2320PrevSet = false;
+#endif
+  ds1820PrevSet = false;
   timeCheck = synCheck;
   soundDelay = startTimeDevice;
   WiFi.macAddress(mac);

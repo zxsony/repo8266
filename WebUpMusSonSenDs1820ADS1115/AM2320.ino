@@ -1,8 +1,18 @@
 #ifdef AM2320
+int _cou = 0;
+
+//unsigned long AM2320DelayPrev = 0; 
 void AM23020Read (){
-#ifdef ADS1115
-unsigned long _tempADC1115Delay = millis();
-#endif
+  //if (AM2320DelayPrev == 0) AM2320DelayPrev = millis();
+  #ifdef debug
+  Serial.print(_cou);
+  Serial.print(" am3020 in count.\r\n");
+  _cou ++;
+  #endif
+   
+  #ifdef ADS1115
+  unsigned long _tempADC1115Delay = millis();
+  #endif
   
   //if (AM2320Delay == 0){
     if (am2320Request){
@@ -26,7 +36,9 @@ unsigned long _tempADC1115Delay = millis();
 //      am2320buf[3] = 0;
 //      am2320buf[4] = 0;
 //      am2320buf[5] = 0;
-      Serial.print("Not transmission.\r\n");
+    #ifdef debug
+    Serial.print("Not transmission.\r\n");
+    #endif  
     }
   }
   if ((millis() - AM2320Delay)>=1600){
@@ -52,6 +64,19 @@ unsigned long _tempADC1115Delay = millis();
     am2320h = ((float)(((am2320buf[2] << 8) + am2320buf[3]) / 10.0) + 15.5);//16.3-89 14.16-82.46 20.1-90.6 29,4-15,7
     //(iva/2320) (27.77 88 / 27.77 72.5)15.5
     am2320t = ((float)(((am2320buf[4] << 8) + am2320buf[5]) / 10.0) - 0.33);// 26.77-(-.33) 
+if (AM2320hPrev == 255) AM2320hPrev = am2320h;
+if (AM2320tPrev == 255) AM2320tPrev = am2320t;
+if (AM2320PrevSet){
+  //Serial.println(millis() - AM2320DelayPrev);
+  //Serial.println(AM2320DelayPrev);
+  AM2320hPrev = am2320h;
+  AM2320tPrev = am2320t;
+  //AM2320DelayPrev = millis();
+  AM2320PrevSet = false;
+  //Serial.println(AM2320DelayPrev);
+}
+
+    
   }
   #ifdef ADS1115
     ADC1115Delay = ADC1115Delay + (millis() - _tempADC1115Delay);

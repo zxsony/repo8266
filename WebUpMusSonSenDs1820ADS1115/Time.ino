@@ -19,7 +19,12 @@ void checkLastUpdate (){
   
   if (dataRecive) {
     lastSynchroDevice = startSecsSince1900 + (currentTimeDevice / 1000) + 3600*3 - startTimeDevice/1000;
-    timeCheck = synCheck; 
+    timeCheck = synCheck;
+
+#ifdef AM2320
+    AM2320PrevSet = true;
+#endif    
+    ds1820PrevSet = true; 
   }
   else timeCheck = timeCheck + 600;
   }

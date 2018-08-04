@@ -17,10 +17,10 @@ Ultrasonic ultrasonic(4,16);
 const char* host = "esp8266-webupdate";
 
 //////////////////////
-#define board1
+#define board2
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.4.1";
+String ver = "v2.4.2";
 //////////////////////
 #ifdef board1
   bool mp3En = 1;
@@ -149,6 +149,9 @@ OneWire  ds(0);
   byte addr[8], addr1[8], addr2[8];
   byte dsData1[9], dsData2[9];
   float dsTemp1, dsTemp2;
+  float dsPrevTemp1= 255;
+  float dsPrevTemp2 = 255;
+  bool ds1820PrevSet;
 #ifdef ADS1115
   Adafruit_ADS1115 ads1115(0x4A);  // construct an ads1115 at address 0x49
   int16_t adc0, adc1, adc2, adc3;
@@ -157,7 +160,10 @@ OneWire  ds(0);
   #define AM2320_i2C_ADDRESS  0xB8
   unsigned char am2320buf[8];
   float am2320h, am2320t;
+  float AM2320hPrev = 255;
+  float AM2320tPrev = 255;
   bool am2320Request;
+  bool AM2320PrevSet;
 #endif
 ESP8266WebServer server(80);
 //const char* serverIndex = "<form method='POST' acton=i'/update' enctype='multipart/form-data'><input type='file' name='update'><input type='submit' value='Update'></form>";

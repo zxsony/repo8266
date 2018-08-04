@@ -95,18 +95,26 @@ void GetServerIndex (void){
     serverIndex += "</td></tr></table>";
   }
   if (TempEn){
-    serverIndex += "<table border='1' bgcolor='PaleGreen' ><tr><td>ds1820 temp1:</td><td>";
+    serverIndex += "<table border='1' bgcolor='PaleGreen' ><tr><td>ds1820t1</td><td>";
     serverIndex += dsTemp1;
-    serverIndex += "</td></tr><tr><td>ds1820 temp2:</td><td>";
+    serverIndex += "</td><td>";
+    serverIndex += dsTemp1 - dsPrevTemp1;
+    serverIndex += "</td></tr><tr><td>ds1820t2</td><td>";
     serverIndex += dsTemp2;
+    serverIndex += "</td><td>";
+    serverIndex += dsTemp2 - dsPrevTemp2;
     serverIndex += "</td></tr></table>";
   }
   
   #ifdef AM2320
-    serverIndex += "<table border='1' bgcolor='DarkSeaGreen' ><tr><td>am2320 hum1:</td><td>";
+    serverIndex += "<table border='1' bgcolor='DarkSeaGreen' ><tr><td>am2320h</td><td>";
     serverIndex += am2320h;
-    serverIndex += "</td></tr><tr><td>am2320 temp1:</td><td>";
+    serverIndex += "</td><td>";
+    serverIndex += am2320h - AM2320hPrev;
+    serverIndex += "</td></tr><tr><td>am2320t</td><td>";
     serverIndex += am2320t;
+    serverIndex += "</td><td>";
+    serverIndex += am2320t - AM2320tPrev;
     serverIndex += "</td></tr></table>";
   #endif
   
