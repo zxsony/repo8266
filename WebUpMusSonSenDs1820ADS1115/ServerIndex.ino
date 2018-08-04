@@ -111,6 +111,7 @@ void GetServerIndex (void){
     serverIndex += am2320h;
     serverIndex += "</td><td>";
     serverIndex += am2320h - AM2320hPrev;
+    //serverIndex += AM2320Stack [timeH][2];
     serverIndex += "</td></tr><tr><td>am2320t</td><td>";
     serverIndex += am2320t;
     serverIndex += "</td><td>";

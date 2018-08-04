@@ -145,9 +145,7 @@ WiFiUDP Udp;
 Ticker secondTick;
 
 OneWire  ds(0);
-  byte data[12];
-  byte addr[8], addr1[8], addr2[8];
-  byte dsData1[9], dsData2[9];
+
   float dsTemp1, dsTemp2;
   float dsPrevTemp1= 255;
   float dsPrevTemp2 = 255;
@@ -164,6 +162,10 @@ OneWire  ds(0);
   float AM2320tPrev = 255;
   bool am2320Request;
   bool AM2320PrevSet;
+  float AM2320Stack [12][2];
+
+ 
+  
 #endif
 ESP8266WebServer server(80);
 //const char* serverIndex = "<form method='POST' acton=i'/update' enctype='multipart/form-data'><input type='file' name='update'><input type='submit' value='Update'></form>";

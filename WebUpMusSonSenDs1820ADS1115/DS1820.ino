@@ -1,4 +1,6 @@
-
+  byte data[12];
+  byte addr[8], addr1[8], addr2[8];
+  byte dsData1[9], dsData2[9];
 
 void DsTempCalc(){
   int16_t raw1, raw2;

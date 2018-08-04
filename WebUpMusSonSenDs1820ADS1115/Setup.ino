@@ -16,6 +16,11 @@ void setup(void){
   pinMode(ledPinGR1, OUTPUT);
   pinMode(ledPinBR2, OUTPUT);
   pinMode(ledPinYR3, OUTPUT);
+
+  for (i = 0; i < 12; i++) {
+    AM2320Stack [i][1] = 0;
+    AM2320Stack [i][2] = 0;
+  }
   
   Wire.begin(3, 2);
   #ifdef ADS1115
