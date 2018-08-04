@@ -17,10 +17,10 @@ Ultrasonic ultrasonic(4,16);
 const char* host = "esp8266-webupdate";
 
 //////////////////////
-#define board2
+#define board1
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.3.4";
+String ver = "v2.4.1";
 //////////////////////
 #ifdef board1
   bool mp3En = 1;
@@ -116,12 +116,14 @@ int switchOnCounter = 0;
 int ultrasonicValue = 0;
 int ultrasonicOnCounter = 0;
 bool ledSensorState = false;
+bool IRSensorEnVar = false;
 bool iRSensorState = false;
 int iRSensorOnCounter = 0;
 bool LightActivityState1 = false;
 bool LightActivityState2 = false;
 bool LightActivityState3 = false;
 bool SecurityEn = true;
+bool ledblinkVal = false;
 
 int ultrasonicLoop = 0;
 String ledColoure = "green";
@@ -162,7 +164,8 @@ ESP8266WebServer server(80);
   String serverIndex = "<form method='POST' action='/update' enctype='multipart/form-data'>"
   "<a href='http://192.168.1.203/'>Home</a><BR>"
   "</form>";
-  
+  String xmlData = "<?xml version='1.0' ?><main><name>test name data</name><testData>test data</testData></main>";
+
 void ISRwatchdog(){
   watchdogCount++;
   if (watchdogCount == 60){

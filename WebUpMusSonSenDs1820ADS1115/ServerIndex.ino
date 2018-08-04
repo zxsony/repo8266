@@ -5,7 +5,7 @@ void GetServerIndex (void){
   "<style>pre {-moz-tab-size: 3;}</style><style type='text/css'>TABLE {color:black;font-size:250%;font-weight:bold;} body{background-color: black;}</style></head>"
   //"<h1>Контроллер ESP 8266<BR>"
   //"<h2><pre><a href='/u'>";
-  "<table border='1' bgcolor='White'><tr><td><a href='/u'>";
+  "<table border='1' bgcolor='White'><tr><td><a href='/data.xml'>";
   serverIndex += deviceId;
   serverIndex += "</a></td><td><a href='/info'>";
   serverIndex += ver;

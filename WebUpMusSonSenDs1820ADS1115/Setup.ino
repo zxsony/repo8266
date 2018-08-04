@@ -161,6 +161,9 @@ serverIndex ="";
       server.send(200, "text/html", serverIndex);
 
     });
+    server.on("/data.xml", HTTP_GET, [](){
+      server.send(200, "text/xml", xmlData);
+    });
       server.on("/redled", HTTP_GET, [](){
       ledColoure = "red";
       server.sendHeader("Connection", "close");
@@ -258,6 +261,14 @@ serverIndex ="";
     ADC1115Delay = millis();
     #ifdef AM2320
       am2320Request = true;
+    #endif
+    
+    #ifdef IRSensorEn
+      IRSensorEnVar = true;
+    #endif
+
+    #ifdef ledblink
+    ledblinkVal = true;
     #endif
 
     ////MDNS.addService("http", "tcp", 80);

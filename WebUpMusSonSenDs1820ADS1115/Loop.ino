@@ -49,6 +49,8 @@ void loop(void){
     
   GetServerIndex();
 
+  GetXmlData();
+
   server.handleClient();
   delay(10);
 } 
