@@ -18,8 +18,8 @@ void DsTempCalc(){
   if ((dsData1[1]==255) and (dsData1[0]==255) and (dsData1[6]==255) or ((dsData1[1]==0) and (dsData1[0]==0) and (dsData1[6]==0))){
     raw2 = 0x3E7F;
   }
-  dsTemp1 = ((float)raw1 / 16.0)-0.5;
-  dsTemp2 = ((float)raw2 / 16.0)-0.3;
+  dsTemp1 = ((float)raw1 / 16.0)-0.2; //-----------------------------------------------------------
+  dsTemp2 = ((float)raw2 / 16.0)-0.0;
 //  Serial.print ("Sensor1=");
 //  Serial.println((float)raw1 / 16.0);
 //  Serial.print ("Sensor2=");

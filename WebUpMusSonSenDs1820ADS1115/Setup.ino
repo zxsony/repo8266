@@ -172,7 +172,7 @@ serverIndex ="";
       server.sendHeader("Access-Control-Allow-Origin", "*");
       GetHTIndex();
       server.send(200, "text/html", serverIndex);
-      ledCurrent = ledPinR;
+      //ledCurrent = ledPinR;
 ////      mp3_stop ();
 ////      delay(100);
     });

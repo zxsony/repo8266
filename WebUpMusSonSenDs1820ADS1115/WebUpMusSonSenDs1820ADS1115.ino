@@ -20,7 +20,7 @@ const char* host = "esp8266-webupdate";
 #define board2
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.4.3b";
+String ver = "v2.4.4b";
 //////////////////////
 #ifdef board1
   bool mp3En = 1;
@@ -62,15 +62,15 @@ String ver = "v2.4.3b";
   bool TempEn = 1;
   bool ultrasonicEn = 0;
   bool sensorEn = 0;
-  bool ntpEn = 0;
-  const char* ssid = "OTK2";
-  const char* password = "Lift80Lift";
+  bool ntpEn = 1;
+//  const char* ssid = "OTK2";
+//  const char* password = "Lift80Lift";
 //  const char* ssid = "Pusko-Naladka";
 //  const char* password = "1234578906";
-//  const char* ssid = "NVRAM WARNING";
-//  const char* password = "Lift80Lift";
-  
+  const char* ssid = "NVRAM WARNING";
+  const char* password = "Lift80Lift";
   String deviceId = "board3";
+  #define ledblink
 #endif
 
   
@@ -130,6 +130,8 @@ String ledColoure = "green";
 int ktoid = 1;
 String devNumbFull, tempStr;
 int watchdogCount = 0;
+
+float tempStack [24][4];
   
 unsigned long startTimeDevice, currentTimeDevice, startSecsSince1900, currentSecsSince1900, secsSince1900, epochStamp;
 unsigned long lastStartDevice, lastSynchroDevice, timeCheck, synCheck, soundDelay, dsDelay, ADC1115Delay, AM2320Delay, LightActivityDelay;

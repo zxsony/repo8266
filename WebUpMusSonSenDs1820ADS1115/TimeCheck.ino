@@ -212,8 +212,8 @@ void CheckTimeEvents(){
     }
   }
                                                                   //  if ((timeM == 25) and (timeH == 20)){
-  if ((timeM == 7) and (timeH == 13)){
-    
+  if ((timeM == 29) and (timeH == 20)){
+    //SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60)){
       soundDelay = millis();
       mp3_play (13);
@@ -265,7 +265,9 @@ void CheckTimeEvents(){
   
 }
 void SetSensorTable(){
-  AM2320Stack [timeH][0] = am2320h;
-  AM2320Stack [timeH][1] = am2320t;
+  tempStack [timeH][0] = am2320h;
+  tempStack [timeH][1] = am2320t;
+  tempStack [timeH][2] = dsTemp1;
+  tempStack [timeH][3] = dsTemp2;
 }
 

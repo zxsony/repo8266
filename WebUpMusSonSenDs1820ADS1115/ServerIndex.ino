@@ -87,7 +87,7 @@ void GetServerIndex (void){
     serverIndex += "</td></tr></table>";
   }
   if (TempEn){
-    serverIndex += "<table border='1' bgcolor='PaleGreen' ><tr><td>ds1820t1</td><td>";
+    serverIndex += "<table border='1' bgcolor='PaleGreen' ><tr><td><a href='/ht'>ds1820t1</a></td><td>";
     serverIndex += dsTemp1;
     serverIndex += "</td><td>";
     serverIndex += dsTemp1 - dsPrevTemp1;
