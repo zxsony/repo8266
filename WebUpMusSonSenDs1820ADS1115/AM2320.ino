@@ -1,5 +1,15 @@
+#define AM2320_i2C_ADDRESS  0xB8
+unsigned char am2320buf[8];
+float am2320h, am2320t;
+float AM2320hPrev = 255;
+float AM2320tPrev = 255;
+bool am2320Request;
+bool AM2320PrevSet;
+float AM2320Stack [24][2];
+  
 #ifdef AM2320
 int _cou = 0;
+
 
 //unsigned long AM2320DelayPrev = 0; 
 void AM23020Read (){

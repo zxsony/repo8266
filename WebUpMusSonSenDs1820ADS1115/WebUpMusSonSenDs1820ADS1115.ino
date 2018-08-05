@@ -155,14 +155,7 @@ OneWire  ds(0);
   int16_t adc0, adc1, adc2, adc3;
 #endif
 #ifdef AM2320
-  #define AM2320_i2C_ADDRESS  0xB8
-  unsigned char am2320buf[8];
-  float am2320h, am2320t;
-  float AM2320hPrev = 255;
-  float AM2320tPrev = 255;
-  bool am2320Request;
-  bool AM2320PrevSet;
-  float AM2320Stack [12][2];
+
 
  
   

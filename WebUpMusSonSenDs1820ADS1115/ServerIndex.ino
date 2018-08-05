@@ -107,7 +107,7 @@ void GetServerIndex (void){
   }
   
   #ifdef AM2320
-    serverIndex += "<table border='1' bgcolor='DarkSeaGreen' ><tr><td>am2320h</td><td>";
+    serverIndex += "<table border='1' bgcolor='DarkSeaGreen' ><tr><td><a href='/ht'>am2320h</a></td><td>";
     serverIndex += am2320h;
     serverIndex += "</td><td>";
     serverIndex += am2320h - AM2320hPrev;

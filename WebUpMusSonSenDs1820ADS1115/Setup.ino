@@ -17,10 +17,7 @@ void setup(void){
   pinMode(ledPinBR2, OUTPUT);
   pinMode(ledPinYR3, OUTPUT);
 
-  for (i = 0; i < 12; i++) {
-    AM2320Stack [i][1] = 0;
-    AM2320Stack [i][2] = 0;
-  }
+
   
   Wire.begin(3, 2);
   #ifdef ADS1115
@@ -173,11 +170,11 @@ serverIndex ="";
     server.on("/data.xml", HTTP_GET, [](){
       server.send(200, "text/xml", xmlData);
     });
-      server.on("/redled", HTTP_GET, [](){
-      ledColoure = "red";
+      server.on("/ht", HTTP_GET, [](){
+      //ledColoure = "red";
       server.sendHeader("Connection", "close");
       server.sendHeader("Access-Control-Allow-Origin", "*");
-      GetServerIndex();
+      GetHTIndex();
       server.send(200, "text/html", serverIndex);
       ledCurrent = ledPinR;
 ////      mp3_stop ();
