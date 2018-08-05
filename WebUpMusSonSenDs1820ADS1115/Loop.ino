@@ -46,11 +46,11 @@ void loop(void){
   #ifdef AM2320
     AM23020Read ();
   #endif
-    
+  server.handleClient();
+   
   GetServerIndex();
 
   GetXmlData();
 
-  server.handleClient();
   delay(10);
 } 

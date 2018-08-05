@@ -23,11 +23,7 @@ void setup(void){
   #ifdef ADS1115
     ads1115.begin();
   #endif
-//  #ifdef AM2320
-//    Wire.beginTransmission(AM2320_i2C_ADDRESS>>1);
-//    //a = Wire.endTransmission();
-//    Wire.endTransmission();
-//  #endif
+
   if (!ultrasonicEn){
   pinMode(button, INPUT);
   }
@@ -279,9 +275,5 @@ serverIndex ="";
 
     ////MDNS.addService("http", "tcp", 80);
   
-    //Serial.printf("Ready! Open http://%s.local in your browser\n", host);
-//  } else {
-//    ////Serial.println("WiFi Failed");
-//    digitalWrite(ledPinR, HIGH);
-//  }
+
 }

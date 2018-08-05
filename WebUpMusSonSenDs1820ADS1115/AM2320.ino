@@ -5,7 +5,7 @@ float AM2320hPrev = 255;
 float AM2320tPrev = 255;
 bool am2320Request;
 bool AM2320PrevSet;
-float AM2320Stack [24][2];
+float AM2320Stack [25][2];
   
 #ifdef AM2320
 int _cou = 0;
@@ -73,7 +73,7 @@ void AM23020Read (){
     }
     am2320h = ((float)(((am2320buf[2] << 8) + am2320buf[3]) / 10.0) + 15.5);//16.3-89 14.16-82.46 20.1-90.6 29,4-15,7
     //(iva/2320) (27.77 88 / 27.77 72.5)15.5
-    am2320t = ((float)(((am2320buf[4] << 8) + am2320buf[5]) / 10.0) - 0.33);// 26.77-(-.33) 
+    am2320t = ((float)(((am2320buf[4] << 8) + am2320buf[5]) / 10.0) - 1.2);// 26.77-(-.33) 
 if (AM2320hPrev == 255) AM2320hPrev = am2320h;
 if (AM2320tPrev == 255) AM2320tPrev = am2320t;
 if (AM2320PrevSet){

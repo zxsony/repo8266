@@ -69,14 +69,6 @@ void GetServerIndex (void){
       serverIndex += "</td></tr></table>";
   }
 
-  //--------------------------------------------------
-//serverIndex += "<BR><BR>timeH:";
-//serverIndex += timeH;
-//serverIndex += " timeM:";
-//serverIndex += timeM;
-//serverIndex += " Delay:";
-//serverIndex += ((millis()/1000) - soundDelay/1000)>60; 
-  //--------------------------------------------------
   if (sensorEn){
     serverIndex += "<table border='1' bgcolor='SkyBlue' ><tr><td>LedOnCounter</td><td>";//LedSensorValue
     //serverIndex += "<tr><td>LedSensorValue</td><td>";
@@ -111,7 +103,6 @@ void GetServerIndex (void){
     serverIndex += am2320h;
     serverIndex += "</td><td>";
     serverIndex += am2320h - AM2320hPrev;
-    //serverIndex += AM2320Stack [timeH][2];
     serverIndex += "</td></tr><tr><td>am2320t</td><td>";
     serverIndex += am2320t;
     serverIndex += "</td><td>";
@@ -130,19 +121,9 @@ void GetServerIndex (void){
     serverIndex += float((adc3 * 0.1875)/1000);
     serverIndex += "</td></tr></table>";
   #endif
-  
 
-
-
-  //serverIndex += "</b><BR><BR>"
-  //"<form method='POST' action='/update' enctype='multipart/form-data'>"
-//  "<a href='/redled'>Red</a><BR>"
-//  "<a href='/blueled'>Blue</a><BR>"
-//  "<a href='/greenled'>Green</a><BR>"
   "<a href='/update2'>Update2</a><BR>"
   "<b>";
-  //serverIndex += "</b><BR>"
-//  "<input type='file' name='update'>"
-//  "<input type='submit' value='Update'>"
+
   "</form></pre></h2></html>";
   }

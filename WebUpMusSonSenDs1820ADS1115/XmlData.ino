@@ -111,14 +111,6 @@ void GetXmlData (void){
   xmlData += float((adc3 * 0.1875)/1000);
   xmlData += "</v50>";
   #endif
-
-//  xmlData += "<TempEn>";
-//  xmlData += TempEn;
-//  xmlData += "</TempEn>";
-//
-//  xmlData += "<TempEn>";
-//  xmlData += TempEn;
-//  xmlData += "</TempEn>";
   
 
   xmlData += "</main>";

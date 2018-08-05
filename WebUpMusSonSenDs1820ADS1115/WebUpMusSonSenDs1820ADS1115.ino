@@ -20,7 +20,7 @@ const char* host = "esp8266-webupdate";
 #define board2
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.4.2";
+String ver = "v2.4.3b";
 //////////////////////
 #ifdef board1
   bool mp3En = 1;
@@ -154,12 +154,7 @@ OneWire  ds(0);
   Adafruit_ADS1115 ads1115(0x4A);  // construct an ads1115 at address 0x49
   int16_t adc0, adc1, adc2, adc3;
 #endif
-#ifdef AM2320
 
-
- 
-  
-#endif
 ESP8266WebServer server(80);
 //const char* serverIndex = "<form method='POST' acton=i'/update' enctype='multipart/form-data'><input type='file' name='update'><input type='submit' value='Update'></form>";
   String serverIndex = "<form method='POST' action='/update' enctype='multipart/form-data'>"

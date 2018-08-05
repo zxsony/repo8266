@@ -3,6 +3,7 @@ void CheckTimeEvents(){
   //if (mp3En){
   
   if ((timeM == 0) and (timeH == 0)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60) ){
       soundDelay = millis();
       mp3_play (212);
@@ -12,6 +13,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 1)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60) ){
       soundDelay = millis();
       mp3_play (201);
@@ -21,6 +23,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 2)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60) ){
       soundDelay = millis();
       mp3_play (202);
@@ -30,6 +33,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 3)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60) ){
       soundDelay = millis();
       mp3_play (203);
@@ -39,6 +43,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 4)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60) ){
       soundDelay = millis();
       mp3_play (204);
@@ -48,6 +53,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 5)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60) ){
       soundDelay = millis();
       mp3_play (205);
@@ -57,6 +63,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 6)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60) ){
       soundDelay = millis();
       mp3_play (206);
@@ -66,6 +73,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 7)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60) ){
       soundDelay = millis();
       mp3_play (207);
@@ -84,6 +92,7 @@ void CheckTimeEvents(){
   }
 }
   if ((timeM == 0) and (timeH == 8)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60) ){
       soundDelay = millis();
       mp3_play (20);
@@ -93,6 +102,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 9)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60) ){
       soundDelay = millis();
       mp3_play (209);
@@ -102,6 +112,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 10)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60)){
     soundDelay = millis();
     mp3_play (210);
@@ -111,6 +122,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 11)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60)){
       soundDelay = millis();
       mp3_play (211);
@@ -120,6 +132,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 12)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60)){
       soundDelay = millis();
       mp3_play (212);
@@ -129,6 +142,7 @@ void CheckTimeEvents(){
     }
   }  
   if ((timeM == 0) and (timeH == 13)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60)){
       soundDelay = millis();
       mp3_play (201);
@@ -138,6 +152,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 14)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60)){
       soundDelay = millis();
       mp3_play (202);
@@ -147,6 +162,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 15)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60)){
       soundDelay = millis();
       mp3_play (203);
@@ -156,6 +172,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 16)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60)){
       soundDelay = millis();
       mp3_play (204);
@@ -165,6 +182,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 17)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60)){
       soundDelay = millis();
       mp3_play (205);
@@ -174,6 +192,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 18)){
+    SetSensorTable();
       if (mp3En and (((millis()/1000) - soundDelay/1000)>60)){
         soundDelay = millis();
         mp3_play (206);
@@ -183,6 +202,7 @@ void CheckTimeEvents(){
       }
   }
   if ((timeM == 0) and (timeH == 19)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60)){
       soundDelay = millis();
       mp3_play (207);
@@ -191,10 +211,9 @@ void CheckTimeEvents(){
       delay(1000);
     }
   }
-//  if ((timeM == 25) and (timeH == 20)){
-  if ((timeM == 54) and (timeH == 22)){
-
-    //AM2320Stack [timeH][2] = am2320t;
+                                                                  //  if ((timeM == 25) and (timeH == 20)){
+  if ((timeM == 7) and (timeH == 13)){
+    
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60)){
       soundDelay = millis();
       mp3_play (13);
@@ -204,6 +223,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 20)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60)){
       soundDelay = millis();
       mp3_play (20);
@@ -213,6 +233,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 21)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60)){
       soundDelay = millis();
       mp3_play (209);
@@ -222,6 +243,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 22)){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60)){
       soundDelay = millis();
       mp3_play (210);
@@ -231,6 +253,7 @@ void CheckTimeEvents(){
     }
   }
   if ((timeM == 0) and (timeH == 23) ){
+    SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60)){
       soundDelay = millis();
       mp3_play (211);
@@ -240,5 +263,9 @@ void CheckTimeEvents(){
     }
   }
   
+}
+void SetSensorTable(){
+  AM2320Stack [timeH][0] = am2320h;
+  AM2320Stack [timeH][1] = am2320t;
 }
 
