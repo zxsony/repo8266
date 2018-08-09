@@ -77,13 +77,9 @@ void AM23020Read (){
 if (AM2320hPrev == 255) AM2320hPrev = am2320h;
 if (AM2320tPrev == 255) AM2320tPrev = am2320t;
 if (AM2320PrevSet){
-  //Serial.println(millis() - AM2320DelayPrev);
-  //Serial.println(AM2320DelayPrev);
   AM2320hPrev = am2320h;
   AM2320tPrev = am2320t;
-  //AM2320DelayPrev = millis();
   AM2320PrevSet = false;
-  //Serial.println(AM2320DelayPrev);
 }
 
     
