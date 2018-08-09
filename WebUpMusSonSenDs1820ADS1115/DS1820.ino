@@ -28,13 +28,10 @@ void DsTempCalc(){
 if (dsPrevTemp1 == 255 and dsTemp1 <999) dsPrevTemp1 = dsTemp1;
 if (dsPrevTemp2 == 255 and dsTemp2 <999) dsPrevTemp2 = dsTemp2;
   if (ds1820PrevSet){
-    //Serial.println(millis() - AM2320DelayPrev);
-    //Serial.println(AM2320DelayPrev);
     dsPrevTemp1 = dsTemp1;
-    dsPrevTemp1 = dsTemp1;
-    //AM2320DelayPrev = millis();
+    dsPrevTemp2 = dsTemp2;
+//    ds1820PrevCount ++;
     ds1820PrevSet = false;
-    //Serial.println(AM2320DelayPrev);
   }
 }
 

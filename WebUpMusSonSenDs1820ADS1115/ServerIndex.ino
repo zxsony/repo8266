@@ -91,6 +91,10 @@ void GetServerIndex (void){
     serverIndex += dsTemp1;
     serverIndex += "</td><td>";
     serverIndex += dsTemp1 - dsPrevTemp1;
+//--------------------------------------------------
+//serverIndex += "</td><td>";
+//serverIndex += ds1820PrevCount;
+//--------------------------------------------------
     serverIndex += "</td></tr><tr><td>ds1820t2</td><td>";
     serverIndex += dsTemp2;
     serverIndex += "</td><td>";

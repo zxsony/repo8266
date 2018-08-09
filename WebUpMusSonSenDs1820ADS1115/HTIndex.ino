@@ -20,7 +20,11 @@ void GetHTIndex (void){
   serverIndex += tempStack [0][3];  
 
   for (int i = 1; i<24; i++){
-    serverIndex += "</td></tr><tr><td>";
+    if (i == timeH){
+      serverIndex += "</td></tr><tr bgcolor='DarkSeaGreen' ><td>";}
+    else{
+      serverIndex += "</td></tr><tr><td>";}
+    //serverIndex += "</td></tr><tr><td>";
     serverIndex += i;
     serverIndex += "</td><td>";
     serverIndex += tempStack [i][0];

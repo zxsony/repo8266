@@ -17,10 +17,10 @@ Ultrasonic ultrasonic(4,16);
 const char* host = "esp8266-webupdate";
 
 //////////////////////
-#define board3
+#define board2
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.4.4b";
+String ver = "v2.4.5b";
 //////////////////////
 #ifdef board1
   bool mp3En = 1;
@@ -79,7 +79,7 @@ String ver = "v2.4.4b";
   bool TempEn = 1;
   bool ultrasonicEn = 0;
   bool sensorEn = 0;
-  bool ntpEn = 0;
+  bool ntpEn = 1;
   const char* ssid = "Tenda_FBA7C0";
   const char* password = "121314150";
   String deviceId = "board4";
@@ -152,6 +152,7 @@ OneWire  ds(0);
   float dsPrevTemp1= 255;
   float dsPrevTemp2 = 255;
   bool ds1820PrevSet;
+//  int ds1820PrevCount = 0;
 #ifdef ADS1115
   Adafruit_ADS1115 ads1115(0x4A);  // construct an ads1115 at address 0x49
   int16_t adc0, adc1, adc2, adc3;

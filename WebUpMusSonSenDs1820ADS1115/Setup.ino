@@ -245,9 +245,16 @@ serverIndex ="";
           //Update.printError(Serial);
         }
       } else if(upload.status == UPLOAD_FILE_END){
+        digitalWrite(ledPinR, LOW);
+        digitalWrite(ledPinBR2, HIGH);
+        delay (1500);
+        digitalWrite(ledPinBR2, LOW);
         if(Update.end(true)){ //true to set the size to the current progress
+          for (int i=1; i<4; i++){digitalWrite(ledPinGR1, HIGH);delay (500); digitalWrite(ledPinGR1, LOW); delay (500);}
+          
           //Serial.printf("Update Success: %u\nRebooting...\n", upload.totalSize);
         } else {
+          for (int i=1; i<4; i++){digitalWrite(ledPinR, HIGH);delay (500); digitalWrite(ledPinR, LOW); delay (500);}
           //Update.printError(Serial);
         }
         //Serial.setDebugOutput(false);
