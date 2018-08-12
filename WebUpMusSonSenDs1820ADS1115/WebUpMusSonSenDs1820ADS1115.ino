@@ -17,10 +17,10 @@ Ultrasonic ultrasonic(4,16);
 const char* host = "esp8266-webupdate";
 
 //////////////////////
-#define board4
+#define board2
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.4.5b";
+String ver = "v2.4.7b";
 //////////////////////
 #ifdef board1
   bool mp3En = 1;
@@ -59,17 +59,18 @@ String ver = "v2.4.5b";
 
 #ifdef board3
   bool mp3En = 0;
-  bool TempEn = 1;
+  bool TempEn = 0;
   bool ultrasonicEn = 0;
   bool sensorEn = 0;
   bool ntpEn = 1;
-  const char* ssid = "OTK2";
-  const char* password = "Lift80Lift";
+//  const char* ssid = "OTK2";
+//  const char* password = "Lift80Lift";
 //  const char* ssid = "Pusko-Naladka";
 //  const char* password = "1234578906";
-//  const char* ssid = "NVRAM WARNING";
-//  const char* password = "Lift80Lift";
+  const char* ssid = "NVRAM WARNING";
+  const char* password = "Lift80Lift";
   String deviceId = "board3";
+  #define AM2320
   #define ledblink
 #endif
 
@@ -98,6 +99,20 @@ String ver = "v2.4.5b";
   String deviceId = "board5";
   
   #define ledblink  
+#endif
+
+#ifdef board6
+  bool mp3En = 0;
+  bool TempEn = 0;
+  bool ultrasonicEn = 0;
+  bool sensorEn = 0;
+  bool ntpEn = 1;
+  const char* ssid = "NVRAM WARNING";
+  const char* password = "Lift80Lift";
+  String deviceId = "board6";
+  #define AM2320
+  //#define ledblink
+  #define irtool  
 #endif
 
 byte mac[6];
