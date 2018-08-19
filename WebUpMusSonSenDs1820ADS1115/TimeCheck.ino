@@ -269,5 +269,7 @@ void SetSensorTable(){
   tempStack [timeH][1] = am2320t;
   tempStack [timeH][2] = dsTemp1;
   tempStack [timeH][3] = dsTemp2;
+  tempStack [timeH][4] = iRSensorOnCounter;
+  tempStack [timeH][5] = switchOnCounter;
 }
 

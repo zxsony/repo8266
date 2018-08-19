@@ -91,7 +91,7 @@ void GetServerIndex (void){
   }
 
   #ifdef IRSensorEn
-    serverIndex += "<table border='1' bgcolor='DarkSeaGreen' ><tr><td>iRSensCounter</td><td>";
+    serverIndex += "<table border='1' bgcolor='DarkSeaGreen' ><tr><td><a href='/ht'>iRSensCounter</a></td><td>";
     serverIndex += iRSensorOnCounter;
     serverIndex += "</td></tr></table>";
   #endif

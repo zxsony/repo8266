@@ -20,7 +20,7 @@ const char* host = "esp8266-webupdate";
 #define board6
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.4.7b";
+String ver = "v2.4.8b";
 //////////////////////
 #ifdef board1
   bool mp3En = 1;
@@ -146,7 +146,7 @@ int ktoid = 1;
 String devNumbFull, tempStr;
 int watchdogCount = 0;
 
-float tempStack [24][4];
+float tempStack [24][6];
   
 unsigned long startTimeDevice, currentTimeDevice, startSecsSince1900, currentSecsSince1900, secsSince1900, epochStamp;
 unsigned long lastStartDevice, lastSynchroDevice, timeCheck, synCheck, soundDelay, dsDelay, ADC1115Delay, AM2320Delay, LightActivityDelay;
