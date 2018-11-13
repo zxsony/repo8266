@@ -35,7 +35,8 @@ void setup(void){
   LightActivityState3 = true;
   #endif
   if (TempEn){
-  DsSearch ();   
+  DsSearch (); 
+//  DallSearch ();   
   }
 
   Serial.println();

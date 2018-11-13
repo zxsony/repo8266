@@ -56,7 +56,7 @@ void DsRead (){
     dsDelay = millis();
   }
   if ((millis() - dsDelay)<=1){
-    //Serial.println(millis() - dsDelay);
+    Serial.println(millis() - dsDelay);
     ds.reset();
     ds.select(addr1);
     ds.write(0x44);
@@ -72,15 +72,22 @@ void DsRead (){
     ds.reset();
     ds.select(addr1);    
     ds.write(0xBE);
-    for ( i = 0; i < 9; i++) {
+    for ( i = 0; i < 8; i++) {
       dsData1[i] = ds.read();
+      Serial.print(dsData1[i], HEX);
+      Serial.print(" ");
     }
+    Serial.println("\n");
     ds.reset();
     ds.select(addr2);    
     ds.write(0xBE);
-    for ( i = 0; i < 9; i++) {
+    for ( i = 0; i < 8; i++) {
       dsData2[i] = ds.read();
-    }    
+      Serial.print(dsData2[i], HEX);
+      Serial.print(" ");
+    }
+    Serial.println("\n"); 
+    Serial.println("\n");    
   }
 
 }
@@ -93,14 +100,17 @@ void DsSearch (){
       for (i=0; i<(8); i++)
       {
         addr1[i] = addr[i];
+        Serial.println(addr[i], HEX);
       }
     }
     if (devCounter==2){ 
       for (i=0; i<(8); i++)
       {
         addr2[i] = addr[i];
+        Serial.println(addr[i], HEX);
       }
     }
+    Serial.println("");
   }
   ds.reset_search();
   delay(250);

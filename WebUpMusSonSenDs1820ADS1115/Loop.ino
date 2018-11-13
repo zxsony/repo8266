@@ -30,6 +30,7 @@ void loop(void){
   if (TempEn){
     DsRead ();
     DsTempCalc(); 
+//DallRead( flagDallRead*1000 );
   }
 
   if (ntpEn){ 

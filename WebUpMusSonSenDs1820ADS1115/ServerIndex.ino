@@ -133,10 +133,13 @@ void GetServerIndex (void){
 //serverIndex += "</td><td>";
 //serverIndex += ds1820PrevCount;
 //--------------------------------------------------
-    serverIndex += "</td></tr><tr><td>ds1820t2</td><td>";
-    serverIndex += dsTemp2;
-    serverIndex += "</td><td>";
-    serverIndex += dsTemp2 - dsPrevTemp2;
+
+
+    //serverIndex += "</td></tr>";
+    //serverIndex += "<tr><td>ds1820t2</td><td>";
+    //serverIndex += dsTemp2;
+    //serverIndex += "</td><td>";
+    //serverIndex += dsTemp2 - dsPrevTemp2;
     serverIndex += "</td></tr></table>";
   }
   
@@ -164,8 +167,8 @@ void GetServerIndex (void){
     serverIndex += "</td></tr></table>";
   #endif
 
-  "<a href='/update2'>Update2</a><BR>"
-  "<b>";
-
-  "</form></pre></h2></html>";
+  //"<a href='/update2'>Update2</a><BR>"
+  //"<b>";
+  
+  serverIndex += "</html>";
   }
