@@ -41,7 +41,7 @@ void loop(void){
     }
   
   #ifdef ADS1115
-    ADC1115Read ();
+    //ADC1115Read ();
   #endif
   
   #ifdef AM2320

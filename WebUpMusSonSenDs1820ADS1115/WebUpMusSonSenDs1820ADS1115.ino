@@ -20,7 +20,7 @@ const char* host = "esp8266-webupdate";
 #define board2
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.4.9b";
+String ver = "v2.4.10b";
 //////////////////////
 #ifdef board1
   bool mp3En = 1;
@@ -111,8 +111,8 @@ String ver = "v2.4.9b";
   const char* password = "Lift80Lift";
   String deviceId = "board6";
   #define AM2320
-  //#define ledblink
-  #define irtool  
+  #define ledblink
+  //#define irtool  
 #endif
 
 byte mac[6];
