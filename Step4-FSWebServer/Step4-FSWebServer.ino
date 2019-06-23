@@ -16,8 +16,8 @@ ESP8266WebServer HTTP(80);
 File fsUploadFile;
 
 // Определяем переменные wifi
-String _ssid     = "home"; // Для хранения SSID
-String _password = "i12345678"; // Для хранения пароля сети
+String _ssid     = "NVRAM WARNING"; // Для хранения SSID
+String _password = "Lift80Lift"; // Для хранения пароля сети
 String _ssidAP = "WiFi";   // SSID AP точки доступа
 String _passwordAP = ""; // пароль точки доступа
 String SSDP_Name="FSWebServer"; // Имя SSDP
@@ -44,6 +44,3 @@ void loop() {
   HTTP.handleClient();
   delay(1);
 }
-
-
-
