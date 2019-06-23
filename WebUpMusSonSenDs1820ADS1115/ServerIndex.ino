@@ -50,7 +50,7 @@ void GetServerIndex (void){
   serverIndex += "</a></td><td><a href='/update2'>Upd.2</a>";
   serverIndex += "</td></tr></table><table border='1' bgcolor='Gainsboro'>";
   
-  serverIndex += "<tr><td>APIP:</td><td>";
+  serverIndex += "<tr><td><a href='/edit'>APIP:</a></td><td>";
   serverIndex += WiFi.softAPIP().toString();
   serverIndex += "</td></tr><tr><td>IP:</td><td>";
   serverIndex += WiFi.localIP().toString();

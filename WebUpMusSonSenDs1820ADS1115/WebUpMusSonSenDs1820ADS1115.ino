@@ -11,16 +11,16 @@
 #include <OneWire.h>
 #include <Wire.h>
 #include <Ticker.h>
-
+#include <FS.h>
 
 Ultrasonic ultrasonic(4,16);
 const char* host = "esp8266-webupdate";
 
 //////////////////////
-#define board2
+#define board6
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.4.10b";
+String ver = "v2.5.0";
 //////////////////////
 #ifdef board1
   bool mp3En = 1;
@@ -180,6 +180,8 @@ ESP8266WebServer server(80);
   "</form>";
   String xmlData = "<?xml version='1.0' ?><main><name>test name data</name><testData>test data</testData></main>";
 
+File fsUploadFile;
+
 void ISRwatchdog(){
   watchdogCount++;
   if (watchdogCount == 60){
@@ -197,4 +199,3 @@ void ISRwatchdog(){
   }
 }
 void tmp(void){} // not del
-
