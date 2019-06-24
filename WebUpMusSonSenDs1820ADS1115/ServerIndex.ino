@@ -135,11 +135,11 @@ void GetServerIndex (void){
 //--------------------------------------------------
 
 
-    //serverIndex += "</td></tr>";
-    //serverIndex += "<tr><td>ds1820t2</td><td>";
-    //serverIndex += dsTemp2;
-    //serverIndex += "</td><td>";
-    //serverIndex += dsTemp2 - dsPrevTemp2;
+    serverIndex += "</td></tr>";
+    serverIndex += "<tr><td>ds1820t2</td><td>";
+    serverIndex += dsTemp2;
+    serverIndex += "</td><td>";
+    serverIndex += dsTemp2 - dsPrevTemp2;
     serverIndex += "</td></tr></table>";
   }
   

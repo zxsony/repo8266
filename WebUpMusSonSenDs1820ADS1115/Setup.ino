@@ -17,6 +17,7 @@ void setup(void) {
   pinMode(ledPinBR2, OUTPUT);
   pinMode(ledPinYR3, OUTPUT);
 
+  //OneWire  ds(0);
   FS_init();
 
   Wire.begin(3, 2);

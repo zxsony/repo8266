@@ -1,8 +1,10 @@
   byte data[12];
   byte addr[8], addr1[8], addr2[8];
   byte dsData1[9], dsData2[9];
+  int devCounter = 0;
 
 void DsTempCalc(){
+  //Serial.println(devCounter);
   int16_t raw1, raw2;
   raw1 = (dsData1[1] << 8) | dsData1[0];
   raw1 = raw1 << 3;
@@ -27,11 +29,18 @@ void DsTempCalc(){
 //  Serial.println(""); 
 if (dsPrevTemp1 == 255 and dsTemp1 <999) dsPrevTemp1 = dsTemp1;
 if (dsPrevTemp2 == 255 and dsTemp2 <999) dsPrevTemp2 = dsTemp2;
+
+    if (devCounter == 1){
+      dsTemp2 = 0;
+      dsPrevTemp2 = 0;
+    }
+
   if (ds1820PrevSet){
     dsPrevTemp1 = dsTemp1;
     dsPrevTemp2 = dsTemp2;
 //    ds1820PrevCount ++;
     ds1820PrevSet = false;
+    
   }
 }
 
@@ -92,25 +101,28 @@ void DsRead (){
 
 }
 void DsSearch (){
+  //Serial.println("DsSearch");
   byte i;
-  int devCounter = 0;
+  
   while  (ds.search(addr)){
+    //Serial.println(devCounter);
     devCounter++;
     if (devCounter==1){ 
       for (i=0; i<(8); i++)
       {
         addr1[i] = addr[i];
-        Serial.println(addr[i], HEX);
+        //Serial.println(addr[i], HEX);
       }
     }
     if (devCounter==2){ 
       for (i=0; i<(8); i++)
       {
         addr2[i] = addr[i];
-        Serial.println(addr[i], HEX);
+        //Serial.println(addr[i], HEX);
       }
     }
     Serial.println("");
+    //delay(250);
   }
   ds.reset_search();
   delay(250);
@@ -130,4 +142,3 @@ void DsAddrPrint(){
   }
   Serial.println("");
 }
-
