@@ -306,6 +306,8 @@ void setup(void) {
   ledblinkVal = true;
 #endif
 
+tempStack[timeH][6] = timeH;
+tempStack[timeH][7] = timeM;
   ////MDNS.addService("http", "tcp", 80);
 
 

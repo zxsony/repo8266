@@ -212,7 +212,7 @@ void CheckTimeEvents(){
     }
   }
                                                                   //  if ((timeM == 25) and (timeH == 20)){
-  if ((timeM == 29) and (timeH == 20)){
+  if ((timeM == 55) and (timeH == 20)){
     //SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60)){
       soundDelay = millis();
@@ -265,11 +265,39 @@ void CheckTimeEvents(){
   
 }
 void SetSensorTable(){
+  if ((tempStack[timeH][6] == timeH) & (tempStack[timeH][7] == timeM))
+  {
+    return;
+  }
+  else
+  {
   tempStack [timeH][0] = am2320h;
   tempStack [timeH][1] = am2320t;
   tempStack [timeH][2] = dsTemp1;
   tempStack [timeH][3] = dsTemp2;
   tempStack [timeH][4] = iRSensorOnCounter;
   tempStack [timeH][5] = switchOnCounter;
+  tempStack [timeH][6] = timeH;
+  tempStack [timeH][7] = timeM;
+  
+  File f = SPIFFS.open(filename, "a");
+  if (!f) {
+    Serial.println("file open failed");
+  }
+  else
+  {
+    //Serial.println("file open");
+      f.print(currentTimeDeviceString);
+      f.print(";");
+      f.print(am2320h);
+      f.print(";");
+      f.print(am2320t);
+      f.print(";");
+      f.print(dsTemp1);
+      f.print(";");
+      f.print(dsTemp2);
+      f.print(";\r");
+      f.close();
+  }
+  }
 }
-
