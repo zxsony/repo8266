@@ -17,7 +17,8 @@ Ultrasonic ultrasonic(4,16);
 const char* host = "esp8266-webupdate";
 
 //////////////////////
-#define board2
+#define board6
+//#define debug
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
 String ver = "v2.5.2";
@@ -107,8 +108,10 @@ String ver = "v2.5.2";
   bool ultrasonicEn = 0;
   bool sensorEn = 0;
   bool ntpEn = 1;
-  const char* ssid = "NVRAM WARNING";
-  const char* password = "Lift80Lift";
+  const char* ssid = "Tenda_FBA7C0";
+  const char* password = "121314150";
+  //const char* ssid = "NVRAM WARNING";
+  //const char* password = "Lift80Lift";
   String deviceId = "board6";
   #define AM2320
   #define ledblink
