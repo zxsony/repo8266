@@ -17,11 +17,11 @@ Ultrasonic ultrasonic(4,16);
 const char* host = "esp8266-webupdate";
 
 //////////////////////
-#define board4
+#define board6
 //#define debug
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.5.3";
+String ver = "v2.5.4";
 //////////////////////
 #ifdef board1
   bool mp3En = 1;
@@ -157,6 +157,8 @@ unsigned long startTimeDevice, currentTimeDevice, startSecsSince1900, currentSec
 unsigned long lastStartDevice, lastSynchroDevice, timeCheck, synCheck, soundDelay, dsDelay, ADC1115Delay, AM2320Delay, LightActivityDelay;
 String timeString, currentTimeDeviceString, lastStartDeviceString, lastSynchroDeviceString, countDownTimeString, ntpRegion;
 byte timeD, timeH, timeM, timeS, testByte;
+uint8_t hour, minute, second, day, month, year, weekday;
+uint8_t monthDays[12]={31,28,31,30,31,30,31,31,30,31,30,31};
 bool dataRecive;
 unsigned int localPort = 2390;
 //IPAddress timeServer(129, 6, 15, 30);// 28, 29
