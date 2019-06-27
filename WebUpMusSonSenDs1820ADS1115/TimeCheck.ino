@@ -212,7 +212,7 @@ void CheckTimeEvents(){
     }
   }
                                                                   //  if ((timeM == 25) and (timeH == 20)){
-  if ((timeM == 55) and (timeH == 20)){
+  if ((timeM == 51) and (timeH == 20)){
     //SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60)){
       soundDelay = millis();
@@ -265,12 +265,18 @@ void CheckTimeEvents(){
   
 }
 void SetSensorTable(){
+  
+  if (ntpRegion == " Not available")
+  {
+    return;
+  }
   if ((tempStack[timeH][6] == timeH) & (tempStack[timeH][7] == timeM))
   {
     return;
   }
   else
   {
+  //Serial.println("SetSensorTable");
   tempStack [timeH][0] = am2320h;
   tempStack [timeH][1] = am2320t;
   tempStack [timeH][2] = dsTemp1;
@@ -287,7 +293,16 @@ void SetSensorTable(){
   else
   {
     //Serial.println("file open");
-      f.print(currentTimeDeviceString);
+      //f.print(currentTimeDeviceString);
+      f.print(day);
+      f.print(".");
+      f.print(month);
+      f.print(".");
+      f.print(year-100);
+      f.print(";");
+      f.print(hour);
+      f.print(":");
+      f.print(minute);
       f.print(";");
       f.print(am2320h);
       f.print(";");

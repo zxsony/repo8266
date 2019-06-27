@@ -47,11 +47,14 @@ void loop(void){
   #ifdef AM2320
     AM23020Read ();
   #endif
-  server.handleClient();
+
+  //Serial.println(day);
    
   GetServerIndex();
 
   GetXmlData();
+  
+  server.handleClient();
 
   delay(10);
 } 
