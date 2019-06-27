@@ -1,3 +1,28 @@
+  void FS_FileWrite(String Fname, String Data){   
+    File f = SPIFFS.open(Fname, "a");
+    if (!f) {
+      Serial.println("file open failed");
+    }
+    else
+    {
+        f.print(day);
+        f.print(".");
+        f.print(month);
+        f.print(".");
+        f.print(year-100);
+        f.print(";");
+        f.print(hour);
+        f.print(":");
+        f.print(minute);
+        f.print(";");
+      
+        f.print(Data);
+        f.print(";\r");
+        
+        f.close();
+    }
+  }
+
 // Инициализация FFS
 void FS_init(void) {
   SPIFFS.begin();

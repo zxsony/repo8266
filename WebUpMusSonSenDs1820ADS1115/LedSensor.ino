@@ -62,6 +62,7 @@
 }
     switchOn = true;
     switchOnCounter += 1;
+    FS_FileWrite("/Sensors.txt", "Led:" + (String)switchOnCounter + ";Val:" + ledSensorValue);
   }
   if ((ledSensorValue < 50) and (ledSensorState == true)) {
     ledSensorState = false;
@@ -131,4 +132,3 @@
 
 
  
-

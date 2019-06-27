@@ -8,6 +8,9 @@ if((((millis()) - soundDelay)>300000)){
 
     if(digitalRead(IRSensorIn) == HIGH and iRSensorState == false and SecurityEn == true){
       iRSensorOnCounter ++;
+
+      
+      FS_FileWrite("/Sensors.txt", "IR:" + (String)iRSensorOnCounter);
       
       iRSensorState = true;
       ledCurrent = ledPinR;
