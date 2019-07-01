@@ -19,7 +19,15 @@ void setup(void) {
 
   //OneWire  ds(0);
   FS_init();
-
+  wifiCount = FS_ReadWiFiSetting();
+#ifdef DEBUG  
+  Serial.println(wifiCount);
+  for (int i = 0; i < wifiCount; i++){
+    Serial.println (wifiStack[i][0]);
+    Serial.println (wifiStack[i][1]);
+  }
+  Serial.println ("end");
+#endif  
   Wire.begin(3, 2);
 #ifdef ADS1115
   ads1115.begin();
@@ -55,37 +63,11 @@ void setup(void) {
   //  Serial.begin(115200);
   //  Serial.println();
   //  Serial.println("Booting Sketch...");
-  if ((digitalRead(button) == HIGH) | ultrasonicEn) {
 
-    devNumbFull = "AP_STA-" + deviceId;
-    WiFi.mode(WIFI_AP_STA);
-    WiFi.softAPConfig(IPAddress(192, 168, 4, 4), IPAddress(192, 168, 4, 4), IPAddress(255, 255, 255, 0));
-    WiFi.softAP(devNumbFull.c_str());
-    WiFi.begin(ssid, password);
-    ////    mp3_play (102);
-    ////    delay(500);
-    ////    mp3_set_volume (30);
-    ////    delay(100);
+//getAP ();
 
-    if (WiFi.waitForConnectResult() == WL_CONNECTED) {
-      //ntpEn = 1;
-      if (mp3En) {
-        mp3_play (31);//19 ok boss
-        delay(100);
-        mp3_set_volume (30);
-        delay(100);
-      }
-    }
-  }
-  else {
+WIFIinit();
 
-    //IPAddress apIP(192,168,4,1);
-    devNumbFull = "AP-" + deviceId;
-    WiFi.mode(WIFI_AP);       // WiFi.mode(WIFI_AP);
-    WiFi.softAPConfig(IPAddress(192, 168, 4, 4), IPAddress(192, 168, 4, 4), IPAddress(255, 255, 255, 0));
-    WiFi.softAP(devNumbFull.c_str());
-
-  }
 #ifdef debug
   Serial.print("LocalIP: ");
   Serial.println(WiFi.localIP());

@@ -1,27 +1,66 @@
-  void FS_FileWrite(String Fname, String Data){   
-    File f = SPIFFS.open(Fname, "a");
+int FS_ReadWiFiSetting(void) {
+  int c = 0;
+  File f = SPIFFS.open("/wifisettings.txt", "r");
+  if (!f) {
+    Serial.println("File doesn't exist yet. Creating it");
+
+    // open the file in write mode
+    File f = SPIFFS.open("/wifisettings.txt", "w");
     if (!f) {
-      Serial.println("file open failed");
+      Serial.println("file creation failed");
     }
-    else
-    {
-        f.print(day);
-        f.print(".");
-        f.print(month);
-        f.print(".");
-        f.print(year-100);
-        f.print(";");
-        f.print(hour);
-        f.print(":");
-        f.print(minute);
-        f.print(";");
-      
-        f.print(Data);
-        f.print(";\r");
-        
-        f.close();
+    // now write two lines in key/value style with  end-of-line characters
+    f.println("la2");
+    f.println("Lift1980");
+    f.println("Tenda_FBA7C0");
+    f.println("121314150");
+    f.println("NVRAM WARNING");
+    f.println("Lift80Lift");
+  } else {
+    // we could open the file
+    
+    while (f.available()) {
+      //Lets read line by line from the file
+      String tstr = f.readStringUntil('\n');
+      tstr.replace("\n", "");
+      tstr.replace("\r", "");
+      wifiStack [c][0] = tstr;
+      tstr = f.readStringUntil('\n');
+      tstr.replace("\n", "");
+      tstr.replace("\r", "");
+      wifiStack [c][1] = tstr;
+      c++;
     }
   }
+  f.close();
+  return c;
+}
+
+
+void FS_FileWrite(String Fname, String Data) {
+  File f = SPIFFS.open(Fname, "a");
+  if (!f) {
+    Serial.println("file open failed");
+  }
+  else
+  {
+    f.print(day);
+    f.print(".");
+    f.print(month);
+    f.print(".");
+    f.print(year - 100);
+    f.print(";");
+    f.print(hour);
+    f.print(":");
+    f.print(minute);
+    f.print(";");
+
+    f.print(Data);
+    f.print(";\r");
+
+    f.close();
+  }
+}
 
 // Инициализация FFS
 void FS_init(void) {
