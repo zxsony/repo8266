@@ -1,12 +1,14 @@
 
 void WIFIinit() {
   // Попытка подключения к точке доступа
-  delay(10000);
+  //delay(10000);
   for (int i = 0; i < wifiCount; i++) {
     //Serial.println (wifiStack[i][0]);
     //Serial.println (wifiStack[i][1]);
 
-    WiFi.mode(WIFI_STA);
+    WiFi.mode(WIFI_AP_STA);
+    WiFi.softAPConfig(IPAddress(192, 168, 4, 4), IPAddress(192, 168, 4, 4), IPAddress(255, 255, 255, 0));
+    WiFi.softAP(devNumbFull.c_str());
     byte tries = 11;
     WiFi.begin(wifiStack[i][0], wifiStack[i][1]);
     //WiFi.begin(ssid, password);
@@ -31,7 +33,7 @@ void WIFIinit() {
       digitalWrite(ledPinGR1, HIGH);
       delay(1000);
       digitalWrite(ledPinGR1, LOW);
-      
+
       WiFi.disconnect();
     }
     else {

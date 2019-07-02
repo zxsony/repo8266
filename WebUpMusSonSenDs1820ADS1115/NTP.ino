@@ -15,12 +15,12 @@ unsigned long sendNTPpacket(IPAddress& address) {
   Udp.endPacket();
 }
 
-void sendReciveUDP(IPAddress& address){
+void sendReciveUDP(IPAddress& address) {
   sendNTPpacket(address);
   delay(300);
-    digitalWrite(ledPinBR2, HIGH);
+  digitalWrite(ledPinBR2, HIGH);
   delay(300); // wait to see if a reply is available
-    digitalWrite(ledPinBR2, LOW);
+  digitalWrite(ledPinBR2, LOW);
   delay(300);
   //dataRecive = 0;
   if (Udp.parsePacket()) {
@@ -29,7 +29,7 @@ void sendReciveUDP(IPAddress& address){
 
     unsigned long highWord = word(packetBuffer[40], packetBuffer[41]);
     unsigned long lowWord = word(packetBuffer[42], packetBuffer[43]);
-    
+
     //if (startSecsSince1900 == 0) startTimeDevice = millis();
     secsSince1900 = highWord << 16 | lowWord;
     const unsigned long seventyYears = 2208988800UL;
@@ -42,47 +42,48 @@ void sendReciveUDP(IPAddress& address){
     digitalWrite(ledPinGR1, LOW);
     return;
   }
-    digitalWrite(ledPinR, HIGH);
-    delay(300);
-    digitalWrite(ledPinR, LOW);
+  digitalWrite(ledPinR, HIGH);
+  delay(300);
+  digitalWrite(ledPinR, LOW);
   dataRecive = 0;
 }
 
-void loopUDP(){
-  byte ipData [3][4] = {{89, 109, 251, 21}, {216, 229, 0, 179}, {129, 6, 15, 30}};//ntp1.vniiftri.ru, Moscow | Lincoln, Nebraska | NIST, Gaithersburg, Maryland 
-  //byte ipData [3][4] = {{198, 111, 152, 100}, {216, 229, 0, 179}, {129, 6, 15, 30}};//Carson City, Michigan | Lincoln, Nebraska | NIST, Gaithersburg, Maryland 
+void loopUDP() {
+  byte ipData [3][4] = {{89, 109, 251, 21}, {216, 229, 0, 179}, {129, 6, 15, 30}};//ntp1.vniiftri.ru, Moscow | Lincoln, Nebraska | NIST, Gaithersburg, Maryland
+  //byte ipData [3][4] = {{198, 111, 152, 100}, {216, 229, 0, 179}, {129, 6, 15, 30}};//Carson City, Michigan | Lincoln, Nebraska | NIST, Gaithersburg, Maryland
   dataRecive = 0;
-  for (int ip = 0; ip < 3; ip++){
-    for (int i = 0; i < 10; i++){
+  for (int ip = 0; ip < 3; ip++) {
+    for (int i = 0; i < 10; i++) {
       if (!dataRecive) {
         IPAddress timeServer(ipData[ip]);
         sendReciveUDP(timeServer);
-        if (!dataRecive) { 
-//          Serial.println(timeServer.toString());
-//          Serial.println("NTP data not available...\n");
+        if (!dataRecive) {
+          //          Serial.println(timeServer.toString());
+          //          Serial.println("NTP data not available...\n");
           ntpRegion = " Not available";
+          WiFi.disconnect();
+          WIFIinit();
         }
         else {
-//          Serial.println(timeServer.toString());
-//          Serial.println("NTP data available...\n");
+          //          Serial.println(timeServer.toString());
+          //          Serial.println("NTP data available...\n");
           switch (ip) {
             case 0:
               ntpRegion = " ntp1.vniiftri.ru, Moscow ";
-              ntpRegion += i+1;
+              ntpRegion += i + 1;
               break;
             case 1:
               ntpRegion = " Lincoln, Nebraska " + i;
-              ntpRegion += i+1;
+              ntpRegion += i + 1;
               break;
             case 2:
               ntpRegion = " NIST, Gaithersburg, Maryland ";
-              ntpRegion += i+1;
+              ntpRegion += i + 1;
               break;
-        }
+          }
           break;
         }
       }
     }
   }
 }
-
