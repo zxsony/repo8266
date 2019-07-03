@@ -86,7 +86,7 @@ WIFIinit();
   }
   Serial.println("");
 #endif
-  WiFi.softAP(devNumbFull.c_str());
+  //WiFi.softAP(devNumbFull.c_str());
 
   if (TempEn) {
 #ifdef debug
@@ -106,6 +106,8 @@ WIFIinit();
     //lastSynchroDevice = startSecsSince1900;
     lastSynchroDevice = startSecsSince1900 + (currentTimeDevice / 1000) + 3600 * 3 - startTimeDevice / 1000;
   }
+  updateCurrent ();
+  FS_FileWrite("/sysLog.txt", "StartDevice;" + (String)ver + ";" + (String)ssid);
 
   ////MDNS.begin(host);
   ////MDNS.addService("http", "tcp", 80);
@@ -210,7 +212,8 @@ WIFIinit();
   server.on("/update", HTTP_POST, []() {
     server.sendHeader("Connection", "close");
     server.sendHeader("Access-Control-Allow-Origin", "*");
-    server.send(200, "text/html", "Update complete! Restarting device...<meta http-equiv='refresh' content='9;URL=/'>");
+    server.send(200, "text/html", "Update complete! Restarting device 30 sec...<meta http-equiv='refresh' content='30;URL=/'>");
+    FS_FileWrite("/sysLog.txt", "UpdateDevice;" + (String)ver + ";" + (String)ssid);
     if (mp3En) {
       mp3_play (18);
       delay(50);

@@ -17,11 +17,11 @@ Ultrasonic ultrasonic(4,16);
 const char* host = "esp8266-webupdate";
 
 //////////////////////
-#define board6
+#define board4
 //#define debug
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.5.7";
+String ver = "v2.5.8";
 //////////////////////
 #ifdef board1
   bool mp3En = 1;
