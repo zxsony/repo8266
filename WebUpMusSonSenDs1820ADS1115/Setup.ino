@@ -3,6 +3,7 @@ void setup(void) {
   startTimeDevice = millis();
   secondTick.attach(1, ISRwatchdog);
   synCheck = 3600;//3600
+  ntpSyn = false;
 #ifdef AM2320
   AM2320PrevSet = false;
 #endif
@@ -19,12 +20,12 @@ void setup(void) {
 
   //OneWire  ds(0);
   FS_init();
-  wifiCount = FS_ReadWiFiSetting();
+  wifiApCount = FS_ReadWiFiSetting();
 #ifdef DEBUG  
-  Serial.println(wifiCount);
-  for (int i = 0; i < wifiCount; i++){
-    Serial.println (wifiStack[i][0]);
-    Serial.println (wifiStack[i][1]);
+  Serial.println(wifiApCount);
+  for (int i = 0; i < wifiApCount; i++){
+    Serial.println (wifiAp[i][0]);
+    Serial.println (wifiAp[i][1]);
   }
   Serial.println ("end");
 #endif  
@@ -106,7 +107,7 @@ WIFIinit();
     //lastSynchroDevice = startSecsSince1900;
     lastSynchroDevice = startSecsSince1900 + (currentTimeDevice / 1000) + 3600 * 3 - startTimeDevice / 1000;
   }
-  updateCurrent ();
+  updateCurrentDateTime ();
   FS_FileWrite("/sysLog.txt", "StartDevice;" + (String)ver + ";" + (String)ssid);
 
   ////MDNS.begin(host);
@@ -149,6 +150,18 @@ WIFIinit();
     server.send(200, "text/html", serverIndex);
 
   });
+  ///////////////////////////////////////////////////////////
+  server.on("/t1", HTTP_GET, []() {
+    server.sendHeader("Connection", "close");
+    server.sendHeader("Access-Control-Allow-Origin", "*");
+    FS_FileWrite("/t1.txt", "tempStack6=" + (String)tempStack[timeH][6] + ";" + "tempStack7=" + (String)tempStack[timeH][7] + ";" + "timeH=" + timeH + ";" + "timeM=" + timeM); //tempStack[timeH][6] == timeH) & (tempStack[timeH][7] == timeM
+  server.send(200, "text/html", "Test write");
+  delay (500);
+  });
+    server.on("/t2", HTTP_GET, []() {
+    server.send(200, "text/xml", xmlData);
+  });
+ ///////////////////////////////////////////////////////////// 
   server.on("/data.xml", HTTP_GET, []() {
     server.send(200, "text/xml", xmlData);
   });

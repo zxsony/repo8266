@@ -65,6 +65,7 @@ void loopUDP() {
           WIFIinit();
         }
         else {
+          ntpSyn = true;
           //          Serial.println(timeServer.toString());
           //          Serial.println("NTP data available...\n");
           switch (ip) {

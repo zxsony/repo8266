@@ -34,10 +34,10 @@ void loop(void){
   }
 
   if (ntpEn){ 
-    updateCurrent() ;
+    updateCurrentDateTime() ;
 //    testByte = timeM;
     CheckTimeEvents();
-    checkLastUpdate();
+    checkNtpUpdate();
     }
   
   #ifdef ADS1115

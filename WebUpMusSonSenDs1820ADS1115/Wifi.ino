@@ -2,15 +2,15 @@
 void WIFIinit() {
   // Попытка подключения к точке доступа
   //delay(10000);
-  for (int i = 0; i < wifiCount; i++) {
-    //Serial.println (wifiStack[i][0]);
-    //Serial.println (wifiStack[i][1]);
+  for (int i = 0; i < wifiApCount; i++) {
+    //Serial.println (wifiAp[i][0]);
+    //Serial.println (wifiAp[i][1]);
 
     WiFi.mode(WIFI_AP_STA);
     WiFi.softAPConfig(IPAddress(192, 168, 4, 4), IPAddress(192, 168, 4, 4), IPAddress(255, 255, 255, 0));
     WiFi.softAP(devNumbFull.c_str());
     byte tries = 11;
-    WiFi.begin(wifiStack[i][0], wifiStack[i][1]);
+    WiFi.begin(wifiAp[i][0], wifiAp[i][1]);
     //WiFi.begin(ssid, password);
     //Serial.println (ssid);
     //Serial.println (password);
@@ -29,7 +29,7 @@ void WIFIinit() {
     if (WiFi.status() != WL_CONNECTED)
     {
       //Serial.println("");
-      //Serial.println("WiFi " + wifiStack[i][0] + " down");
+      //Serial.println("WiFi " + wifiAp[i][0] + " down");
       digitalWrite(ledPinGR1, HIGH);
       delay(1000);
       digitalWrite(ledPinGR1, LOW);

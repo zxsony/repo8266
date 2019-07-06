@@ -266,7 +266,8 @@ void CheckTimeEvents(){
 }
 void SetSensorTable(){
   
-  if (ntpRegion == " Not available")
+  //if (ntpRegion == " Not available")
+  if (!ntpSyn)
   {
     return;
   }

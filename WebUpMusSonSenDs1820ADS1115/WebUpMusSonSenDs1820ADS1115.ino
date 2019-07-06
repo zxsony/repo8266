@@ -17,11 +17,11 @@ Ultrasonic ultrasonic(4,16);
 const char* host = "esp8266-webupdate";
 
 //////////////////////
-#define board4
+#define board6
 //#define debug
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.5.8";
+String ver = "v2.5.9b";
 //////////////////////
 #ifdef board1
   bool mp3En = 1;
@@ -114,7 +114,7 @@ String ver = "v2.5.8";
   const char* password = "Lift80Lift";
   String deviceId = "board6";
   #define AM2320
-  #define ledblink
+  //#define ledblink
   //#define irtool  
 #endif
 
@@ -151,10 +151,11 @@ int watchdogCount = 0;
 
 float tempStack [24][8];
 
-String wifiStack [10][2];
-int wifiCount;
+String wifiAp [10][2];
+int wifiApCount;
 
 String filename = "/data.txt";
+File fsUploadFile;
   
 unsigned long startTimeDevice, currentTimeDevice, startSecsSince1900, currentSecsSince1900, secsSince1900, epochStamp;
 unsigned long lastStartDevice, lastSynchroDevice, timeCheck, synCheck, soundDelay, dsDelay, ADC1115Delay, AM2320Delay, LightActivityDelay;
@@ -167,6 +168,7 @@ unsigned int localPort = 2390;
 //IPAddress timeServer(129, 6, 15, 30);// 28, 29
 
 const int NTP_PACKET_SIZE = 48;
+bool ntpSyn;
 byte packetBuffer[ NTP_PACKET_SIZE];
 WiFiUDP Udp;
 Ticker secondTick;
@@ -190,7 +192,7 @@ ESP8266WebServer server(80);
   "</form>";
   String xmlData = "<?xml version='1.0' ?><main><name>test name data</name><testData>test data</testData></main>";
 
-File fsUploadFile;
+
 
 void ISRwatchdog(){
   watchdogCount++;

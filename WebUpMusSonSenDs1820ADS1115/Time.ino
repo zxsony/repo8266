@@ -34,7 +34,7 @@ void Unix_to_GMT(unsigned long epoch)
   day=epoch+1;  // day of month
 } 
 
-void updateCurrent (){
+void updateCurrentDateTime (){
   currentTimeDevice = millis();
   currentSecsSince1900 = startSecsSince1900 + ((currentTimeDevice / 1000) - startTimeDevice/1000) + 3600*3;// - 3600*7 - 60*16;
   
@@ -49,7 +49,7 @@ void updateCurrent (){
   
   Unix_to_GMT (currentSecsSince1900);
 }
-void checkLastUpdate (){
+void checkNtpUpdate (){
   if (currentSecsSince1900 - lastSynchroDevice > timeCheck){
 
   loopUDP();

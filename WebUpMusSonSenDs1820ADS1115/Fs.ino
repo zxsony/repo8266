@@ -24,11 +24,11 @@ int FS_ReadWiFiSetting(void) {
       String tstr = f.readStringUntil('\n');
       tstr.replace("\n", "");
       tstr.replace("\r", "");
-      wifiStack [c][0] = tstr;
+      wifiAp [c][0] = tstr;
       tstr = f.readStringUntil('\n');
       tstr.replace("\n", "");
       tstr.replace("\r", "");
-      wifiStack [c][1] = tstr;
+      wifiAp [c][1] = tstr;
       c++;
     }
   }
