@@ -1,4 +1,7 @@
-
+void WIFIcheck(){  
+          WiFi.disconnect();
+          WIFIinit();   
+}
 void WIFIinit() {
   // Попытка подключения к точке доступа
   //delay(10000);

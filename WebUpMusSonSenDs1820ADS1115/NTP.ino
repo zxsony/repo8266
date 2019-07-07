@@ -61,8 +61,7 @@ void loopUDP() {
           //          Serial.println(timeServer.toString());
           //          Serial.println("NTP data not available...\n");
           ntpRegion = " Not available";
-          WiFi.disconnect();
-          WIFIinit();
+
         }
         else {
           ntpSyn = true;
@@ -86,5 +85,8 @@ void loopUDP() {
         }
       }
     }
+    
   }
+  if (WiFi.status() != WL_CONNECTED) WIFIcheck();
+  
 }

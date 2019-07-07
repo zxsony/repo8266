@@ -37,6 +37,7 @@ void loop(void){
     updateCurrentDateTime() ;
 //    testByte = timeM;
     CheckTimeEvents();
+    //WIFIcheck();
     checkNtpUpdate();
     }
   
