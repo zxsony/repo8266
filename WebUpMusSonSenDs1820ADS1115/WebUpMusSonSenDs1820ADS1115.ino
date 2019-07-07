@@ -21,7 +21,7 @@ const char* host = "esp8266-webupdate";
 //#define debug
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.5.10";
+String ver = "v2.5.11b";
 //////////////////////
 #ifdef board1
   bool mp3En = 1;
