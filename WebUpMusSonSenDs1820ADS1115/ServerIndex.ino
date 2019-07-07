@@ -62,7 +62,7 @@ void GetServerIndex (void){
   serverIndex += ntpRegion;
   serverIndex += "</td></tr></table>";
 
-  serverIndex += "<table border='1' bgcolor='Moccasin' ><tr><td>UT(d|h|m)</td><td>";
+  serverIndex += "<table border='1' bgcolor='Moccasin' ><tr><td>UT(<a href='/t1'>d</a>|<a href='/t2'>h</a>|<a href='/t3'>m</a>)</td><td>";
   serverIndex += (((millis()/1000)/60)/60)/24 ;
   serverIndex += "d</td><td>";
   serverIndex += ((millis()/1000)/60)/60 ;

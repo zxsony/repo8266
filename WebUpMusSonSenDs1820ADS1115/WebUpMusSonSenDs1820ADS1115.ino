@@ -21,7 +21,7 @@ const char* host = "esp8266-webupdate";
 //#define debug
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.5.9b";
+String ver = "v2.5.10";
 //////////////////////
 #ifdef board1
   bool mp3En = 1;
@@ -114,7 +114,7 @@ String ver = "v2.5.9b";
   const char* password = "Lift80Lift";
   String deviceId = "board6";
   #define AM2320
-  //#define ledblink
+  #define ledblink
   //#define irtool  
 #endif
 
@@ -161,7 +161,7 @@ unsigned long startTimeDevice, currentTimeDevice, startSecsSince1900, currentSec
 unsigned long lastStartDevice, lastSynchroDevice, timeCheck, synCheck, soundDelay, dsDelay, ADC1115Delay, AM2320Delay, LightActivityDelay;
 String timeString, currentTimeDeviceString, lastStartDeviceString, lastSynchroDeviceString, countDownTimeString, ntpRegion;
 byte timeD, timeH, timeM, timeS, testByte;
-uint8_t hour, minute, second, day, month, year, weekday;
+uint8_t hour, minute, second, day, month, year, weekday, lhour, lminute;
 uint8_t monthDays[12]={31,28,31,30,31,30,31,31,30,31,30,31};
 bool dataRecive;
 unsigned int localPort = 2390;

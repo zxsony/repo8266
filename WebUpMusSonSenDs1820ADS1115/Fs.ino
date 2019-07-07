@@ -44,14 +44,18 @@ void FS_FileWrite(String Fname, String Data) {
   }
   else
   {
+    if (day < 10) f.print("0");
     f.print(day);
     f.print(".");
+    if (month < 10) f.print("0");
     f.print(month);
     f.print(".");
     f.print(year - 100);
     f.print(";");
+    if (hour < 10) f.print("0");
     f.print(hour);
     f.print(":");
+    if (minute < 10) f.print("0");
     f.print(minute);
     f.print(";");
 

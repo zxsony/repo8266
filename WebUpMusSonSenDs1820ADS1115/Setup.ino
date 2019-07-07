@@ -109,7 +109,8 @@ WIFIinit();
   }
   updateCurrentDateTime ();
   FS_FileWrite("/sysLog.txt", "StartDevice;" + (String)ver + ";" + (String)ssid);
-
+  lhour = hour;
+  lminute = minute;
   ////MDNS.begin(host);
   ////MDNS.addService("http", "tcp", 80);
   server.on("/info", HTTP_GET, []() {
@@ -154,12 +155,22 @@ WIFIinit();
   server.on("/t1", HTTP_GET, []() {
     server.sendHeader("Connection", "close");
     server.sendHeader("Access-Control-Allow-Origin", "*");
-    FS_FileWrite("/t1.txt", "tempStack6=" + (String)tempStack[timeH][6] + ";" + "tempStack7=" + (String)tempStack[timeH][7] + ";" + "timeH=" + timeH + ";" + "timeM=" + timeM); //tempStack[timeH][6] == timeH) & (tempStack[timeH][7] == timeM
-  server.send(200, "text/html", "Test write");
-  delay (500);
+    startTimeDevice += 3600000;
+    //FS_FileWrite("/t1.txt", "tempStack6=" + (String)tempStack[timeH][6] + ";" + "tempStack7=" + (String)tempStack[timeH][7] + ";" + "timeH=" + timeH + ";" + "timeM=" + timeM); //tempStack[timeH][6] == timeH) & (tempStack[timeH][7] == timeM
+  server.send(200, "text/html", "11h<meta http-equiv='refresh' content='1;URL=/'>");
+  //delay (500);<meta http-equiv='refresh' content='30;URL=/'>
   });
     server.on("/t2", HTTP_GET, []() {
-    server.send(200, "text/xml", xmlData);
+    server.sendHeader("Connection", "close");
+    server.sendHeader("Access-Control-Allow-Origin", "*");
+      startTimeDevice += 600000;
+    server.send(200, "text/html", "-10m<meta http-equiv='refresh' content='1;URL=/'>");
+  });
+    server.on("/t3", HTTP_GET, []() {
+    server.sendHeader("Connection", "close");
+    server.sendHeader("Access-Control-Allow-Origin", "*");
+      startTimeDevice += 60000;
+    server.send(200, "text/html", "-1m<meta http-equiv='refresh' content='1;URL=/'>");
   });
  ///////////////////////////////////////////////////////////// 
   server.on("/data.xml", HTTP_GET, []() {
@@ -305,8 +316,8 @@ WIFIinit();
   ledblinkVal = true;
 #endif
 
-tempStack[timeH][6] = timeH;
-tempStack[timeH][7] = timeM;
+tempStack[hour][6] = hour;
+tempStack[hour][7] = minute;
   ////MDNS.addService("http", "tcp", 80);
 
 
