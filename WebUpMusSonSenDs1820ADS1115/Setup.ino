@@ -101,8 +101,9 @@ WIFIinit();
     Udp.begin(localPort);
     ////Serial.println("\nGet NTP data...");
     dataRecive = 0;
-
+if (WiFi.status() == WL_CONNECTED) {
     loopUDP();
+}
     ////printEpoch(epochStamp);
     //lastSynchroDevice = startSecsSince1900;
     lastSynchroDevice = startSecsSince1900 + (currentTimeDevice / 1000) + 3600 * 3 - startTimeDevice / 1000;

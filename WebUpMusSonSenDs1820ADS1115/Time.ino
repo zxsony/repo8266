@@ -57,7 +57,9 @@ void checkNtpUpdate (){
   if (dataRecive) {
     lastSynchroDevice = startSecsSince1900 + (currentTimeDevice / 1000) + 3600*3 - startTimeDevice/1000;
     timeCheck = synCheck;
-
+Serial.println(currentSecsSince1900 - lastSynchroDevice);
+Serial.println(timeCheck);
+Serial.println("");
 #ifdef AM2320
     AM2320PrevSet = true;
 #endif    

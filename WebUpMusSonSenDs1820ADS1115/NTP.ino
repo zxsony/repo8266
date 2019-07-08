@@ -52,8 +52,10 @@ void loopUDP() {
   byte ipData [3][4] = {{89, 109, 251, 21}, {216, 229, 0, 179}, {129, 6, 15, 30}};//ntp1.vniiftri.ru, Moscow | Lincoln, Nebraska | NIST, Gaithersburg, Maryland
   //byte ipData [3][4] = {{198, 111, 152, 100}, {216, 229, 0, 179}, {129, 6, 15, 30}};//Carson City, Michigan | Lincoln, Nebraska | NIST, Gaithersburg, Maryland
   dataRecive = 0;
+  if (WiFi.status() == WL_CONNECTED) {
   for (int ip = 0; ip < 3; ip++) {
     for (int i = 0; i < 10; i++) {
+      watchdogCount = 0;
       if (!dataRecive) {
         IPAddress timeServer(ipData[ip]);
         sendReciveUDP(timeServer);
@@ -87,6 +89,7 @@ void loopUDP() {
     }
     
   }
-  if (WiFi.status() != WL_CONNECTED) WIFIcheck();
+  }
+  else WIFIcheck();
   
 }

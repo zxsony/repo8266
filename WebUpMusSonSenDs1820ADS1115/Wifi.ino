@@ -22,6 +22,7 @@ void WIFIinit() {
     // не станет равен нулю или не получим подключение
     while (--tries && WiFi.status() != WL_CONNECTED)
     {
+      watchdogCount = 0;
       //Serial.print(".");
 
       digitalWrite(ledPinBR2, HIGH);
