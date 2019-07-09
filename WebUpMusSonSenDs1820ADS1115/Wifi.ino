@@ -13,7 +13,7 @@ void WIFIinit() {
     WiFi.softAPConfig(IPAddress(192, 168, 4, 4), IPAddress(192, 168, 4, 4), IPAddress(255, 255, 255, 0));
     WiFi.softAP(devNumbFull.c_str());
     byte tries = 11;
-    WiFi.begin(wifiAp[i][0], wifiAp[i][1]);
+    WiFi.begin(wifiAp[i][0].c_str(), wifiAp[i][1].c_str());
     //WiFi.begin(ssid, password);
     //Serial.println (ssid);
     //Serial.println (password);
