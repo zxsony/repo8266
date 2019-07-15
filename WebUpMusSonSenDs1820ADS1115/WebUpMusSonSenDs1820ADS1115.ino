@@ -21,7 +21,7 @@ const char* host = "esp8266-webupdate";
 //#define debug
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.5.13";
+String ver = "v2.5.15";
 //////////////////////
 #ifdef board1
   bool mp3En = 1;
@@ -199,7 +199,7 @@ void ISRwatchdog(){
   if (watchdogCount == 60){
     Serial.println();
     Serial.println("the watchdog bites!!!!!!!!!!");
-
+    FS_FileWrite("/sl.txt", "\"Watchdog\";\"" + (String)ver + "\";\"" + (String)ssid + "\"");
     if (mp3En){
     mp3_play (30);
     delay(100);

@@ -62,7 +62,8 @@
 }
     switchOn = true;
     switchOnCounter += 1;
-    if (SecurityEn) FS_FileWrite("/Sensors.txt", "Led:" + (String)switchOnCounter + ";Val:" + ledSensorValue);
+    //if (SecurityEn && sensorEn) FS_FileWrite("/Sensors.txt", "Led:" + (String)switchOnCounter + ";Val:" + ledSensorValue);
+    if (SecurityEn && sensorEn) FS_FileWrite("/ils.txt", "\"IedCount\";" + (String)switchOnCounter + ";\"Vol\";" + ledSensorValue);
   }
   if ((ledSensorValue < 50) and (ledSensorState == true)) {
     ledSensorState = false;

@@ -60,7 +60,7 @@ void FS_FileWrite(String Fname, String Data) {
     f.print(";");
 
     f.print(Data);
-    f.print(";\r");
+    f.print("\r");
 
     f.close();
   }

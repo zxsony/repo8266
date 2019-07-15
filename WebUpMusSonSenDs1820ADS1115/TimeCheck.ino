@@ -212,8 +212,8 @@ void CheckTimeEvents(){
     }
   }
                                                                   //  if ((minute == 25) and (hour == 20)){
-  if ((minute == 55) and (hour == 20)){
-    SetSensorTable();
+  if ((minute == 10) and (hour == 13)){
+    //SetSensorTable();
     if (mp3En and (((millis()/1000) - soundDelay/1000)>60)){
       soundDelay = millis();
       mp3_play (13);
@@ -323,13 +323,18 @@ void SetSensorTable(){
 //      f.close();
 //  }
 String tempString;
-tempString += (String)am2320h + ";";
-tempString += (String)am2320t + ";";
-tempString += (String)dsTemp1 + ";";
-tempString += (String)dsTemp2;
-
-FS_FileWrite("/thsensData.txt", tempString);
-
-
+bool writeState = false;
+  #ifdef AM2320
+    tempString += (String)am2320h + ";";
+    tempString += (String)am2320t;
+    writeState = true;
+    if (TempEn) tempString += ";";
+  #endif
+if (TempEn){
+  tempString += (String)dsTemp1 + ";";
+  tempString += (String)dsTemp2;
+  writeState = true;
+}
+    if (writeState) FS_FileWrite("/thd.txt", tempString);
   }
 }

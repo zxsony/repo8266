@@ -10,7 +10,7 @@ if((((millis()) - soundDelay)>300000)){
       iRSensorOnCounter ++;
 
       
-      FS_FileWrite("/Sensors.txt", "IR:" + (String)iRSensorOnCounter);
+      if (SecurityEn && sensorEn) FS_FileWrite("/ils.txt", "\"IrCount\";" + (String)iRSensorOnCounter);
       
       iRSensorState = true;
       ledCurrent = ledPinR;

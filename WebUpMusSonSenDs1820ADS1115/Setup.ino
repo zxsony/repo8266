@@ -109,7 +109,7 @@ if (WiFi.status() == WL_CONNECTED) {
     lastSynchroDevice = startSecsSince1900 + (currentTimeDevice / 1000) + 3600 * 3 - startTimeDevice / 1000;
   }
   updateCurrentDateTime ();
-  FS_FileWrite("/sysLog.txt", "StartDevice;" + (String)ver + ";" + (String)ssid);
+  FS_FileWrite("/sl.txt", "\"StartDevice\";\"" + (String)ver + "\";\"" + (String)ssid + "\"");
   lhour = hour;
   lminute = minute;
   ////MDNS.begin(host);
@@ -242,7 +242,8 @@ if (WiFi.status() == WL_CONNECTED) {
     server.sendHeader("Connection", "close");
     server.sendHeader("Access-Control-Allow-Origin", "*");
     server.send(200, "text/html", "Update complete! Restarting device 30 sec...<meta http-equiv='refresh' content='30;URL=/'>");
-    FS_FileWrite("/sysLog.txt", "UpdateDevice;" + (String)ver + ";" + (String)ssid);
+    FS_FileWrite("/sl.txt", "\"UpdateDevice\";\"" + (String)ver + "\";\"" + (String)ssid + "\"");
+    //FS_FileWrite("/sysLog.txt", "UpdateDevice;" + (String)ver + ";" + (String)ssid);
     if (mp3En) {
       mp3_play (18);
       delay(50);
