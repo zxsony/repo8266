@@ -48,6 +48,7 @@ void GetServerIndex (void){
   serverIndex += "</a></td><td><a href='/info'>";
   serverIndex += ver;
   serverIndex += "</a></td><td><a href='/update2'>Upd.2</a>";
+  if (samplePolling) serverIndex += "</td><td><a href='/t2'>Poll:" + (String)sampleCount + ", Page:" + (String)samplePage + "</a>";
   serverIndex += "</td></tr></table><table border='1' bgcolor='Gainsboro'>";
   
   serverIndex += "<tr><td><a href='/edit'>APIP:</a></td><td>";

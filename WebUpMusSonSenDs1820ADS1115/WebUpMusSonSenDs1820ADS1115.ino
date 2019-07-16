@@ -17,11 +17,11 @@ Ultrasonic ultrasonic(4,16);
 const char* host = "esp8266-webupdate";
 
 //////////////////////
-#define board6
+#define board2
 //#define debug
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.5.15";
+String ver = "v2.5.16";
 //////////////////////
 #ifdef board1
   bool mp3En = 1;
@@ -150,18 +150,26 @@ String devNumbFull, tempStr;
 int watchdogCount = 0;
 
 float tempStack [24][8];
+float sampleDataStack [60][7];
+uint8_t sampleDateTimeStack [60][4];
+
+bool samplePolling;
+int sampleCount, sampleLimit, samplePage;
 
 String wifiAp [10][2];
 int wifiApCount;
 
 String filename = "/data.txt";
+
+String sampleFn;
+
 File fsUploadFile;
   
 unsigned long startTimeDevice, currentTimeDevice, startSecsSince1900, currentSecsSince1900, secsSince1900, epochStamp;
 unsigned long lastStartDevice, lastSynchroDevice, timeCheck, synCheck, soundDelay, dsDelay, ADC1115Delay, AM2320Delay, LightActivityDelay;
 String timeString, currentTimeDeviceString, lastStartDeviceString, lastSynchroDeviceString, countDownTimeString, ntpRegion;
 byte timeD, timeH, timeM, timeS, testByte;
-uint8_t hour, minute, second, day, month, year, weekday, lhour, lminute;
+uint8_t hour, minute, second, day, month, year, weekday, lhour, lminute, tikminute;
 uint8_t monthDays[12]={31,28,31,30,31,30,31,31,30,31,30,31};
 bool dataRecive;
 unsigned int localPort = 2390;

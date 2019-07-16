@@ -1,3 +1,29 @@
+void FS_FileDimWrite(String Fname, String Data) {
+  File f = SPIFFS.open(Fname, "a");
+  if (!f) {
+    Serial.println("file open failed");
+  }
+  else
+  {
+    //f.print(Data + "\r");
+    for(int w = 0; w < sampleLimit; w++){
+
+    if (sampleDateTimeStack[w][2] < 10) f.print("0");//hour
+    f.print((String)sampleDateTimeStack[w][2]);
+    f.print(":");
+    if (sampleDateTimeStack[w][3] < 10) f.print("0");//minute
+    f.print((String)sampleDateTimeStack[w][3]);
+    f.print(";");
+    f.print((String)sampleDataStack[w][0]);
+    f.print(";");
+    f.print((String)sampleDataStack[w][1]);
+    f.print("\r");
+    
+    }
+    f.close();
+  }
+}
+
 int FS_ReadWiFiSetting(void) {
   int c = 0;
   File f = SPIFFS.open("/wifisettings.txt", "r");

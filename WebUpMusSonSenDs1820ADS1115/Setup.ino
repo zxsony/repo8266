@@ -4,6 +4,11 @@ void setup(void) {
   secondTick.attach(1, ISRwatchdog);
   synCheck = 3600;//3600
   ntpSyn = false;
+  sampleFn = "Null";
+  samplePolling = true;
+  sampleLimit = 60;
+  samplePage = 24;
+  sampleCount = 0;
 #ifdef AM2320
   AM2320PrevSet = false;
 #endif
@@ -19,7 +24,7 @@ void setup(void) {
   pinMode(ledPinYR3, OUTPUT);
 
   //OneWire  ds(0);
-  FS_init();
+  FS_init();    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   wifiApCount = FS_ReadWiFiSetting();
 #ifdef DEBUG  
   Serial.println(wifiApCount);
@@ -67,7 +72,7 @@ void setup(void) {
 
 //getAP ();
 
-WIFIinit();
+WIFIinit();   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #ifdef debug
   Serial.print("LocalIP: ");
@@ -102,7 +107,7 @@ WIFIinit();
     ////Serial.println("\nGet NTP data...");
     dataRecive = 0;
 if (WiFi.status() == WL_CONNECTED) {
-    loopUDP();
+    loopUDP();    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
     ////printEpoch(epochStamp);
     //lastSynchroDevice = startSecsSince1900;
@@ -112,6 +117,7 @@ if (WiFi.status() == WL_CONNECTED) {
   FS_FileWrite("/sl.txt", "\"StartDevice\";\"" + (String)ver + "\";\"" + (String)ssid + "\"");
   lhour = hour;
   lminute = minute;
+  tikminute = minute;
   ////MDNS.begin(host);
   ////MDNS.addService("http", "tcp", 80);
   server.on("/info", HTTP_GET, []() {
@@ -148,6 +154,13 @@ if (WiFi.status() == WL_CONNECTED) {
     serverIndex += "bootVersion: " + String(ESP.getBootVersion()) + "<BR>";
     serverIndex += "bootMode: " + String(ESP.getBootMode()) + "<BR>";
     serverIndex += "Security: " + String(SecurityEn) + "<BR>";
+    serverIndex += "samplePolling: " + String(samplePolling) + "<BR>";
+
+    for (int q = 0; q < 3; q++){
+      serverIndex += "0: " + String(sampleDataStack [q][0]) + "<BR>";
+      serverIndex += "2: " + (String)sampleDataStack [q][2] + "<BR>";
+      //serverIndex += "8: " + (String)sampleDataStack [q][8] + "<BR>";
+    }
 
     server.send(200, "text/html", serverIndex);
 
@@ -156,7 +169,10 @@ if (WiFi.status() == WL_CONNECTED) {
   server.on("/t1", HTTP_GET, []() {
     server.sendHeader("Connection", "close");
     server.sendHeader("Access-Control-Allow-Origin", "*");
-    timeCheck = timeCheck - 3600000;
+    samplePolling = true;
+    sampleCount = 0;
+    samplePage = 24;
+    //timeCheck = timeCheck - 3600000;
     //startTimeDevice += 3600000;
     //FS_FileWrite("/t1.txt", "tempStack6=" + (String)tempStack[timeH][6] + ";" + "tempStack7=" + (String)tempStack[timeH][7] + ";" + "timeH=" + timeH + ";" + "timeM=" + timeM); //tempStack[timeH][6] == timeH) & (tempStack[timeH][7] == timeM
   server.send(200, "text/html", "11h<meta http-equiv='refresh' content='1;URL=/'>");
@@ -165,14 +181,16 @@ if (WiFi.status() == WL_CONNECTED) {
     server.on("/t2", HTTP_GET, []() {
     server.sendHeader("Connection", "close");
     server.sendHeader("Access-Control-Allow-Origin", "*");
-    timeCheck = timeCheck - 600;
+    samplePolling = false;
+    //timeCheck = timeCheck - 600;
     //startTimeDevice += 600000;
     server.send(200, "text/html", "-10m<meta http-equiv='refresh' content='1;URL=/'>");
   });
     server.on("/t3", HTTP_GET, []() {
     server.sendHeader("Connection", "close");
     server.sendHeader("Access-Control-Allow-Origin", "*");
-    timeCheck = timeCheck - 60;
+    samplePolling = true;
+    //timeCheck = timeCheck - 60;
     //ntpSyn = false;
     //startTimeDevice += 60000;
     server.send(200, "text/html", "-1m<meta http-equiv='refresh' content='1;URL=/'>");
