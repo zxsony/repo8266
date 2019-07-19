@@ -4,11 +4,7 @@ void setup(void) {
   secondTick.attach(1, ISRwatchdog);
   synCheck = 3600;//3600
   ntpSyn = false;
-  sampleFn = "Null";
-  samplePolling = true;
-  sampleLimit = 60;
-  samplePage = 24;
-  sampleCount = 0;
+  StartSampling();
 #ifdef AM2320
   AM2320PrevSet = false;
 #endif
@@ -169,31 +165,32 @@ if (WiFi.status() == WL_CONNECTED) {
   server.on("/t1", HTTP_GET, []() {
     server.sendHeader("Connection", "close");
     server.sendHeader("Access-Control-Allow-Origin", "*");
-    samplePolling = true;
-    sampleCount = 0;
-    samplePage = 24;
+
+  StartSampling();
     //timeCheck = timeCheck - 3600000;
     //startTimeDevice += 3600000;
     //FS_FileWrite("/t1.txt", "tempStack6=" + (String)tempStack[timeH][6] + ";" + "tempStack7=" + (String)tempStack[timeH][7] + ";" + "timeH=" + timeH + ";" + "timeM=" + timeM); //tempStack[timeH][6] == timeH) & (tempStack[timeH][7] == timeM
-  server.send(200, "text/html", "11h<meta http-equiv='refresh' content='1;URL=/'>");
+  server.send(200, "text/html", "Start polling. page limit 24.<meta http-equiv='refresh' content='5;URL=/'>");
   //delay (500);<meta http-equiv='refresh' content='30;URL=/'>
   });
     server.on("/t2", HTTP_GET, []() {
     server.sendHeader("Connection", "close");
     server.sendHeader("Access-Control-Allow-Origin", "*");
-    samplePolling = false;
+    samplePolling = !samplePolling;
     //timeCheck = timeCheck - 600;
     //startTimeDevice += 600000;
-    server.send(200, "text/html", "-10m<meta http-equiv='refresh' content='1;URL=/'>");
+    server.send(200, "text/html", "Stop/Start polling.<meta http-equiv='refresh' content='1;URL=/'>");
   });
     server.on("/t3", HTTP_GET, []() {
     server.sendHeader("Connection", "close");
     server.sendHeader("Access-Control-Allow-Origin", "*");
     samplePolling = true;
+    sampleCount = sampleLimit - 1;
+    samplePage = 1;
     //timeCheck = timeCheck - 60;
     //ntpSyn = false;
     //startTimeDevice += 60000;
-    server.send(200, "text/html", "-1m<meta http-equiv='refresh' content='1;URL=/'>");
+    server.send(200, "text/html", "Stop/Start polling. Write File.<meta http-equiv='refresh' content='1;URL=/'>");
   });
  ///////////////////////////////////////////////////////////// 
   server.on("/data.xml", HTTP_GET, []() {

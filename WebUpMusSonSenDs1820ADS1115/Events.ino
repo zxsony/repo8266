@@ -1,3 +1,30 @@
+void StartSampling(){
+  sampleFn = "Null";
+  samplePolling = true;
+  sampleLimit = 60;
+  samplePage = 24;
+  sampleCount = 0;
+  ClearSampleStack();
+}
+
+void ClearSampleStack(){
+  for(int w = 0; w < sampleLimit; w++){
+
+    sampleDataStack[w][0] = 0;
+    sampleDataStack[w][1] = 0;
+    sampleDataStack[w][2] = 0;
+    sampleDataStack[w][3] = 0;
+    sampleDataStack[w][4] = 0;
+    sampleDataStack[w][5] = 0;
+    sampleDataStack[w][6] = 0;
+    sampleDataStack[w][7] = 0;    
+    sampleDateTimeStack[w][0] = 0;
+    sampleDateTimeStack[w][1] = 0;
+    sampleDateTimeStack[w][2] = 0;
+    sampleDateTimeStack[w][3] = 0;
+    sampleDateTimeStack[w][4] = 0;    
+  }
+}
 
 void CheckTimeEvent (void) {
   if ((tikminute == minute))
@@ -38,6 +65,7 @@ void sampleWrite() {
     if (sampleFn == "Null") sampleFn = tempfn;
     FS_FileDimWrite(sampleFn, "test");
     //FS_FileDimWrite(tempfn, "Test");
+    ClearSampleStack();
     sampleCount = 0;
     samplePage--;
     if (samplePage == 0) {

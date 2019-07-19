@@ -7,7 +7,7 @@ void FS_FileDimWrite(String Fname, String Data) {
   {
     //f.print(Data + "\r");
     for(int w = 0; w < sampleLimit; w++){
-
+if (sampleDateTimeStack[w][0] != 0){
     if (sampleDateTimeStack[w][2] < 10) f.print("0");//hour
     f.print((String)sampleDateTimeStack[w][2]);
     f.print(":");
@@ -18,7 +18,7 @@ void FS_FileDimWrite(String Fname, String Data) {
     f.print(";");
     f.print((String)sampleDataStack[w][1]);
     f.print("\r");
-    
+}
     }
     f.close();
   }

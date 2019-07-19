@@ -72,9 +72,9 @@ void GetServerIndex (void){
   serverIndex += "m";
   serverIndex += "</td></tr></table>";
   
-  serverIndex += "<table border='1' bgcolor='Moccasin' ><tr><td><a href='/t1'>Time:</a></td><td>";//</font>
+  serverIndex += "<table border='1' bgcolor='Moccasin' ><tr><td><a href='/'>Time:</a></td><td>";//</font>
   serverIndex += currentTimeDeviceString;
-  serverIndex += "</td></tr><tr><td><a href='/t2'>CDT:</a></td><td>0";
+  serverIndex += "</td></tr><tr><td><a href='/'>CDT:</a></td><td>0";
 
   //parseLongWord((timeCheck + lastSynchroDevice)- currentSecsSince1900);
   serverIndex += countDownTimeString;
