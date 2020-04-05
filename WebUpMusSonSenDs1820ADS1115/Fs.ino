@@ -24,6 +24,35 @@ if (sampleDateTimeStack[w][0] != 0){
   }
 }
 
+
+void FS_ReadAM2320Setting(void) {
+  int c = 0;
+  File f = SPIFFS.open("/2320settings.txt", "r");
+  if (!f) {
+    Serial.println("File doesn't exist yet. Creating it");
+
+    // open the file in write mode
+    File f = SPIFFS.open("/2320settings.txt", "w");
+    if (!f) {
+      Serial.println("file creation failed");
+    }
+    // now write two lines in key/value style with  end-of-line characters
+    f.println("0.0");
+    f.println("0.0");
+  } 
+      String tstr = f.readStringUntil('\n');
+      tstr.replace("\n", "");
+      tstr.replace("\r", "");
+      divam2320t = tstr.toFloat();
+      //Serial.println(divam2320t);
+      tstr = f.readStringUntil('\n');
+      tstr.replace("\n", "");
+      tstr.replace("\r", "");
+      divam2320h = tstr.toFloat();
+  f.close();
+}
+
+
 int FS_ReadWiFiSetting(void) {
   int c = 0;
   File f = SPIFFS.open("/wifisettings.txt", "r");
