@@ -1,6 +1,6 @@
 #define AM2320_i2C_ADDRESS  0xB8
 unsigned char am2320buf[8];
-float am2320h, am2320t;
+float am2320h, am2320t, divam2320h, divam2320t;
 float AM2320hPrev = 255;
 float AM2320tPrev = 255;
 bool am2320Request;
@@ -71,18 +71,21 @@ void AM23020Read (){
       Serial.println(millis() - AM2320Delay);
       #endif
     }
-    #ifdef board2
-    am2320t = ((float)(((am2320buf[4] << 8) + am2320buf[5]) / 10.0) - 0.4);// 26.77-(-.33) 
-    am2320h = ((float)(((am2320buf[2] << 8) + am2320buf[3]) / 10.0) + 25.5);//16.3-89 14.16-82.46 20.1-90.6 29,4-15,7
-    #endif
-    #ifdef board3
-    am2320t = ((float)(((am2320buf[4] << 8) + am2320buf[5]) / 10.0) - 3.2);// 26.77-(-.33) 
-    am2320h = ((float)(((am2320buf[2] << 8) + am2320buf[3]) / 10.0) + 15.5);//16.3-89 14.16-82.46 20.1-90.6 29,4-15,7
-    #endif
-    #ifdef board6
-    am2320t = ((float)(((am2320buf[4] << 8) + am2320buf[5]) / 10.0) - 2.0);// 26.77-(-.33) 
-    am2320h = ((float)(((am2320buf[2] << 8) + am2320buf[3]) / 10.0) - 11.0);// - 11.8
-    #endif
+
+      am2320t = ((float)(((am2320buf[4] << 8) + am2320buf[5]) / 10.0) + divam2320t);
+      am2320h = ((float)(((am2320buf[2] << 8) + am2320buf[3]) / 10.0) + divam2320h);
+//    #ifdef board2
+//    am2320t = ((float)(((am2320buf[4] << 8) + am2320buf[5]) / 10.0) - 0.4);// 26.77-(-.33) 
+//    am2320h = ((float)(((am2320buf[2] << 8) + am2320buf[3]) / 10.0) + 25.5);//16.3-89 14.16-82.46 20.1-90.6 29,4-15,7
+//    #endif
+//    #ifdef board3
+//    am2320t = ((float)(((am2320buf[4] << 8) + am2320buf[5]) / 10.0) - 3.2);// 26.77-(-.33) 
+//    am2320h = ((float)(((am2320buf[2] << 8) + am2320buf[3]) / 10.0) + 15.5);//16.3-89 14.16-82.46 20.1-90.6 29,4-15,7
+//    #endif
+//    #ifdef board6
+//    am2320t = ((float)(((am2320buf[4] << 8) + am2320buf[5]) / 10.0) - 2.0);// 26.77-(-.33) 
+//    am2320h = ((float)(((am2320buf[2] << 8) + am2320buf[3]) / 10.0) - 11.0);// - 11.8
+//    #endif
     //(iva/2320) (27.77 88 / 27.77 72.5)15.5
     
 if (AM2320hPrev == 255) AM2320hPrev = am2320h;

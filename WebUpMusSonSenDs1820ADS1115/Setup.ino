@@ -22,6 +22,7 @@ void setup(void) {
   //OneWire  ds(0);
   FS_init();    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   wifiApCount = FS_ReadWiFiSetting();
+  FS_ReadAM2320Setting();
 #ifdef DEBUG  
   Serial.println(wifiApCount);
   for (int i = 0; i < wifiApCount; i++){
@@ -30,7 +31,7 @@ void setup(void) {
   }
   Serial.println ("end");
 #endif  
-  Wire.begin(3, 2);
+  Wire.begin(4, 14);
 #ifdef ADS1115
   ads1115.begin();
 #endif

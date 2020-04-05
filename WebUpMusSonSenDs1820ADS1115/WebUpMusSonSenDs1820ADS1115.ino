@@ -17,11 +17,11 @@ Ultrasonic ultrasonic(4,16);
 const char* host = "esp8266-webupdate";
 
 //////////////////////
-#define board4
+#define board6
 //#define debug
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.5.17";
+String ver = "v2.5.18";
 //////////////////////
 #ifdef board1
   bool mp3En = 1;
@@ -173,6 +173,7 @@ uint8_t hour, minute, second, day, month, year, weekday, lhour, lminute, tikminu
 uint8_t monthDays[12]={31,28,31,30,31,30,31,31,30,31,30,31};
 bool dataRecive;
 unsigned int localPort = 2390;
+
 //IPAddress timeServer(129, 6, 15, 30);// 28, 29
 
 const int NTP_PACKET_SIZE = 48;
