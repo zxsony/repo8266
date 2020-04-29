@@ -4,6 +4,9 @@ void setup(void) {
   secondTick.attach(1, ISRwatchdog);
   synCheck = 3600;//3600
   ntpSyn = false;
+  am2320storagecounter = 0;
+  am2320averagecounter = 0;
+  am2320averagecounterfull = false;
   StartSampling();
 #ifdef AM2320
   AM2320PrevSet = false;
