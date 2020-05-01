@@ -114,14 +114,17 @@ if (WiFi.status() == WL_CONNECTED) {
     lastSynchroDevice = startSecsSince1900 + (currentTimeDevice / 1000) + 3600 * 3 - startTimeDevice / 1000;
   }
   updateCurrentDateTime ();
-  FS_FileWrite("/sl.txt", "\"StartDevice\";\"" + (String)ver + "\";\"" + (String)ssid + "\"");
+  FS_FileWrite("/sl.txt", "\"StartDevice\";\"" + (String)ver + "\";\"" + WiFi.SSID() + "\"");
   lhour = hour;
   lminute = minute;
   tikminute = minute;
   ////MDNS.begin(host);
   ////MDNS.addService("http", "tcp", 80);
   server.on("/info", HTTP_GET, []() {
-
+    
+  FSInfo fs_info;
+  SPIFFS.info(fs_info);
+  
     if (SecurityEn) {
       SecurityEn = false;
     }
@@ -156,11 +159,15 @@ if (WiFi.status() == WL_CONNECTED) {
     serverIndex += "Security: " + String(SecurityEn) + "<BR>";
     serverIndex += "samplePolling: " + String(samplePolling) + "<BR>";
 
-    for (int q = 0; q < 3; q++){
-      serverIndex += "0: " + String(sampleDataStack [q][0]) + "<BR>";
-      serverIndex += "2: " + (String)sampleDataStack [q][2] + "<BR>";
-      //serverIndex += "8: " + (String)sampleDataStack [q][8] + "<BR>";
-    }
+    serverIndex += "fs_info.totalBytes: " + String(fs_info.totalBytes) + "<BR>";
+    serverIndex += "fs_info.freeBytes: " + String(fs_info.totalBytes - fs_info.usedBytes) + "<BR>";
+    serverIndex += "fs_info.usedBytes: " + String(fs_info.usedBytes) + "<BR>";
+
+//    for (int q = 0; q < 3; q++){
+//      serverIndex += "0: " + String(sampleDataStack [q][0]) + "<BR>";
+//      serverIndex += "2: " + (String)sampleDataStack [q][2] + "<BR>";
+//      //serverIndex += "8: " + (String)sampleDataStack [q][8] + "<BR>";
+//    }
 
     server.send(200, "text/html", serverIndex);
 
@@ -261,7 +268,7 @@ if (WiFi.status() == WL_CONNECTED) {
     server.sendHeader("Connection", "close");
     server.sendHeader("Access-Control-Allow-Origin", "*");
     server.send(200, "text/html", "Update complete! Restarting device 30 sec...<meta http-equiv='refresh' content='30;URL=/'>");
-    FS_FileWrite("/sl.txt", "\"UpdateDevice\";\"" + (String)ver + "\";\"" + (String)ssid + "\"");
+    FS_FileWrite("/sl.txt", "\"UpdateDevice\";\"" + (String)ver + "\";\"" + WiFi.SSID() + "\"");
     //FS_FileWrite("/sysLog.txt", "UpdateDevice;" + (String)ver + ";" + (String)ssid);
     if (mp3En) {
       mp3_play (18);

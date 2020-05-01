@@ -51,7 +51,14 @@ void updateCurrentDateTime (){
 }
 void checkNtpUpdate (){
   if (currentSecsSince1900 - lastSynchroDevice > timeCheck){
-
+    
+    if (WiFi.status() != WL_CONNECTED)
+    {
+      Serial.println("WiFi.status() != WL_CONNECTED");
+      WIFIinit();
+      FS_FileWrite("/sl.txt", "\"Reconnect\";\"" + (String)ver + "\";\"" + WiFi.SSID() + "\"");
+    }
+    
   loopUDP();
   
   if (dataRecive) {

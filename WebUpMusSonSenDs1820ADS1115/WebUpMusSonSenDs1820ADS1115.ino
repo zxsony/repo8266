@@ -17,13 +17,14 @@ Ultrasonic ultrasonic(4,16);
 const char* host = "esp8266-webupdate";
 
 //////////////////////
-#define board6
+#define board8
 //#define debug
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.5.19";
+String ver = "v2.5.20";
 //////////////////////
 #ifdef board1
+  OneWire  ds(0);
   bool mp3En = 1;
   bool TempEn = 0;
   bool ultrasonicEn = 0;
@@ -39,6 +40,7 @@ String ver = "v2.5.19";
 
 
 #ifdef board2
+  OneWire  ds(0);
   bool mp3En = 0;
   bool TempEn = 1;
   bool ultrasonicEn = 0;
@@ -59,6 +61,7 @@ String ver = "v2.5.19";
 
 
 #ifdef board3
+  OneWire  ds(0);
   bool mp3En = 0;
   bool TempEn = 1;
   bool ultrasonicEn = 0;
@@ -77,6 +80,7 @@ String ver = "v2.5.19";
 
   
 #ifdef board4
+  OneWire  ds(0);
   bool mp3En = 0;
   bool TempEn = 1;
   bool ultrasonicEn = 0;
@@ -90,6 +94,7 @@ String ver = "v2.5.19";
 #endif
 
 #ifdef board5
+  OneWire  ds(0);
   bool mp3En = 0;
   bool TempEn = 0;
   bool ultrasonicEn = 0;
@@ -103,6 +108,7 @@ String ver = "v2.5.19";
 #endif
 
 #ifdef board6
+  OneWire  ds(0);
   bool mp3En = 0;
   bool TempEn = 0;
   bool ultrasonicEn = 0;
@@ -113,6 +119,40 @@ String ver = "v2.5.19";
   const char* ssid = "NVRAM WARNING";
   const char* password = "Lift80Lift";
   String deviceId = "board6";
+  #define AM2320
+  #define ledblink
+  //#define irtool  
+#endif
+
+#ifdef board8
+  OneWire  ds(0);
+  bool mp3En = 0;
+  bool TempEn = 1;
+  bool ultrasonicEn = 0;
+  bool sensorEn = 0;
+  bool ntpEn = 1;
+  //const char* ssid = "Tenda_FBA7C0";
+  //const char* password = "121314150";
+  const char* ssid = "NVRAM WARNING";
+  const char* password = "Lift80Lift";
+  String deviceId = "board7";
+  //#define AM2320
+  #define ledblink
+  //#define irtool  
+#endif
+
+#ifdef board1
+  OneWire  ds(5);
+  bool mp3En = 0;
+  bool TempEn = 1;
+  bool ultrasonicEn = 0;
+  bool sensorEn = 0;
+  bool ntpEn = 1;
+  //const char* ssid = "Tenda_FBA7C0";
+  //const char* password = "121314150";
+  const char* ssid = "NVRAM WARNING";
+  const char* password = "Lift80Lift";
+  String deviceId = "board8";
   #define AM2320
   #define ledblink
   //#define irtool  
@@ -182,7 +222,7 @@ byte packetBuffer[ NTP_PACKET_SIZE];
 WiFiUDP Udp;
 Ticker secondTick;
 
-  OneWire  ds(0);
+  //OneWire  ds(0);
 
   float dsTemp1, dsTemp2;
   float dsPrevTemp1= 255;
@@ -208,7 +248,7 @@ void ISRwatchdog(){
   if (watchdogCount == 60){
     Serial.println();
     Serial.println("the watchdog bites!!!!!!!!!!");
-    FS_FileWrite("/sl.txt", "\"Watchdog\";\"" + (String)ver + "\";\"" + (String)ssid + "\"");
+    FS_FileWrite("/sl.txt", "\"Watchdog\";\"" + (String)ver + "\";\"" + WiFi.SSID() + "\"");
     if (mp3En){
     mp3_play (30);
     delay(100);

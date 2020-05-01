@@ -15,8 +15,8 @@ void WIFIinit() {
     byte tries = 11;
     WiFi.begin(wifiAp[i][0].c_str(), wifiAp[i][1].c_str());
     //WiFi.begin(ssid, password);
-    //Serial.println (ssid);
-    //Serial.println (password);
+    //Serial.println (wifiAp[i][0].c_str());
+    //Serial.println (wifiAp[i][1].c_str());
     //delay(1000000);
     // Делаем проверку подключения до тех пор пока счетчик tries
     // не станет равен нулю или не получим подключение

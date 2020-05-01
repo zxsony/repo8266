@@ -51,8 +51,8 @@ void GetServerIndex (void){
   if (samplePolling) serverIndex += "</td><td><a href='/t2'>Poll:" + (String)sampleCount + ", Page:" + (String)samplePage + "</a>";
   serverIndex += "</td></tr></table><table border='1' bgcolor='Gainsboro'>";
   
-  serverIndex += "<tr><td><a href='/edit'>APIP:</a></td><td>";
-  serverIndex += WiFi.softAPIP().toString();
+  serverIndex += "<tr><td><a href='/edit'>SSID:</a></td><td>";
+  serverIndex += WiFi.SSID();
   serverIndex += "</td></tr><tr><td>IP:</td><td>";
   serverIndex += WiFi.localIP().toString();
   serverIndex += "</td></tr><tr><td>RSSI:</td><td>";

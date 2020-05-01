@@ -20,8 +20,8 @@ int _cou = 0;
 void AM23020Read () {
   //if (AM2320DelayPrev == 0) AM2320DelayPrev = millis();
 #ifdef debug
-  Serial.print(_cou);
-  Serial.print(" am3020 in count.\r\n");
+  //Serial.print(_cou);
+  //Serial.print(" am3020 in count.\r\n");
   _cou ++;
 #endif
 
@@ -45,7 +45,7 @@ void AM23020Read () {
     Wire.write(0x03);
     Wire.write(0x00);
     Wire.write(0x04);
-    delay(100);
+    delay(10);
     if (Wire.endTransmission(1) != 0) {
       //      am2320buf[2] = 0;
       //      am2320buf[3] = 0;
@@ -83,7 +83,9 @@ void AM23020Read () {
     if  (am2320storagecounter < am2320storage) {
       am2320mt [am2320storagecounter] = ((float)(((am2320buf[4] << 8) + am2320buf[5]) / 10.0) + divam2320t);
       //Serial.println((float)(((am2320buf[4] << 8) + am2320buf[5]) / 10.0) + divam2320t);
+      //Serial.println (am2320mt [am2320storagecounter]);
       am2320mh [am2320storagecounter] = ((float)(((am2320buf[2] << 8) + am2320buf[3]) / 10.0) + divam2320h);
+      //Serial.println (am2320mh [am2320storagecounter]);
       //Serial.println(am2320storagecounter);
       am2320storagecounter++;
 
