@@ -35,8 +35,8 @@ void Unix_to_GMT(unsigned long epoch)
 } 
 
 void updateCurrentDateTime (){
-  currentTimeDevice = millis();
-  currentSecsSince1900 = startSecsSince1900 + ((currentTimeDevice / 1000) - startTimeDevice/1000) + 3600*3;// - 3600*7 - 60*16;
+  currentMilisDevice = millis();
+  currentSecsSince1900 = startSecsSince1900 + ((currentMilisDevice / 1000) - startMillisDevice/1000) + 3600*3;// - 3600*7 - 60*16;
   
   parseLongWord(lastSynchroDevice);
   lastSynchroDeviceString = timeString;
@@ -62,7 +62,7 @@ void checkNtpUpdate (){
   loopUDP();
   
   if (dataRecive) {
-    lastSynchroDevice = startSecsSince1900 + (currentTimeDevice / 1000) + 3600*3 - startTimeDevice/1000;
+    lastSynchroDevice = startSecsSince1900 + (currentMilisDevice / 1000) + 3600*3 - startMillisDevice/1000;
     timeCheck = synCheck;
 Serial.println(currentSecsSince1900 - lastSynchroDevice);
 Serial.println(timeCheck);

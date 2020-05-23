@@ -91,7 +91,7 @@ String sampleFn;
 
 File fsUploadFile;
   
-unsigned long startTimeDevice, currentTimeDevice, startSecsSince1900, currentSecsSince1900, secsSince1900, epochStamp;
+unsigned long startMillisDevice, currentMilisDevice, startSecsSince1900, currentSecsSince1900, secsSince1900, epochStamp;
 unsigned long lastStartDevice, lastSynchroDevice, timeCheck, synCheck, soundDelay, dsDelay, ADC1115Delay, AM2320Delay, LightActivityDelay;
 String timeString, currentTimeDeviceString, lastStartDeviceString, lastSynchroDeviceString, countDownTimeString, ntpRegion;
 byte timeD, timeH, timeM, timeS, testByte;

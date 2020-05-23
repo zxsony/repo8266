@@ -34,7 +34,7 @@ void sendReciveUDP(IPAddress& address) {
     unsigned long highWord = word(packetBuffer[40], packetBuffer[41]);
     unsigned long lowWord = word(packetBuffer[42], packetBuffer[43]);
 
-    //if (startSecsSince1900 == 0) startTimeDevice = millis();
+    //if (startSecsSince1900 == 0) startMillisDevice = millis();
     secsSince1900 = highWord << 16 | lowWord;
     const unsigned long seventyYears = 2208988800UL;
     unsigned long epoch = secsSince1900 - seventyYears;

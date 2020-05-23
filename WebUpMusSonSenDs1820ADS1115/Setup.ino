@@ -1,6 +1,6 @@
 void setup(void) {
   ////////////////////
-  startTimeDevice = millis();
+  startMillisDevice = millis();
   secondTick.attach(1, ISRwatchdog);
   synCheck = 3600;//3600
   ntpSyn = false;
@@ -13,7 +13,7 @@ void setup(void) {
 
   ds1820PrevSet = false;
   timeCheck = synCheck;
-  soundDelay = startTimeDevice;
+  soundDelay = startMillisDevice;
   WiFi.macAddress(mac);
   byte i;
   Serial.begin (9600);
@@ -125,7 +125,7 @@ if (WiFi.status() == WL_CONNECTED) {
 }
     ////printEpoch(epochStamp);
     //lastSynchroDevice = startSecsSince1900;
-    lastSynchroDevice = startSecsSince1900 + (currentTimeDevice / 1000) + 3600 * 3 - startTimeDevice / 1000;
+    lastSynchroDevice = startSecsSince1900 + (currentMilisDevice / 1000) + 3600 * 3 - startMillisDevice / 1000;
   }
   updateCurrentDateTime ();
   FS_FileWrite("/sl.txt", "\"StartDevice\";\"" + (String)ver + "\";\"" + WiFi.SSID() + "\"");
@@ -202,7 +202,7 @@ if (WiFi.status() == WL_CONNECTED) {
 
   StartSampling();
     //timeCheck = timeCheck - 3600000;
-    //startTimeDevice += 3600000;
+    //startMillisDevice += 3600000;
     //FS_FileWrite("/t1.txt", "tempStack6=" + (String)tempStack[timeH][6] + ";" + "tempStack7=" + (String)tempStack[timeH][7] + ";" + "timeH=" + timeH + ";" + "timeM=" + timeM); //tempStack[timeH][6] == timeH) & (tempStack[timeH][7] == timeM
   server.send(200, "text/html", "Start polling. page limit 24.<meta http-equiv='refresh' content='5;URL=/'>");
   //delay (500);<meta http-equiv='refresh' content='30;URL=/'>
@@ -212,7 +212,7 @@ if (WiFi.status() == WL_CONNECTED) {
     server.sendHeader("Access-Control-Allow-Origin", "*");
     samplePolling = !samplePolling;
     //timeCheck = timeCheck - 600;
-    //startTimeDevice += 600000;
+    //startMillisDevice += 600000;
     server.send(200, "text/html", "Stop/Start polling.<meta http-equiv='refresh' content='1;URL=/'>");
   });
     server.on("/t3", HTTP_GET, []() {
@@ -223,7 +223,7 @@ if (WiFi.status() == WL_CONNECTED) {
     samplePage = 1;
     //timeCheck = timeCheck - 60;
     //ntpSyn = false;
-    //startTimeDevice += 60000;
+    //startMillisDevice += 60000;
     server.send(200, "text/html", "Stop/Start polling. Write File.<meta http-equiv='refresh' content='1;URL=/'>");
   });
  ///////////////////////////////////////////////////////////// 
@@ -262,7 +262,7 @@ if (WiFi.status() == WL_CONNECTED) {
     server.sendHeader("Connection", "close");
     server.sendHeader("Access-Control-Allow-Origin", "*");
     server.send(200, "text/html", "<html><head><title>ESP8266</title><meta http-equiv='Content-Type' content='text/html; charset=utf-8' /><script>alert( 'Вы запустили процедуру самоуничтожения!))' );document.location.href='/';</script>");
-    lastSynchroDevice = startSecsSince1900 + (currentTimeDevice / 1000) + 3600 * 3 - startTimeDevice / 1000;
+    lastSynchroDevice = startSecsSince1900 + (currentMilisDevice / 1000) + 3600 * 3 - startMillisDevice / 1000;
     timeCheck = synCheck;
   });
 
