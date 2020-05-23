@@ -7,8 +7,18 @@ void WIFIinit2() {
   devNumbFull = "STA-" + deviceId;
   WiFi.persistent(false); 
   WiFi.mode(WIFI_STA);
-  WiFi.softAPConfig(IPAddress(192, 168, 4, 4), IPAddress(192, 168, 4, 4), IPAddress(255, 255, 255, 0));
-  WiFi.softAP(devNumbFull.c_str());
+//  WiFi.softAPConfig(IPAddress(192, 168, 4, 4), IPAddress(192, 168, 4, 4), IPAddress(255, 255, 255, 0));
+//  WiFi.softAP(devNumbFull.c_str());
+
+  IPAddress ip;
+  IPAddress mask;
+  IPAddress gate;
+  
+  ip.fromString(FS_ReadSetting("[NETWORK]", "ip"));
+  mask.fromString(FS_ReadSetting("[NETWORK]", "mask"));
+  gate.fromString(FS_ReadSetting("[NETWORK]", "gate"));
+  WiFi.config(ip, gate, mask);
+  
   bool endlist = true;
   int count = 0;
   
