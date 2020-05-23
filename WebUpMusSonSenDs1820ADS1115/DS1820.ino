@@ -2,8 +2,10 @@
   byte addr[8], addr1[8], addr2[8];
   byte dsData1[9], dsData2[9];
   int devCounter = 0;
-
+  
+  
 void DsTempCalc(){
+
   //Serial.println(devCounter);
   int16_t raw1, raw2;
   raw1 = (dsData1[1] << 8) | dsData1[0];
@@ -20,8 +22,8 @@ void DsTempCalc(){
   if ((dsData1[1]==255) and (dsData1[0]==255) and (dsData1[6]==255) or ((dsData1[1]==0) and (dsData1[0]==0) and (dsData1[6]==0))){
     raw2 = 0x3E7F;
   }
-  dsTemp1 = ((float)raw1 / 16.0)-0.15; //-----------------------------------------------------------
-  dsTemp2 = ((float)raw2 / 16.0)+0.04;
+  dsTemp1 = ((float)raw1 / 16.0)+ ds1820corr[0]; //-----------------------------------------------------------
+  dsTemp2 = ((float)raw2 / 16.0)+ ds1820corr[1];
 //  Serial.print ("Sensor1=");
 //  Serial.println((float)raw1 / 16.0);
 //  Serial.print ("Sensor2=");

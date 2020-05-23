@@ -6,11 +6,11 @@ if((((millis()) - soundDelay)>300000)){
   
 }
 
-    if(digitalRead(IRSensorIn) == HIGH and iRSensorState == false and SecurityEn == true){
+    if(digitalRead(IRSensorIn) == HIGH and iRSensorState == false and securityEn == true){
       iRSensorOnCounter ++;
 
       
-      if (SecurityEn && sensorEn) FS_FileWrite("/ils.txt", "\"IrCount\";" + (String)iRSensorOnCounter);
+      if (securityEn && analogSensorEn) FS_FileWrite("/ils.txt", "\"IrCount\";" + (String)iRSensorOnCounter);
       
       iRSensorState = true;
       ledCurrent = ledPinR;

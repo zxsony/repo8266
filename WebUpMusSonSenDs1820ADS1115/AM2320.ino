@@ -1,6 +1,7 @@
 #define AM2320_i2C_ADDRESS  0xB8
 unsigned char am2320buf[8];
-float am2320h, am2320t, divam2320h, divam2320t;
+String nameam2320t, nameam2320h;
+float am2320h, am2320t, corram2320h, corram2320t;
 float am2320mt [50], am2320mh [50], am2320at[10], am2320ah[10];
 int am2320ct [50], am2320ch [50];
 int am2320storagecounter, am2320averagecounter;
@@ -12,7 +13,7 @@ bool am2320Request;
 bool AM2320PrevSet;
 bool am2320averagecounterfull;
 
-#ifdef AM2320
+//if (am2320En){
 int _cou = 0;
 
 
@@ -40,7 +41,9 @@ void AM23020Read () {
     Serial.print(" AM2320 transmission.\r\n");
 #endif
     Wire.beginTransmission(AM2320_i2C_ADDRESS >> 1);
+        
     Wire.endTransmission();
+    delay(80);
     Wire.beginTransmission(AM2320_i2C_ADDRESS >> 1);
     Wire.write(0x03);
     Wire.write(0x00);
@@ -77,15 +80,16 @@ void AM23020Read () {
 #endif
     }
 
-    //      am2320t = ((float)(((am2320buf[4] << 8) + am2320buf[5]) / 10.0) + divam2320t);
-    //      am2320h = ((float)(((am2320buf[2] << 8) + am2320buf[3]) / 10.0) + divam2320h);
-
     if  (am2320storagecounter < am2320storage) {
-      am2320mt [am2320storagecounter] = ((float)(((am2320buf[4] << 8) + am2320buf[5]) / 10.0) + divam2320t);
-      //Serial.println((float)(((am2320buf[4] << 8) + am2320buf[5]) / 10.0) + divam2320t);
-      //Serial.println (am2320mt [am2320storagecounter]);
-      am2320mh [am2320storagecounter] = ((float)(((am2320buf[2] << 8) + am2320buf[3]) / 10.0) + divam2320h);
-      //Serial.println (am2320mh [am2320storagecounter]);
+      am2320mt [am2320storagecounter] = ((float)(((am2320buf[4] << 8) + am2320buf[5]) / 10.0) + corram2320t);
+      //Serial.println((float)(((am2320buf[4] << 8) + am2320buf[5]) / 10.0) + corram2320t);
+
+      am2320mh [am2320storagecounter] = ((float)(((am2320buf[2] << 8) + am2320buf[3]) / 10.0) + corram2320h);
+
+#ifdef debug2320
+      Serial.println (am2320mt [am2320storagecounter]);
+      Serial.println (am2320mh [am2320storagecounter]);
+#endif
       //Serial.println(am2320storagecounter);
       am2320storagecounter++;
 
@@ -169,7 +173,7 @@ void AM23020Read () {
 #endif
 #endif
 }
-#endif
+
 
 void search_max_sort(float* m, int* index, int sizem)
 {

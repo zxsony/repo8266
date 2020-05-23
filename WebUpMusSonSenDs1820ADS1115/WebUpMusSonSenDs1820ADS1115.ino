@@ -19,146 +19,18 @@ const char* host = "esp8266-webupdate";
 //////////////////////
 #define board8
 //#define debug
+#define DEBUGFS
+//#define debugwifi
+#define debug2320
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.5.20";
+String ver = "v2.5.21";
 //////////////////////
-#ifdef board1
-  OneWire  ds(0);
-  bool mp3En = 1;
-  bool TempEn = 0;
-  bool ultrasonicEn = 0;
-  bool sensorEn = 1;
-  bool ntpEn = 1;
-  const char* ssid = "NVRAM WARNING";
-  const char* password = "Lift80Lift";
-  String deviceId = "board1";
-  
-  #define IRSensorEn
-  #define ledblink  
-#endif
 
 
-#ifdef board2
-  OneWire  ds(0);
-  bool mp3En = 0;
-  bool TempEn = 1;
-  bool ultrasonicEn = 0;
-  bool sensorEn = 0;
-  bool ntpEn = 1;
-  const char* ssid = "NVRAM WARNING";
-  const char* password = "Lift80Lift";
-  String deviceId = "board2";
-  //#define IRSensorEn
-  //const char* ssid = "la8";
-  //const char* password = "Lift1980";
-  
-  //#define debug
-  #define ADS1115
-  #define AM2320
-  #define ledblink
-#endif
-
-
-#ifdef board3
-  OneWire  ds(0);
-  bool mp3En = 0;
-  bool TempEn = 1;
-  bool ultrasonicEn = 0;
-  bool sensorEn = 0;
-  bool ntpEn = 1;
-//  const char* ssid = "OTK2";
-//  const char* password = "Lift80Lift";
-//  const char* ssid = "Pusko-Naladka";
-//  const char* password = "1234578906";
-  const char* ssid = "NVRAM WARNING";
-  const char* password = "Lift80Lift";
-  String deviceId = "board3";
-  //#define AM2320
-  #define ledblink
-#endif
-
-  
-#ifdef board4
-  OneWire  ds(0);
-  bool mp3En = 0;
-  bool TempEn = 1;
-  bool ultrasonicEn = 0;
-  bool sensorEn = 0;
-  bool ntpEn = 1;
-  const char* ssid = "Tenda_FBA7C0";
-  const char* password = "121314150";
-  String deviceId = "board4";
-
-  #define ledblink
-#endif
-
-#ifdef board5
-  OneWire  ds(0);
-  bool mp3En = 0;
-  bool TempEn = 0;
-  bool ultrasonicEn = 0;
-  bool sensorEn = 1;
-  bool ntpEn = 1;
-  const char* ssid = "NVRAM WARNING";
-  const char* password = "Lift80Lift";
-  String deviceId = "board5";
-  
-  #define ledblink  
-#endif
-
-#ifdef board6
-  OneWire  ds(0);
-  bool mp3En = 0;
-  bool TempEn = 0;
-  bool ultrasonicEn = 0;
-  bool sensorEn = 0;
-  bool ntpEn = 1;
-  //const char* ssid = "Tenda_FBA7C0";
-  //const char* password = "121314150";
-  const char* ssid = "NVRAM WARNING";
-  const char* password = "Lift80Lift";
-  String deviceId = "board6";
-  #define AM2320
-  #define ledblink
-  //#define irtool  
-#endif
-
-#ifdef board8
-  OneWire  ds(0);
-  bool mp3En = 0;
-  bool TempEn = 1;
-  bool ultrasonicEn = 0;
-  bool sensorEn = 0;
-  bool ntpEn = 1;
-  //const char* ssid = "Tenda_FBA7C0";
-  //const char* password = "121314150";
-  const char* ssid = "NVRAM WARNING";
-  const char* password = "Lift80Lift";
-  String deviceId = "board7";
-  //#define AM2320
-  #define ledblink
-  //#define irtool  
-#endif
-
-#ifdef board1
-  OneWire  ds(5);
-  bool mp3En = 0;
-  bool TempEn = 1;
-  bool ultrasonicEn = 0;
-  bool sensorEn = 0;
-  bool ntpEn = 1;
-  //const char* ssid = "Tenda_FBA7C0";
-  //const char* password = "121314150";
-  const char* ssid = "NVRAM WARNING";
-  const char* password = "Lift80Lift";
-  String deviceId = "board8";
-  #define AM2320
-  #define ledblink
-  //#define irtool  
-#endif
-
+String deviceId;
 byte mac[6];
+bool tempEn, analogSensorEn, am2320En, mp3En;
 
 int button = 4;
 int IRSensorIn = 16;
@@ -168,7 +40,7 @@ int ledPinBR2 = 13;
 int ledPinYR3 = 14;
 int ledPinR = 15;
 int ledCurrent = ledPinGR1;
-int ledSensorValue = 0;
+int analogSensorValue = 0;
 bool switchOn = false;
 int switchOnCounter = 0;
 int ultrasonicValue = 0;
@@ -180,14 +52,28 @@ int iRSensorOnCounter = 0;
 bool LightActivityState1 = false;
 bool LightActivityState2 = false;
 bool LightActivityState3 = false;
-bool SecurityEn = true;
-bool ledblinkVal = false;
+bool securityEn;
+bool ledblink;
+bool ultrasonicEn;
+bool ntpEn;
+String ssid, pass;
 
 int ultrasonicLoop = 0;
 String ledColoure = "green";
 int ktoid = 1;
 String devNumbFull, tempStr;
 int watchdogCount = 0;
+
+OneWire  ds(0);
+int ds1820pin;
+String ds1820name [10];
+float ds1820corr [10];
+float dsTemp1, dsTemp2;
+float dsPrevTemp1= 255;
+float dsPrevTemp2 = 255;
+bool ds1820PrevSet;
+
+int am2320SDApin, am2320SCLpin;
 
 float tempStack [24][8];
 float sampleDataStack [60][7];
@@ -224,10 +110,7 @@ Ticker secondTick;
 
   //OneWire  ds(0);
 
-  float dsTemp1, dsTemp2;
-  float dsPrevTemp1= 255;
-  float dsPrevTemp2 = 255;
-  bool ds1820PrevSet;
+
 //  int ds1820PrevCount = 0;
 #ifdef ADS1115
   Adafruit_ADS1115 ads1115(0x4A);  // construct an ads1115 at address 0x49

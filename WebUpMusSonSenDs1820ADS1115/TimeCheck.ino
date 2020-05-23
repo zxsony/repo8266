@@ -324,13 +324,15 @@ void SetSensorTable(){
 //  }
 String tempString;
 bool writeState = false;
-  #ifdef AM2320
+
+  if (am2320En){
     tempString += (String)am2320h + ";";
     tempString += (String)am2320t;
     writeState = true;
-    if (TempEn) tempString += ";";
-  #endif
-if (TempEn){
+    if (tempEn) tempString += ";";
+  }
+
+if (tempEn){
   tempString += (String)dsTemp1 + ";";
   tempString += (String)dsTemp2;
   writeState = true;

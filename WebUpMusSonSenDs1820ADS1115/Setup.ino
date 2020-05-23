@@ -8,9 +8,9 @@ void setup(void) {
   am2320averagecounter = 0;
   am2320averagecounterfull = false;
   StartSampling();
-#ifdef AM2320
-  AM2320PrevSet = false;
-#endif
+
+  if (am2320En) AM2320PrevSet = false;
+
   ds1820PrevSet = false;
   timeCheck = synCheck;
   soundDelay = startTimeDevice;
@@ -24,17 +24,31 @@ void setup(void) {
 
   //OneWire  ds(0);
   FS_init();    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  wifiApCount = FS_ReadWiFiSetting();
-  FS_ReadAM2320Setting();
+  //wifiApCount = FS_ReadWiFiSetting();
+  //FS_ReadAM2320Setting();
+
+  readsettings();
+
+#ifdef DEBUGFS
+Serial.println ("\nDEBUGFS\n");
+//for (int i = 1; i < 4; i++){
+//  Serial.println(FS_ReadSetting("[DS1820]", "name" + String (i)));
+//  Serial.println(FS_ReadSetting("[DS1820]", "corr" + String (i)));
+//}
+
+#endif
+  
 #ifdef DEBUG  
-  Serial.println(wifiApCount);
-  for (int i = 0; i < wifiApCount; i++){
-    Serial.println (wifiAp[i][0]);
-    Serial.println (wifiAp[i][1]);
-  }
-  Serial.println ("end");
-#endif  
-  Wire.begin(4, 14);
+//  Serial.println(wifiApCount);
+//  for (int i = 0; i < wifiApCount; i++){
+//    Serial.println (wifiAp[i][0]);
+//    Serial.println (wifiAp[i][1]);
+//  }
+//  Serial.println ("end");
+#endif
+
+  ds.begin(ds1820pin);
+  Wire.begin(am2320SDApin, am2320SCLpin);
 #ifdef ADS1115
   ads1115.begin();
 #endif
@@ -49,7 +63,7 @@ void setup(void) {
   LightActivityState2 = true;
   LightActivityState3 = true;
 #endif
-  if (TempEn) {
+  if (tempEn) {
     DsSearch ();
     //  DallSearch ();
   }
@@ -72,7 +86,7 @@ void setup(void) {
 
 //getAP ();
 
-WIFIinit();   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+WIFIinit2();   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #ifdef debug
   Serial.print("LocalIP: ");
@@ -94,7 +108,7 @@ WIFIinit();   //////////////////////////////////////////////////////////////////
 #endif
   //WiFi.softAP(devNumbFull.c_str());
 
-  if (TempEn) {
+  if (tempEn) {
 #ifdef debug
     DsAddrPrint();
 #endif
@@ -125,12 +139,12 @@ if (WiFi.status() == WL_CONNECTED) {
   FSInfo fs_info;
   SPIFFS.info(fs_info);
   
-    if (SecurityEn) {
-      SecurityEn = false;
-    }
-    else {
-      SecurityEn = true;
-    }
+//    if (securityEn) {
+//      securityEn = false;
+//    }
+//    else {
+//      securityEn = true;
+//    }
 
     server.sendHeader("Connection", "close");
     server.sendHeader("Access-Control-Allow-Origin", "*");
@@ -154,9 +168,11 @@ if (WiFi.status() == WL_CONNECTED) {
     serverIndex += "resetReason: " + ESP.getResetReason() + "<BR>";
     serverIndex += "resetInfo: " + ESP.getResetInfo() + "<BR>";
 
+    serverIndex += "CPUCycleCount: " + String(ESP.getCycleCount()) + "<BR>";
+
     serverIndex += "bootVersion: " + String(ESP.getBootVersion()) + "<BR>";
     serverIndex += "bootMode: " + String(ESP.getBootMode()) + "<BR>";
-    serverIndex += "Security: " + String(SecurityEn) + "<BR>";
+    serverIndex += "Security: " + String(securityEn) + "<BR>";
     serverIndex += "samplePolling: " + String(samplePolling) + "<BR>";
 
     serverIndex += "fs_info.totalBytes: " + String(fs_info.totalBytes) + "<BR>";
@@ -173,6 +189,13 @@ if (WiFi.status() == WL_CONNECTED) {
 
   });
   ///////////////////////////////////////////////////////////
+  server.on("/rs", HTTP_GET, []() {
+    server.sendHeader("Connection", "close");
+    server.sendHeader("Access-Control-Allow-Origin", "*");
+    readsettings();
+  server.send(200, "text/html", "Read settings.<meta http-equiv='refresh' content='5;URL=/'>");
+  });
+  
   server.on("/t1", HTTP_GET, []() {
     server.sendHeader("Connection", "close");
     server.sendHeader("Access-Control-Allow-Origin", "*");
@@ -251,9 +274,7 @@ if (WiFi.status() == WL_CONNECTED) {
     ADC1115Read ();
   #endif
   
-  #ifdef AM2320
-    AM23020Read ();
-  #endif
+  if (am2320En) AM23020Read ();
   
     server.send(200, "text/html", serverIndex);
   });
@@ -336,16 +357,11 @@ if (WiFi.status() == WL_CONNECTED) {
   dsDelay = 0;
   AM2320Delay = 0;
   ADC1115Delay = millis();
-#ifdef AM2320
-  am2320Request = true;
-#endif
+  
+  if (am2320En) am2320Request = true;
 
 #ifdef IRSensorEn
   IRSensorEnVar = true;
-#endif
-
-#ifdef ledblink
-  ledblinkVal = true;
 #endif
 
 tempStack[hour][6] = hour;
@@ -353,4 +369,38 @@ tempStack[hour][7] = minute;
   ////MDNS.addService("http", "tcp", 80);
 
 
+}
+void readsettings(void) {
+    deviceId = FS_ReadSetting("[MAIN]", "deviceId");
+    securityEn = bool ((FS_ReadSetting("[MAIN]", "securityEn")).toInt());
+    tempEn = bool ((FS_ReadSetting("[MAIN]", "tempEn")).toInt());
+    am2320En = bool ((FS_ReadSetting("[MAIN]", "am2320En")).toInt());
+    analogSensorEn = bool ((FS_ReadSetting("[MAIN]", "analogSensorEn")).toInt());
+    mp3En = bool ((FS_ReadSetting("[MAIN]", "mp3En")).toInt());
+    ultrasonicEn = bool ((FS_ReadSetting("[MAIN]", "ultrasonicEn")).toInt());
+    ntpEn = bool ((FS_ReadSetting("[MAIN]", "ntpEn")).toInt());
+    ledblink = bool ((FS_ReadSetting("[MAIN]", "ledblink")).toInt());
+    
+    ds1820pin = (FS_ReadSetting("[INTERFACE]", "oneWire")).toInt();
+    am2320SDApin = (FS_ReadSetting("[INTERFACE]", "i2cSDA")).toInt();
+    am2320SCLpin = (FS_ReadSetting("[INTERFACE]", "i2cSCL")).toInt();
+    
+    fillds1820();
+    nameam2320t = FS_ReadSetting("[AM2320]", "namet");
+    corram2320t = (FS_ReadSetting("[AM2320]", "corrt")).toFloat();
+    nameam2320h = FS_ReadSetting("[AM2320]", "nameh");
+    corram2320h = (FS_ReadSetting("[AM2320]", "corrh")).toFloat();
+//    String stry = "1";
+//    Serial.println (bool ((stry).toInt()));
+}
+void fillds1820(void) {
+    for (int i = 0; i < 10; i++){
+    String tds1820name = FS_ReadSetting("[DS1820]", "name" + String (i));
+    float tds1820corr = (FS_ReadSetting("[DS1820]", "corr" + String (i))).toFloat();
+    if (tds1820name != ""){
+      ds1820name[i] = tds1820name;
+      ds1820corr[i] = tds1820corr;
+    }
+    
+  }
 }

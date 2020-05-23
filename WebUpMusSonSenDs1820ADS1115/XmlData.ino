@@ -12,17 +12,17 @@ void GetXmlData (void){
   xmlData += mp3En;
   xmlData += "</mp3En>";
 
-  xmlData += "<TempEn>";
-  xmlData += TempEn;
-  xmlData += "</TempEn>";
+  xmlData += "<tempEn>";
+  xmlData += tempEn;
+  xmlData += "</tempEn>";
 
   xmlData += "<ultrasonicEn>";
   xmlData += ultrasonicEn;
   xmlData += "</ultrasonicEn>";
 
-  xmlData += "<sensorEn>";
-  xmlData += sensorEn;
-  xmlData += "</sensorEn>";
+  xmlData += "<analogSensorEn>";
+  xmlData += analogSensorEn;
+  xmlData += "</analogSensorEn>";
 
   xmlData += "<ntpEn>";
   xmlData += ntpEn;
@@ -33,7 +33,7 @@ void GetXmlData (void){
   xmlData += "</IRSensorEn>";
 
   xmlData += "<ledblink>";
-  xmlData += ledblinkVal;
+  xmlData += ledblink;
   xmlData += "</ledblink>";
 
   xmlData += "<localIP>";
@@ -72,9 +72,9 @@ void GetXmlData (void){
   xmlData += switchOnCounter;
   xmlData += "</switchOnCounter>";
 
-  xmlData += "<ledSensorValue>";
-  xmlData += ledSensorValue;
-  xmlData += "</ledSensorValue>";
+  xmlData += "<analogSensorValue>";
+  xmlData += analogSensorValue;
+  xmlData += "</analogSensorValue>";
 
   xmlData += "<dsTemp1>";
   xmlData += dsTemp1;
@@ -84,7 +84,8 @@ void GetXmlData (void){
   xmlData += dsTemp2;
   xmlData += "</dsTemp2>";
 
-  #ifdef AM2320
+
+  if (am2320En){
   xmlData += "<am2320h>";
   xmlData += am2320h;
   xmlData += "</am2320h>";
@@ -92,7 +93,7 @@ void GetXmlData (void){
   xmlData += "<am2320t>";
   xmlData += am2320t;
   xmlData += "</am2320t>";
-  #endif
+  }
 
   #ifdef ADS1115
   xmlData += "<Gas>";
@@ -115,4 +116,3 @@ void GetXmlData (void){
 
   xmlData += "</main>";
 }
-

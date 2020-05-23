@@ -34,7 +34,7 @@
   }
   }
   
-  if ((ledSensorValue >= 80) and (ledSensorState == false)) {
+  if ((analogSensorValue >= 80) and (ledSensorState == false)) {
     
     if (LightActivityDelay == 0){
       LightActivityDelay = millis();
@@ -50,7 +50,7 @@
         if (mp3En){
           mp3_set_volume (30);//30
           delay(100);
-          if (ledSensorValue > 100 and ledSensorValue < 150){
+          if (analogSensorValue > 100 and analogSensorValue < 150){
             mp3_play (6);//6
           }
           else {
@@ -62,10 +62,10 @@
 }
     switchOn = true;
     switchOnCounter += 1;
-    //if (SecurityEn && sensorEn) FS_FileWrite("/Sensors.txt", "Led:" + (String)switchOnCounter + ";Val:" + ledSensorValue);
-    if (SecurityEn && sensorEn) FS_FileWrite("/ils.txt", "\"IedCount\";" + (String)switchOnCounter + ";\"Vol\";" + ledSensorValue);
+    //if (securityEn && analogSensorEn) FS_FileWrite("/Sensors.txt", "Led:" + (String)switchOnCounter + ";Val:" + analogSensorValue);
+    if (securityEn && analogSensorEn) FS_FileWrite("/ils.txt", "\"IedCount\";" + (String)switchOnCounter + ";\"Vol\";" + analogSensorValue);
   }
-  if ((ledSensorValue < 50) and (ledSensorState == true)) {
+  if ((analogSensorValue < 50) and (ledSensorState == true)) {
     ledSensorState = false;
     LightActivityState1 = false;
     LightActivityState2 = false;
@@ -106,7 +106,7 @@
       return;
     }
   }
-    ledSensorValue = ra;
+    analogSensorValue = ra;
 }
   
 

@@ -44,7 +44,7 @@ void sampleWrite() {
   sampleDataStack [sampleCount][3] = dsTemp2;
   sampleDataStack [sampleCount][4] = iRSensorOnCounter;
   sampleDataStack [sampleCount][5] = switchOnCounter;
-  sampleDataStack [sampleCount][6] = ledSensorValue;
+  sampleDataStack [sampleCount][6] = analogSensorValue;
   sampleDateTimeStack [sampleCount][0] = day;
   sampleDateTimeStack [sampleCount][1] = month;
   sampleDateTimeStack [sampleCount][2] = hour;

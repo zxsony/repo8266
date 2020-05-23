@@ -17,11 +17,15 @@ unsigned long sendNTPpacket(IPAddress& address) {
 
 void sendReciveUDP(IPAddress& address) {
   sendNTPpacket(address);
-  delay(300);
+  delay(150);
   digitalWrite(ledPinBR2, HIGH);
-  delay(300); // wait to see if a reply is available
+  delay(150);
   digitalWrite(ledPinBR2, LOW);
-  delay(300);
+  delay(150);
+  digitalWrite(ledPinBR2, HIGH);
+  delay(150);
+  digitalWrite(ledPinBR2, LOW);
+  delay(150);  
   //dataRecive = 0;
   if (Udp.parsePacket()) {
     //Serial.println("packet received");
@@ -38,12 +42,12 @@ void sendReciveUDP(IPAddress& address) {
     epochStamp = epoch;
     dataRecive = 1;
     digitalWrite(ledPinGR1, HIGH);
-    delay(300);
+    delay(1000);
     digitalWrite(ledPinGR1, LOW);
     return;
   }
   digitalWrite(ledPinR, HIGH);
-  delay(300);
+  delay(1000);
   digitalWrite(ledPinR, LOW);
   dataRecive = 0;
 }

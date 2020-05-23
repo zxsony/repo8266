@@ -1,8 +1,8 @@
 #ifdef ADS1115
 void ADC1115Read (){
-  #ifdef AM2320
-    unsigned long _tempAM2320Delay = millis();
-  #endif
+
+  if (am2320En) unsigned long _tempAM2320Delay = millis();
+
   if (ADC1115Delay == 0){
     ADC1115Delay = millis();
   }
@@ -20,12 +20,10 @@ void ADC1115Read (){
     adc2 = ads1115.readADC_SingleEnded(2);
     adc3 = ads1115.readADC_SingleEnded(3);  
   }
-  #ifdef AM2320
-    AM2320Delay = AM2320Delay + (millis() - _tempAM2320Delay);
+    if (am2320En) AM2320Delay = AM2320Delay + (millis() - _tempAM2320Delay);
     #ifdef debug
 //      Serial.print("_tempAM2320Delay ");
 //      Serial.println(millis() - _tempAM2320Delay);
     #endif
-  #endif 
 }
 #endif

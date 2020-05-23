@@ -55,7 +55,7 @@ void checkNtpUpdate (){
     if (WiFi.status() != WL_CONNECTED)
     {
       Serial.println("WiFi.status() != WL_CONNECTED");
-      WIFIinit();
+      WIFIinit2();
       FS_FileWrite("/sl.txt", "\"Reconnect\";\"" + (String)ver + "\";\"" + WiFi.SSID() + "\"");
     }
     
@@ -67,9 +67,9 @@ void checkNtpUpdate (){
 Serial.println(currentSecsSince1900 - lastSynchroDevice);
 Serial.println(timeCheck);
 Serial.println("");
-#ifdef AM2320
+if (am2320En){
     AM2320PrevSet = true;
-#endif    
+}    
     ds1820PrevSet = true; 
   }
   else timeCheck = timeCheck + 600;

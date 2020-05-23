@@ -5,12 +5,12 @@ void loop(void){
 //}
   watchdogCount = 0;
   if (digitalRead(button) == LOW){while(1){}};
-  #ifdef ledblink
+  if (ledblink){
     digitalWrite(ledCurrent, HIGH);
     delay(1);
     digitalWrite(ledCurrent, LOW);
     delay(1);
-  #endif 
+  }
 
 
   if (ultrasonicEn){
@@ -21,13 +21,13 @@ void loop(void){
     CheckIRSensor();
   #endif 
   //
-  if (sensorEn){
-    //ledSensorValue = analogRead(sensorPin);
+  if (analogSensorEn){
+    //analogSensorValue = analogRead(sensorPin);
     ReadLedSensor();
     CheckLedSensor();
   }
   //
-  if (TempEn){
+  if (tempEn){
     DsRead ();
     DsTempCalc(); 
 //DallRead( flagDallRead*1000 );
@@ -46,9 +46,7 @@ void loop(void){
     ADC1115Read ();
   #endif
   
-  #ifdef AM2320
-    AM23020Read ();
-  #endif
+  if (am2320En) AM23020Read ();
 
   //Serial.println(day);
    

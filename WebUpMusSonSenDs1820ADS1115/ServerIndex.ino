@@ -53,7 +53,7 @@ void GetServerIndex (void){
   
   serverIndex += "<tr><td><a href='/edit'>SSID:</a></td><td>";
   serverIndex += WiFi.SSID();
-  serverIndex += "</td></tr><tr><td>IP:</td><td>";
+  serverIndex += "</td></tr><tr><td><a href='/rs'>IP:</a></td><td>";
   serverIndex += WiFi.localIP().toString();
   serverIndex += "</td></tr><tr><td>RSSI:</td><td>";
   long rssi = WiFi.RSSI();
@@ -108,13 +108,13 @@ void GetServerIndex (void){
       serverIndex += "</td></tr></table>";
   }
 
-  if (sensorEn){
-    serverIndex += "<table border='1' bgcolor='SkyBlue' ><tr><td>LedOnCounter</td><td>";//LedSensorValue
-    //serverIndex += "<tr><td>LedSensorValue</td><td>";
-    serverIndex += switchOnCounter;//ledSensorValue
+  if (analogSensorEn){
+    serverIndex += "<table border='1' bgcolor='SkyBlue' ><tr><td>LedOnCounter</td><td>";//analogSensorValue
+    //serverIndex += "<tr><td>analogSensorValue</td><td>";
+    serverIndex += switchOnCounter;//analogSensorValue
     serverIndex += "</td></tr></table>";
     serverIndex += "<table border='1' bgcolor='Plum' ><tr><td>LedSensValue</td><td>";//LedOnCounter
-    serverIndex += ledSensorValue;//switchOnCounter
+    serverIndex += analogSensorValue;//switchOnCounter
     serverIndex += "</td></tr><tr><td>LedOn</td><td>";
     if (switchOn){
     serverIndex += "On";  
@@ -125,8 +125,10 @@ void GetServerIndex (void){
     //serverIndex += switchOn;
     serverIndex += "</td></tr></table>";
   }
-  if (TempEn){
-    serverIndex += "<table border='1' bgcolor='PaleGreen' ><tr><td><a href='/ht'>ds1820t1</a></td><td>";
+  if (tempEn){
+    serverIndex += "<table border='1' bgcolor='PaleGreen' ><tr><td><a href='/ht'>";
+    serverIndex += ds1820name[0];
+    serverIndex += "</a></td><td>";
     serverIndex += dsTemp1;
     serverIndex += "</td><td>";
     serverIndex += dsTemp1 - dsPrevTemp1;
@@ -137,24 +139,30 @@ void GetServerIndex (void){
 
 
     serverIndex += "</td></tr>";
-    serverIndex += "<tr><td>ds1820t2</td><td>";
+    serverIndex += "<tr><td>";
+    serverIndex += ds1820name[1];
+    serverIndex += "</td><td>";
     serverIndex += dsTemp2;
     serverIndex += "</td><td>";
     serverIndex += dsTemp2 - dsPrevTemp2;
     serverIndex += "</td></tr></table>";
   }
   
-  #ifdef AM2320
-    serverIndex += "<table border='1' bgcolor='DarkSeaGreen' ><tr><td><a href='/ht'>am2320t</a></td><td>";
+  if (am2320En){
+    serverIndex += "<table border='1' bgcolor='DarkSeaGreen' ><tr><td><a href='/ht'>";
+    serverIndex += nameam2320t;
+    serverIndex += "</a></td><td>";
     serverIndex += am2320t;
     serverIndex += "</td><td>";
     serverIndex += am2320t - AM2320tPrev;
-    serverIndex += "</td></tr><tr><td>am2320h</td><td>";
+    serverIndex += "</td></tr><tr><td>";
+    serverIndex += nameam2320h;
+    serverIndex += "</td><td>";
     serverIndex += am2320h;
     serverIndex += "</td><td>";
     serverIndex += am2320h - AM2320hPrev;
     serverIndex += "</td></tr></table>";
-  #endif
+  }
   
   #ifdef ADS1115
     serverIndex += "<table border='1' bgcolor='SkyBlue' ><tr><td>ads1115(0)Gas</td><td>0";
