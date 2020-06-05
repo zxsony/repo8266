@@ -35,8 +35,14 @@ void Unix_to_GMT(unsigned long epoch)
 } 
 
 void updateCurrentDateTime (){
-  currentMilisDevice = millis();
-  currentSecsSince1900 = startSecsSince1900 + ((currentMilisDevice / 1000) - startMillisDevice/1000) + 3600*3;// - 3600*7 - 60*16;
+  //currentMilisDevice = millis();
+  if (firstSynNTP){
+    currentSecsSince1900 = startSecsSince1900 + ((millis() - lastSynchroMillisDevice) / 1000 ) + 3600*3;// - 3600*7 - 60*16;
+  }
+  else{
+    currentSecsSince1900 = (millis() - lastSynchroMillisDevice) / 1000;
+  }
+  //if (dataRecive) currentSecsSince1900 = startSecsSince1900 + ((millis() - lastSynchroMillisDevice) / 1000 ) + 3600*3;// - 3600*7 - 60*16;
   
   parseLongWord(lastSynchroDevice);
   lastSynchroDeviceString = timeString;
@@ -50,6 +56,14 @@ void updateCurrentDateTime (){
   Unix_to_GMT (currentSecsSince1900);
 }
 void checkNtpUpdate (){
+//  Serial.println(currentSecsSince1900 - lastSynchroDevice);
+//
+//parseLongWord(currentSecsSince1900);
+//Serial.println("currentSecsSince1900="+timeString);
+//parseLongWord(lastSynchroDevice);
+//Serial.println("lastSynchroDevice="+timeString);
+//Serial.println(dataRecive);
+//Serial.println("");
   if (currentSecsSince1900 - lastSynchroDevice > timeCheck){
     
     if (WiFi.status() != WL_CONNECTED)
@@ -59,20 +73,24 @@ void checkNtpUpdate (){
       FS_FileWrite("/sl.txt", "\"Reconnect\";\"" + (String)ver + "\";\"" + WiFi.SSID() + "\"");
     }
     
-  loopUDP();
+  if (WiFi.status() == WL_CONNECTED) {
+    loopUDP();}
+    else{
+      dataRecive = 0;
+  }
   
   if (dataRecive) {
-    lastSynchroDevice = startSecsSince1900 + (currentMilisDevice / 1000) + 3600*3 - startMillisDevice/1000;
+    lastSynchroDevice = startSecsSince1900 + 3600*3;
+    lastSynchroMillisDevice = millis();
     timeCheck = synCheck;
-Serial.println(currentSecsSince1900 - lastSynchroDevice);
-Serial.println(timeCheck);
-Serial.println("");
+
+
 if (am2320En){
     AM2320PrevSet = true;
 }    
     ds1820PrevSet = true; 
   }
-  else timeCheck = timeCheck + 600;
+  else timeCheck = timeCheck + timeCheck;
   }
 }
 bool parseLongWord(unsigned long data)

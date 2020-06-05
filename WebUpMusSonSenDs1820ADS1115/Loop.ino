@@ -34,12 +34,13 @@ void loop(void){
   }
 
   if (ntpEn){ 
+    checkNtpUpdate();
     updateCurrentDateTime() ;
 //    testByte = timeM;
     CheckTimeEvents();
     CheckTimeEvent(); // New!!!
     //WIFIcheck();
-    checkNtpUpdate();
+    
     }
   
   #ifdef ADS1115

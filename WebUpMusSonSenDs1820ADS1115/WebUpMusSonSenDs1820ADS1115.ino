@@ -24,7 +24,7 @@ const char* host = "esp8266-webupdate";
 #define debug2320
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.5.22";
+String ver = "v2.5.24";
 //////////////////////
 
 
@@ -91,13 +91,13 @@ String sampleFn;
 
 File fsUploadFile;
   
-unsigned long startMillisDevice, currentMilisDevice, startSecsSince1900, currentSecsSince1900, secsSince1900, epochStamp;
+unsigned long startMillisDevice, currentMilisDevice, lastSynchroMillisDevice, startSecsSince1900, currentSecsSince1900, secsSince1900, epochStamp;
 unsigned long lastStartDevice, lastSynchroDevice, timeCheck, synCheck, soundDelay, dsDelay, ADC1115Delay, AM2320Delay, LightActivityDelay;
 String timeString, currentTimeDeviceString, lastStartDeviceString, lastSynchroDeviceString, countDownTimeString, ntpRegion;
 byte timeD, timeH, timeM, timeS, testByte;
 uint8_t hour, minute, second, day, month, year, weekday, lhour, lminute, tikminute;
 uint8_t monthDays[12]={31,28,31,30,31,30,31,31,30,31,30,31};
-bool dataRecive;
+bool dataRecive, firstSynNTP;
 unsigned int localPort = 2390;
 
 //IPAddress timeServer(129, 6, 15, 30);// 28, 29

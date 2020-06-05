@@ -5,13 +5,15 @@ float am2320h, am2320t, corram2320h, corram2320t;
 float am2320mt [50], am2320mh [50], am2320at[10], am2320ah[10];
 int am2320ct [50], am2320ch [50];
 int am2320storagecounter, am2320averagecounter;
-int am2320storage = 50;
-int am2320average = 10;
+int am2320storage;
+int am2320average;
 float AM2320hPrev = 255;
 float AM2320tPrev = 255;
 bool am2320Request;
 bool AM2320PrevSet;
 bool am2320averagecounterfull;
+int am2320requery;
+bool am2320debug;
 
 //if (am2320En){
 int _cou = 0;
@@ -40,26 +42,31 @@ void AM23020Read () {
     Serial.print(currentTimeDeviceString);
     Serial.print(" AM2320 transmission.\r\n");
 #endif
-    Wire.beginTransmission(AM2320_i2C_ADDRESS >> 1);
-        
-    Wire.endTransmission();
-    delay(80);
-    Wire.beginTransmission(AM2320_i2C_ADDRESS >> 1);
-    Wire.write(0x03);
-    Wire.write(0x00);
-    Wire.write(0x04);
-    delay(10);
-    if (Wire.endTransmission(1) != 0) {
-      //      am2320buf[2] = 0;
-      //      am2320buf[3] = 0;
-      //      am2320buf[4] = 0;
-      //      am2320buf[5] = 0;
-#ifdef debug
-      Serial.print("Not transmission.\r\n");
-#endif
-    }
+//    Wire.beginTransmission(AM2320_i2C_ADDRESS >> 1);  
+//    Wire.endTransmission(1);
+//    Wire.beginTransmission(AM2320_i2C_ADDRESS >> 1);
+//    Wire.endTransmission(0);
+//    delay(10);
+//    Wire.beginTransmission(AM2320_i2C_ADDRESS >> 1);
+//    Wire.write(0x03);
+//    Wire.write(0x00);
+//    Wire.write(0x04);
+//    
+//    delay(10);
+//    Wire.endTransmission(1);
+
+    
+//    if (Wire.endTransmission(1) != 0) {
+//      //      am2320buf[2] = 0;
+//      //      am2320buf[3] = 0;
+//      //      am2320buf[4] = 0;
+//      //      am2320buf[5] = 0;
+//#ifdef debug
+//      Serial.print("Not transmission.\r\n");
+//#endif
+//    }
   }
-  if ((millis() - AM2320Delay) >= 1600) {
+  if ((millis() - AM2320Delay) >= am2320requery * 1000) {//1600
     //AM2320Delay = 0;
     am2320Request = true;
 #ifdef debug
@@ -67,11 +74,42 @@ void AM23020Read () {
     Serial.print(" AM2320 request.");
     Serial.println(millis() - AM2320Delay);
 #endif
+    Wire.beginTransmission(AM2320_i2C_ADDRESS >> 1);
+    Wire.endTransmission(1); 
+    //int aet = Wire.endTransmission(1);
+    //delay(10);
+    Wire.beginTransmission(AM2320_i2C_ADDRESS >> 1);
+    Wire.endTransmission(0);
+    //int bet = Wire.endTransmission(0);
+    delay(10);
+    Wire.beginTransmission(AM2320_i2C_ADDRESS >> 1);
+    Wire.write(0x03);
+    Wire.write(0x00);
+    Wire.write(0x04);
+    
+    Wire.endTransmission(1);
+    //int cet = Wire.endTransmission(1);
+delay(10);
+
+    
+    Wire.beginTransmission(AM2320_i2C_ADDRESS >> 1);
     Wire.requestFrom(AM2320_i2C_ADDRESS >> 1, 8, 1);
     while (Wire.available())
     {
       for (int i = 0; i < 8; i++) am2320buf[i] = Wire.read();
     }
+    Wire.endTransmission(1);
+    //int det = Wire.endTransmission(1);
+// Serial.println(aet);
+// Serial.println(bet);
+// Serial.println(cet);
+// Serial.println(det);  
+//Serial.println("AM2320 read");
+//  for (int i = 0; i<7; i++){
+//    Serial.println(am2320buf[i]);
+//  }
+//Serial.println(((float)(((am2320buf[4] << 8) + am2320buf[5]) / 10.0) + corram2320t));
+//Serial.println(((float)(((am2320buf[2] << 8) + am2320buf[3]) / 10.0) + corram2320h));    
     if (am2320buf[2] == 0 & am2320buf[3] == 0) {
 #ifdef debug
       Serial.print(currentTimeDeviceString);
@@ -87,8 +125,11 @@ void AM23020Read () {
       am2320mh [am2320storagecounter] = ((float)(((am2320buf[2] << 8) + am2320buf[3]) / 10.0) + corram2320h);
 
 #ifdef debug2320
-      Serial.println (am2320mt [am2320storagecounter]);
-      Serial.println (am2320mh [am2320storagecounter]);
+      if (am2320debug){
+            Serial.println (am2320mt [am2320storagecounter]);
+            Serial.println (am2320mh [am2320storagecounter]);  
+      }
+
 #endif
       //Serial.println(am2320storagecounter);
       am2320storagecounter++;
@@ -126,12 +167,14 @@ void AM23020Read () {
           }
 //          am2320t = average_data(am2320at, am2320averagecounter);
 //          am2320h = average_data(am2320ah, am2320averagecounter);
-          Serial.print(am2320averagecounter);
-          Serial.print(" average am2320t=");
-          Serial.println(am2320t);
-          Serial.print(am2320averagecounter);
-          Serial.print(" average am2320h=");
-          Serial.println(am2320h);
+          if (am2320debug){
+            Serial.print(am2320averagecounter);
+            Serial.print(" average am2320t=");
+            Serial.println(am2320t);
+            Serial.print(am2320averagecounter);
+            Serial.print(" average am2320h=");
+            Serial.println(am2320h);
+          }
           if (am2320averagecounter == am2320average)
           {
             am2320averagecounter = 0;

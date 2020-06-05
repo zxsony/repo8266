@@ -26,7 +26,7 @@ void sendReciveUDP(IPAddress& address) {
   delay(150);
   digitalWrite(ledPinBR2, LOW);
   delay(150);  
-  //dataRecive = 0;
+  dataRecive = 0;
   if (Udp.parsePacket()) {
     //Serial.println("packet received");
     Udp.read(packetBuffer, NTP_PACKET_SIZE);
@@ -38,9 +38,11 @@ void sendReciveUDP(IPAddress& address) {
     secsSince1900 = highWord << 16 | lowWord;
     const unsigned long seventyYears = 2208988800UL;
     unsigned long epoch = secsSince1900 - seventyYears;
-    if (startSecsSince1900 == 0) startSecsSince1900 = epoch;
+    //if (startSecsSince1900 == 0) startSecsSince1900 = epoch;
+    startSecsSince1900 = epoch;
     epochStamp = epoch;
     dataRecive = 1;
+    if (!firstSynNTP) firstSynNTP = true;
     digitalWrite(ledPinGR1, HIGH);
     delay(1000);
     digitalWrite(ledPinGR1, LOW);
@@ -56,7 +58,7 @@ void loopUDP() {
   byte ipData [3][4] = {{89, 109, 251, 21}, {216, 229, 0, 179}, {129, 6, 15, 30}};//ntp1.vniiftri.ru, Moscow | Lincoln, Nebraska | NIST, Gaithersburg, Maryland
   //byte ipData [3][4] = {{198, 111, 152, 100}, {216, 229, 0, 179}, {129, 6, 15, 30}};//Carson City, Michigan | Lincoln, Nebraska | NIST, Gaithersburg, Maryland
   dataRecive = 0;
-  if (WiFi.status() == WL_CONNECTED) {
+  //if (WiFi.status() == WL_CONNECTED) {
   for (int ip = 0; ip < 3; ip++) {
     for (int i = 0; i < 10; i++) {
       watchdogCount = 0;
@@ -93,7 +95,7 @@ void loopUDP() {
     }
     
   }
-  }
-  else WIFIcheck();
+//  }
+//  else WIFIcheck();
   
 }

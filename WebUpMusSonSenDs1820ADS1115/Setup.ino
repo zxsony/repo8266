@@ -4,6 +4,7 @@ void setup(void) {
   secondTick.attach(1, ISRwatchdog);
   synCheck = 3600;//3600
   ntpSyn = false;
+  firstSynNTP = false;
   am2320storagecounter = 0;
   am2320averagecounter = 0;
   am2320averagecounterfull = false;
@@ -49,6 +50,8 @@ Serial.println ("\nDEBUGFS\n");
 
   ds.begin(ds1820pin);
   Wire.begin(am2320SDApin, am2320SCLpin);
+  Wire.beginTransmission(AM2320_i2C_ADDRESS >> 1);  
+  Wire.endTransmission(1);
 #ifdef ADS1115
   ads1115.begin();
 #endif
@@ -124,8 +127,8 @@ if (WiFi.status() == WL_CONNECTED) {
     loopUDP();    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
     ////printEpoch(epochStamp);
-    //lastSynchroDevice = startSecsSince1900;
-    lastSynchroDevice = startSecsSince1900 + (currentMilisDevice / 1000) + 3600 * 3 - startMillisDevice / 1000;
+    lastSynchroDevice = startSecsSince1900;
+    //lastSynchroDevice = startSecsSince1900 + (currentMilisDevice / 1000) + 3600 * 3 - startMillisDevice / 1000;
   }
   updateCurrentDateTime ();
   FS_FileWrite("/sl.txt", "\"StartDevice\";\"" + (String)ver + "\";\"" + WiFi.SSID() + "\"");
@@ -262,7 +265,7 @@ if (WiFi.status() == WL_CONNECTED) {
     server.sendHeader("Connection", "close");
     server.sendHeader("Access-Control-Allow-Origin", "*");
     server.send(200, "text/html", "<html><head><title>ESP8266</title><meta http-equiv='Content-Type' content='text/html; charset=utf-8' /><script>alert( 'Вы запустили процедуру самоуничтожения!))' );document.location.href='/';</script>");
-    lastSynchroDevice = startSecsSince1900 + (currentMilisDevice / 1000) + 3600 * 3 - startMillisDevice / 1000;
+    //lastSynchroDevice = startSecsSince1900 + (currentMilisDevice / 1000) + 3600 * 3 - startMillisDevice / 1000;
     timeCheck = synCheck;
   });
 
@@ -390,6 +393,10 @@ void readsettings(void) {
     corram2320t = (FS_ReadSetting("[AM2320]", "corrt")).toFloat();
     nameam2320h = FS_ReadSetting("[AM2320]", "nameh");
     corram2320h = (FS_ReadSetting("[AM2320]", "corrh")).toFloat();
+    am2320storage = (FS_ReadSetting("[AM2320]", "storage")).toInt();
+    am2320average = (FS_ReadSetting("[AM2320]", "average")).toInt();
+    am2320debug = bool ((FS_ReadSetting("[AM2320]", "debug")).toInt());
+    am2320requery = (FS_ReadSetting("[AM2320]", "requery")).toInt();
 //    String stry = "1";
 //    Serial.println (bool ((stry).toInt()));
 }

@@ -43,6 +43,11 @@ String FS_ReadSetting(String section, String parametr) {
     f.println("corrt=0.0");
     f.println("nameh=AM2320 h");
     f.println("corrh=0.0");
+    f.println("storage=1");
+    f.println("average=1");
+    f.println("requery=20");
+    f.println("debug=0");
+
 
   } 
       String dataread, dataparametr;
