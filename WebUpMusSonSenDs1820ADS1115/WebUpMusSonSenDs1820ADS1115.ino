@@ -24,7 +24,7 @@ const char* host = "esp8266-webupdate";
 #define debug2320
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.5.24";
+String ver = "v2.5.25";
 //////////////////////
 
 
@@ -77,7 +77,7 @@ int am2320SDApin, am2320SCLpin;
 
 float tempStack [24][8];
 float sampleDataStack [60][7];
-uint8_t sampleDateTimeStack [60][4];
+uint8_t sampleDateTimeStack [60][5];
 
 bool samplePolling;
 int sampleCount, sampleLimit, samplePage;

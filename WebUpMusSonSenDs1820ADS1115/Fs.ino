@@ -76,13 +76,29 @@ String FS_ReadSetting(String section, String parametr) {
 
 
 void FS_FileDimWrite(String Fname, String Data) {
+  bool fe = SPIFFS.exists(Fname);
   File f = SPIFFS.open(Fname, "a");
   if (!f) {
     Serial.println("file open failed");
   }
   else
   {
-    //f.print(Data + "\r");
+    if (!fe) {
+      f.print("\"time\";"); 
+    }
+    if (am2320En and !fe) {
+      f.print("\"" + nameam2320t + "\";");
+      f.print("\"" + nameam2320h + "\"");
+    }
+    if (tempEn and !fe) {
+      f.print(";\"" + ds1820name[0] + "\";");
+      f.print("\"" + ds1820name[1] + "\"");
+    }
+    if (analogSensorEn and !fe) {
+      f.print(";\"analogIn\"");
+    }
+    f.print("\r");
+    
     for(int w = 0; w < sampleLimit; w++){
 if (sampleDateTimeStack[w][0] != 0){
     if (sampleDateTimeStack[w][2] < 10) f.print("0");//hour
@@ -90,10 +106,26 @@ if (sampleDateTimeStack[w][0] != 0){
     f.print(":");
     if (sampleDateTimeStack[w][3] < 10) f.print("0");//minute
     f.print((String)sampleDateTimeStack[w][3]);
-    f.print(";");
-    f.print((String)sampleDataStack[w][0]);
-    f.print(";");
-    f.print((String)sampleDataStack[w][1]);
+
+    if (am2320En) {
+      f.print(";");
+      f.print((String)sampleDataStack[w][0]);
+      f.print(";");
+      f.print((String)sampleDataStack[w][1]);
+    }
+
+    if (tempEn) {
+      f.print(";");
+      f.print((String)sampleDataStack[w][2]);
+      f.print(";");
+      f.print((String)sampleDataStack[w][3]);
+    }
+
+    if (analogSensorEn) {
+      f.print(";");
+      f.print((String)sampleDataStack[w][6]);
+    }    
+    
     f.print("\r");
 }
     }
