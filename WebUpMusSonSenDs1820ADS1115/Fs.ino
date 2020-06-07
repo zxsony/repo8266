@@ -121,7 +121,7 @@ if (sampleDateTimeStack[w][0] != 0){
 
     if (analogSensorEn) {
       f.print(";");
-      f.print((String)sampleDataStack[w][6]);
+      f.print((String)((int)sampleDataStack[w][6]));
     }    
     
     f.print("\r");
@@ -243,7 +243,7 @@ void FS_init(void) {
   server.on("/list", HTTP_GET, handleFileList);
   //загрузка редактора editor
   server.on("/edit", HTTP_GET, []() {
-    if (!handleFileRead("/edit.htm")) server.send(404, "text/plain", "FileNotFound");
+    if (!handleFileRead("/edit2.html")) server.send(404, "text/plain", "FileNotFound");
   });
   //Создание файла
   server.on("/edit", HTTP_PUT, handleFileCreate);

@@ -1,0 +1,45 @@
+[MAIN]
+deviceId=device1
+tempEn=0
+analogSensorEn=1
+am2320En=0
+securityEn=0
+mp3En=0
+ultrasonicEn=0
+ntpEn=1
+ledblink=1
+
+[INTERFACE]
+oneWire=5
+i2cSDA=4
+i2cSCL=14
+
+[WIFIAP]
+ssid1=NVRAM WARNING
+pass1=Lift80Lift
+ssid2=zxASUSzx
+pass2=Lift80Lift
+ssid3=la2
+pass3=Lift1980
+
+[NETWORK]
+ipset=0
+ip=192.168.1.100
+mask=255.255.0.0
+gate=192.168.1.1
+
+[DS1820]
+name0=ds1820t1
+corr0=0.0
+name1=ds1820t2
+corr1=0.0
+
+[AM2320]
+namet=AM2320 t
+corrt=0.0
+nameh=AM2320 h
+corrh=0.0
+storage=1
+average=1
+requery=2
+debug=0
