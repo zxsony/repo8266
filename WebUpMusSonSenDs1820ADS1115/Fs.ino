@@ -83,9 +83,7 @@ void FS_FileDimWrite(String Fname, String Data) {
   }
   else
   {
-    if (!fe) {
-      f.print("\"time\";"); 
-    }
+    if (!fe) f.print("\"time\";");
     if (am2320En and !fe) {
       f.print("\"" + nameam2320t + "\";");
       f.print("\"" + nameam2320h + "\"");
@@ -97,7 +95,7 @@ void FS_FileDimWrite(String Fname, String Data) {
     if (analogSensorEn and !fe) {
       f.print(";\"analogIn\"");
     }
-    f.print("\r");
+    if (!fe) f.print("\r");
     
     for(int w = 0; w < sampleLimit; w++){
 if (sampleDateTimeStack[w][0] != 0){

@@ -17,8 +17,9 @@ void WIFIinit2() {
   ip.fromString(FS_ReadSetting("[NETWORK]", "ip"));
   mask.fromString(FS_ReadSetting("[NETWORK]", "mask"));
   gate.fromString(FS_ReadSetting("[NETWORK]", "gate"));
-  WiFi.config(ip, gate, mask);
   
+  if (ipset) WiFi.config(ip, gate, mask);
+  WiFi.hostname(deviceId);
   bool endlist = true;
   int count = 0;
   
@@ -53,6 +54,11 @@ void WIFIinit2() {
         // Иначе удалось подключиться отправляем сообщение
         // о подключении и выводим адрес IP
         //Serial.println("");
+        Serial.println("IP address: ");
+        Serial.println(WiFi.localIP());
+        Serial.println("IP gateway: ");
+        Serial.println(WiFi.gatewayIP().toString());
+        
         digitalWrite(ledPinGR1, HIGH);
         delay(1000);
         digitalWrite(ledPinGR1, LOW);

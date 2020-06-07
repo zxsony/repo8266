@@ -126,8 +126,14 @@ WIFIinit2();   /////////////////////////////////////////////////////////////////
 if (WiFi.status() == WL_CONNECTED) {
     loopUDP();    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
+
     ////printEpoch(epochStamp);
-    lastSynchroDevice = startSecsSince1900;
+    if (firstSynNTP){
+      lastSynchroDevice = startSecsSince1900 + 3600*3;
+    }
+    else{
+      lastSynchroDevice = startSecsSince1900;
+    }
     //lastSynchroDevice = startSecsSince1900 + (currentMilisDevice / 1000) + 3600 * 3 - startMillisDevice / 1000;
   }
   updateCurrentDateTime ();
@@ -382,6 +388,7 @@ void readsettings(void) {
     mp3En = bool ((FS_ReadSetting("[MAIN]", "mp3En")).toInt());
     ultrasonicEn = bool ((FS_ReadSetting("[MAIN]", "ultrasonicEn")).toInt());
     ntpEn = bool ((FS_ReadSetting("[MAIN]", "ntpEn")).toInt());
+    ipset = bool ((FS_ReadSetting("[NETWORK]", "ipset")).toInt());
     ledblink = bool ((FS_ReadSetting("[MAIN]", "ledblink")).toInt());
     
     ds1820pin = (FS_ReadSetting("[INTERFACE]", "oneWire")).toInt();

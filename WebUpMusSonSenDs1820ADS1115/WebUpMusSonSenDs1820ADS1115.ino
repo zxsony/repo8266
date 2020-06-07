@@ -24,7 +24,7 @@ const char* host = "esp8266-webupdate";
 #define debug2320
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.5.25";
+String ver = "v2.5.26";
 //////////////////////
 
 
@@ -56,6 +56,7 @@ bool securityEn;
 bool ledblink;
 bool ultrasonicEn;
 bool ntpEn;
+bool ipset;
 String ssid, pass;
 
 int ultrasonicLoop = 0;
