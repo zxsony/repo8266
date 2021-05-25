@@ -111,6 +111,8 @@ void loopUDP() {
   //byte ipData [3][4] = {{198, 111, 152, 100}, {216, 229, 0, 179}, {129, 6, 15, 30}};//Carson City, Michigan | Lincoln, Nebraska | NIST, Gaithersburg, Maryland
   dataRecive = 0;
   //if (WiFi.status() == WL_CONNECTED) {
+  ntpRegion = "Not available";
+
   for (int ip = 0; ip < 3; ip++) {
     for (int i = 0; i < 10; i++) {
       watchdogCount = 0;
@@ -147,14 +149,17 @@ void loopUDP() {
     }
     
   }
+
   if (ntpRegion == "Not available"){
-    IPAddress ipgateway;
-    ipgateway = WiFi.gatewayIP();
-    sendReciveUDPlocal(ipgateway);
-    if (dataRecive) {
-    ntpRegion = "Gateway";
+//    Serial.println("Local NTP");
+//    WIFIinitLocalNtp();
+//    IPAddress ipgateway;
+//    ipgateway = WiFi.gatewayIP();
+//    sendReciveUDPlocal(ipgateway);
+//    if (dataRecive) {
+//    ntpRegion = "Gateway";
     }
-  }
+//  }
 
 //  }
 //  else WIFIcheck();

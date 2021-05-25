@@ -89,8 +89,10 @@ if (am2320En){
     AM2320PrevSet = true;
 }    
     ds1820PrevSet = true; 
+
+    
   }
-  else timeCheck = timeCheck + timeCheck;
+  else timeCheck = synCheck + 120;
   }
 }
 bool parseLongWord(unsigned long data)

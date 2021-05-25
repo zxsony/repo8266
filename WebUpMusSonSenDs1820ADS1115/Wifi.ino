@@ -7,9 +7,11 @@ void WIFIinit2() {
   devNumbFull = "STA-" + deviceId;
   WiFi.persistent(false); 
   WiFi.mode(WIFI_STA);
+  WiFi.disconnect();
+  delay(100);
 //  WiFi.softAPConfig(IPAddress(192, 168, 4, 4), IPAddress(192, 168, 4, 4), IPAddress(255, 255, 255, 0));
 //  WiFi.softAP(devNumbFull.c_str());
-
+  wifiScanCount = WiFi.scanNetworks();
   IPAddress ip;
   IPAddress mask;
   IPAddress gate;
@@ -30,8 +32,16 @@ void WIFIinit2() {
     pass = FS_ReadSetting("[WIFIAP]", "pass" + String (count)); 
 //    Serial.println(ssid);
 //    Serial.println(pass);
-    if (ssid == "" or pass == "") break;
+//    Serial.println(count);
+//Serial.println(bool ((FS_ReadSetting("[MAIN]", "test")).toInt()));
+    if (count > 9) break;
+    if (ssid == "" or pass == "") continue;
+    //Serial.println(WIFIChk(ssid));
+    if (!WIFIChk(ssid)) continue;
+    Serial.println ("WiFi.begin");
     WiFi.begin(ssid, pass);
+    Serial.println(ssid);
+    Serial.println(pass);
     
     while (--tries && WiFi.status() != WL_CONNECTED)
       {
@@ -48,12 +58,13 @@ void WIFIinit2() {
       delay(1000);
       digitalWrite(ledPinR, LOW);
       //WiFi.disconnect();
+      
     }
     else 
       {
         // Иначе удалось подключиться отправляем сообщение
         // о подключении и выводим адрес IP
-        //Serial.println("");
+        Serial.println("Conn");
         Serial.println("IP address: ");
         Serial.println(WiFi.localIP());
         Serial.println("IP gateway: ");
@@ -72,6 +83,8 @@ void WIFIinit2() {
         return;
       }
     }
+    WIFIinitLocalNtp();
+    
     ssid = "Not setting";
     devNumbFull = "AP-" + deviceId;
     WiFi.mode(WIFI_AP);       // WiFi.mode(WIFI_AP);
@@ -91,6 +104,65 @@ void WIFIinit2() {
     delay(1000);
 }
 
+void WIFIinitLocalNtp() {
+  WiFi.disconnect();
+  byte tries = 11;
+  ssid = FS_ReadSetting("[WIFIAP]", "ssidLNtp");
+  pass = FS_ReadSetting("[WIFIAP]", "passLNtp");
+  Serial.println("Local Ntp");
+  Serial.println(ssid);
+  Serial.println(pass);
+  WiFi.begin(ssid, pass);
+  while (--tries && WiFi.status() != WL_CONNECTED)
+    {
+    watchdogCount = 0;
+    digitalWrite(ledPinBR2, HIGH);
+    delay(300);
+    digitalWrite(ledPinBR2, LOW);
+    delay(700);
+    }
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    digitalWrite(ledPinR, HIGH);
+    delay(1000);
+    digitalWrite(ledPinR, LOW);
+  }
+    else 
+    {
+      Serial.println("Local NTP IP address: ");
+      Serial.println(WiFi.localIP());
+      Serial.println("Local NTP IP gateway: ");
+      Serial.println(WiFi.gatewayIP().toString());
+      
+      digitalWrite(ledPinGR1, HIGH);
+      delay(1000);
+      digitalWrite(ledPinGR1, LOW); 
+
+      Serial.println("Local NTP");
+      IPAddress ipgateway;
+      ipgateway = WiFi.gatewayIP();
+      sendReciveUDPlocal(ipgateway);
+      if (dataRecive) {
+      ntpRegion = "Gateway";}
+    }
+    ssid = "Not setting";
+    devNumbFull = "AP-" + deviceId;
+    WiFi.mode(WIFI_AP);       // WiFi.mode(WIFI_AP);
+    WiFi.softAPConfig(IPAddress(192, 168, 4, 4), IPAddress(192, 168, 4, 4), IPAddress(255, 255, 255, 0));
+    WiFi.softAP(devNumbFull.c_str());
+    digitalWrite(ledPinR, HIGH);
+    delay(1000);
+    digitalWrite(ledPinR, LOW);
+    delay(1000);
+    digitalWrite(ledPinR, HIGH);
+    delay(1000);
+    digitalWrite(ledPinR, LOW);
+    delay(1000);
+    digitalWrite(ledPinR, HIGH);
+    delay(1000);
+    digitalWrite(ledPinR, LOW);
+    delay(1000);
+}
 
 void WIFIinit() {
   // Попытка подключения к точке доступа
@@ -140,6 +212,35 @@ void WIFIinit() {
       return;
     }
   }
+}
+
+bool WIFIChk(String testSSID){
+  
+  if (wifiScanCount == 0) {
+    Serial.println("no networks found");
+    return false;
+  } else {
+//    Serial.print(wifiScanCount);
+//    Serial.println(" networks found");
+    for (int i = 0; i < wifiScanCount; ++i) {
+      // Print SSID and RSSI for each network found
+//      Serial.print(i + 1);
+//      Serial.print(": ");
+//      Serial.print(WiFi.SSID(i));
+//      Serial.print(" (");
+//      Serial.print(WiFi.RSSI(i));
+//      Serial.print(")");
+//      Serial.println((WiFi.encryptionType(i) == ENC_TYPE_NONE) ? " " : "*");
+
+//Serial.println(testSSID);
+//Serial.println(WiFi.SSID(i));
+//
+//Serial.println(WiFi.SSID(i) == testSSID);
+      if (WiFi.SSID(i) == testSSID) return true;
+      delay(10);
+    }
+    return false;
+}
 }
 
 //void getAP () {

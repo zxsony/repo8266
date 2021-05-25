@@ -29,7 +29,7 @@ void setup(void) {
   //FS_ReadAM2320Setting();
 
   readsettings();
-
+  timeCheck = synCheck;
 #ifdef DEBUGFS
 Serial.println ("\nDEBUGFS\n");
 //for (int i = 1; i < 4; i++){
@@ -390,6 +390,7 @@ void readsettings(void) {
     ntpEn = bool ((FS_ReadSetting("[MAIN]", "ntpEn")).toInt());
     ipset = bool ((FS_ReadSetting("[NETWORK]", "ipset")).toInt());
     ledblink = bool ((FS_ReadSetting("[MAIN]", "ledblink")).toInt());
+    synCheck = (FS_ReadSetting("[MAIN]", "syncheck")).toInt();
     
     ds1820pin = (FS_ReadSetting("[INTERFACE]", "oneWire")).toInt();
     am2320SDApin = (FS_ReadSetting("[INTERFACE]", "i2cSDA")).toInt();
