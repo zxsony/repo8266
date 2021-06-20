@@ -18,12 +18,16 @@ String FS_ReadSetting(String section, String parametr) {
     f.println("ultrasonicEn=0");
     f.println("ntpEn=1");
     f.println("ledblink=1");
+    f.println("syncheck=3600");
+    f.println("test=0");
     f.println("");
+    
     f.println("[INTERFACE]");
     f.println("oneWire=5");
     f.println("i2cSDA=4");
     f.println("i2cSCL=14");
     f.println("");
+    
     f.println("[WIFIAP]");
     f.println("ssid1=NVRAM WARNING");
     f.println("pass1=Lift80Lift");
@@ -32,12 +36,21 @@ String FS_ReadSetting(String section, String parametr) {
     f.println("ssid3=la2");
     f.println("pass3=Lift1980");
     f.println("");
+
+    f.println("[NETWORK]");
+    f.println("ipset=0");
+    f.println("ip=192.168.1.100");
+    f.println("mask=255.255.0.0");
+    f.println("gate=192.168.1.1");
+    f.println("");
+    
     f.println("[DS1820]");
     f.println("name0=ds1820t1");
     f.println("corr0=0.0");
     f.println("name1=ds1820t2");
     f.println("corr1=0.0");
     f.println("");
+    
     f.println("[AM2320]");
     f.println("namet=AM2320 t");
     f.println("corrt=0.0");
