@@ -92,7 +92,7 @@ if (am2320En){
 
     
   }
-  else timeCheck = synCheck + 120;
+  else timeCheck = synCheck + 600;
   }
 }
 bool parseLongWord(unsigned long data)

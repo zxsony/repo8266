@@ -83,6 +83,7 @@ void WIFIinit2() {
         return;
       }
     }
+    return;
     WIFIinitLocalNtp();
     
     ssid = "Not setting";
@@ -123,12 +124,14 @@ void WIFIinitLocalNtp() {
     }
   if (WiFi.status() != WL_CONNECTED)
   {
+    Serial.println("Local NTP not connected");
     digitalWrite(ledPinR, HIGH);
     delay(1000);
     digitalWrite(ledPinR, LOW);
   }
     else 
     {
+      Serial.println("Local NTP connected");
       Serial.println("Local NTP IP address: ");
       Serial.println(WiFi.localIP());
       Serial.println("Local NTP IP gateway: ");
@@ -138,11 +141,12 @@ void WIFIinitLocalNtp() {
       delay(1000);
       digitalWrite(ledPinGR1, LOW); 
 
-      Serial.println("Local NTP");
+      
       IPAddress ipgateway;
       ipgateway = WiFi.gatewayIP();
       sendReciveUDPlocal(ipgateway);
       if (dataRecive) {
+      Serial.println("Local NTP data recive");
       ntpRegion = "Gateway";}
     }
     ssid = "Not setting";

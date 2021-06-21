@@ -26,7 +26,7 @@ void sendReciveUDPlocal(IPAddress& address) {
   delay(150);  
   dataRecive = 0;
   if (Udp.parsePacket()) {
-    //Serial.println("packet received");
+    Serial.println("packet received");
     Udp.read(packetBuffer, NTP_PACKET_SIZE);
 
     unsigned long highWord = word(packetBuffer[40], packetBuffer[41]);
@@ -151,17 +151,17 @@ void loopUDP() {
   }
 
   if (ntpRegion == "Not available"){
-//    Serial.println("Local NTP");
-//    WIFIinitLocalNtp();
-//    IPAddress ipgateway;
-//    ipgateway = WiFi.gatewayIP();
-//    sendReciveUDPlocal(ipgateway);
-//    if (dataRecive) {
-//    ntpRegion = "Gateway";
+    Serial.println("Local NTP");
+    WIFIinitLocalNtp();
+    IPAddress ipgateway;
+    ipgateway = WiFi.gatewayIP();
+    sendReciveUDPlocal(ipgateway);
+    if (dataRecive) {
+    ntpRegion = "Gateway";
     }
-//  }
+  
 
-//  }
-//  else WIFIcheck();
+  }
+  else WIFIcheck();
   
 }
