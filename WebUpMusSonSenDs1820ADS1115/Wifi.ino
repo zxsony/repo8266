@@ -64,21 +64,21 @@ void WIFIinit2() {
       {
         // Иначе удалось подключиться отправляем сообщение
         // о подключении и выводим адрес IP
-        Serial.println("Conn");
-        Serial.println("IP address: ");
+        Serial.println("WiFi router connect");
+        Serial.print("IP address: ");
         Serial.println(WiFi.localIP());
-        Serial.println("IP gateway: ");
+        Serial.print("IP gateway: ");
         Serial.println(WiFi.gatewayIP().toString());
         
         digitalWrite(ledPinGR1, HIGH);
         delay(1000);
         digitalWrite(ledPinGR1, LOW);
 #ifdef debugwifi        
-        Serial.println("WiFi connected");
-        Serial.print("IP SSID: ");
+//        Serial.println("WiFi connected");
+        Serial.print("WIFI SSID: ");
         Serial.println(WiFi.SSID());
-        Serial.print("IP address: ");
-        Serial.println(WiFi.localIP());
+//        Serial.print("IP address: ");
+//        Serial.println(WiFi.localIP());
 #endif
         return;
       }

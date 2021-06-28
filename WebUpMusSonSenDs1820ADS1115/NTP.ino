@@ -162,6 +162,6 @@ void loopUDP() {
   
 
   }
-  else WIFIcheck();
+  //else WIFIcheck();
   
 }
