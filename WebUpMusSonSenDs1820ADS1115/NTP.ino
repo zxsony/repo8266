@@ -107,6 +107,9 @@ void sendReciveUDP(IPAddress& address) {
 }
 
 void loopUDP() {
+
+  Serial.println ("NTP loop");
+  
   byte ipData [3][4] = {{89, 109, 251, 21}, {216, 229, 0, 179}, {129, 6, 15, 30}};//ntp1.vniiftri.ru, Moscow | Lincoln, Nebraska | NIST, Gaithersburg, Maryland
   //byte ipData [3][4] = {{198, 111, 152, 100}, {216, 229, 0, 179}, {129, 6, 15, 30}};//Carson City, Michigan | Lincoln, Nebraska | NIST, Gaithersburg, Maryland
   dataRecive = 0;
