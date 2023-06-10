@@ -87,7 +87,7 @@ int sampleCount, sampleLimit, samplePage;
 String wifiAp [10][2];
 int wifiApCount;
 
-String filename = "/data.txt";
+//String filename = "/data.txt";
 
 String sampleFn;
 

@@ -1,4 +1,4 @@
-unsigned long sendNTPpacketlocal(IPAddress& address) {
+void sendNTPpacketlocal(IPAddress& address) {
   memset(packetBuffer, 0, NTP_PACKET_SIZE);
   packetBuffer[0] = 0b11100011;
   packetBuffer[1] = 0;
@@ -52,7 +52,7 @@ void sendReciveUDPlocal(IPAddress& address) {
   dataRecive = 0;
 }
 
-unsigned long sendNTPpacket(IPAddress& address) {
+void sendNTPpacket(IPAddress& address) {
   memset(packetBuffer, 0, NTP_PACKET_SIZE);
   packetBuffer[0] = 0b11100011;
   packetBuffer[1] = 0;
