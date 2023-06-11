@@ -3,90 +3,90 @@ String FS_ReadSetting(String section, String parametr) {
   String data[2];
   File f = SPIFFS.open("/8266settings.txt", "r");
   if (!f) {
-    Serial.println("File doesn't exist yet. Creating it");
-    File f = SPIFFS.open("/8266settings.txt", "w");
-    if (!f) {
-      Serial.println("file creation failed");
-    }
-    f.println("[MAIN]");
-    f.println("deviceId=device0");
-    f.println("tempEn=0");
-    f.println("analogSensorEn=0");
-    f.println("am2320En=0");
-    f.println("securityEn=0");
-    f.println("mp3En=0");
-    f.println("ultrasonicEn=0");
-    f.println("ntpEn=1");
-    f.println("ledblink=1");
-    f.println("syncheck=3600");
-    f.println("test=0");
-    f.println("");
-    
-    f.println("[INTERFACE]");
-    f.println("oneWire=5");
-    f.println("i2cSDA=4");
-    f.println("i2cSCL=14");
-    f.println("");
-    
-    f.println("[WIFIAP]");
-    f.println("ssid1=NVRAM WARNING");
-    f.println("pass1=Lift80Lift");
-    f.println("ssid2=zxASUSzx");
-    f.println("pass2=Lift80Lift");
-    f.println("ssid3=la2");
-    f.println("pass3=Lift1980");
-    f.println("");
+    FS_WriteConfigFile();
+  }
+  String dataread, dataparametr;
 
-    f.println("[NETWORK]");
-    f.println("ipset=0");
-    f.println("ip=192.168.1.100");
-    f.println("mask=255.255.0.0");
-    f.println("gate=192.168.1.1");
-    f.println("");
-    
-    f.println("[DS1820]");
-    f.println("name0=ds1820t1");
-    f.println("corr0=0.0");
-    f.println("name1=ds1820t2");
-    f.println("corr1=0.0");
-    f.println("");
-    
-    f.println("[AM2320]");
-    f.println("namet=AM2320 t");
-    f.println("corrt=0.0");
-    f.println("nameh=AM2320 h");
-    f.println("corrh=0.0");
-    f.println("storage=1");
-    f.println("average=1");
-    f.println("requery=20");
-    f.println("debug=0");
-
-
-  } 
-      String dataread, dataparametr;
-      
-      while (f.available()){
+  while (f.available()) {
+    dataread = f.readStringUntil('\n');
+    dataread.replace("\r", "");
+    if (dataread == section)
+    {
+      while (f.available()) {
         dataread = f.readStringUntil('\n');
         dataread.replace("\r", "");
-        if (dataread == section)
-          {
-            while (f.available()){
-              dataread = f.readStringUntil('\n');
-              dataread.replace("\r", "");
-              if (dataread.indexOf("[") > -1) break;
-              if (dataread.indexOf(parametr + "=") > -1){
-                //Serial.println (dataread.substring (0,dataread.indexOf("=")));
-                //Serial.println (dataread.substring (dataread.indexOf("=") + 1));
-                dataparametr = dataread.substring (dataread.indexOf("=") + 1);
-              }
-            }
-          }
+        if (dataread.indexOf("[") > -1) break;
+        if (dataread.indexOf(parametr + "=") > -1) {
+          //Serial.println (dataread.substring (0,dataread.indexOf("=")));
+          //Serial.println (dataread.substring (dataread.indexOf("=") + 1));
+          dataparametr = dataread.substring (dataread.indexOf("=") + 1);
+        }
       }
+    }
+  }
   f.close();
   return dataparametr;
 }
 
+void FS_WriteConfigFile(void) {
+  Serial.println("File doesn't exist yet. Creating it");
+  File f = SPIFFS.open("/8266settings.txt", "w");
+  if (!f) {
+    Serial.println("file creation failed");
+  }
+  f.println("[MAIN]");
+  f.println("deviceId=device0");
+  f.println("tempEn=0");
+  f.println("analogSensorEn=0");
+  f.println("am2320En=0");
+  f.println("securityEn=0");
+  f.println("mp3En=0");
+  f.println("ultrasonicEn=0");
+  f.println("ntpEn=1");
+  f.println("ledblink=1");
+  f.println("syncheck=3600");
+  f.println("test=0");
+  f.println("");
 
+  f.println("[INTERFACE]");
+  f.println("oneWire=5");
+  f.println("i2cSDA=4");
+  f.println("i2cSCL=14");
+  f.println("");
+
+  f.println("[WIFIAP]");
+  f.println("ssid1=NVRAM WARNING");
+  f.println("pass1=Lift80Lift");
+  f.println("ssid2=zxASUSzx");
+  f.println("pass2=Lift80Lift");
+  f.println("ssid3=la2");
+  f.println("pass3=Lift1980");
+  f.println("");
+
+  f.println("[NETWORK]");
+  f.println("ipset=0");
+  f.println("ip=192.168.1.100");
+  f.println("mask=255.255.0.0");
+  f.println("gate=192.168.1.1");
+  f.println("");
+
+  f.println("[DS1820]");
+  f.println("name0=ds1820t1");
+  f.println("corr0=0.0");
+  f.println("name1=ds1820t2");
+  f.println("corr1=0.0");
+  f.println("");
+
+  f.println("[AM2320]");
+  f.println("namet=AM2320 t");
+  f.println("corrt=0.0");
+  f.println("nameh=AM2320 h");
+  f.println("corrh=0.0");
+  f.println("storage=1");
+  f.println("average=1");
+  f.println("requery=20");
+  f.println("debug=0");
+}
 
 void FS_FileDimWrite(String Fname, String Data) {
   bool fe = SPIFFS.exists(Fname);
@@ -109,113 +109,111 @@ void FS_FileDimWrite(String Fname, String Data) {
       f.print(";\"analogIn\"");
     }
     if (!fe) f.print("\r");
-    
-    for(int w = 0; w < sampleLimit; w++){
-if (sampleDateTimeStack[w][0] != 0){
-    if (sampleDateTimeStack[w][2] < 10) f.print("0");//hour
-    f.print((String)sampleDateTimeStack[w][2]);
-    f.print(":");
-    if (sampleDateTimeStack[w][3] < 10) f.print("0");//minute
-    f.print((String)sampleDateTimeStack[w][3]);
 
-    if (am2320En) {
-      f.print(";");
-      f.print((String)sampleDataStack[w][0]);
-      f.print(";");
-      f.print((String)sampleDataStack[w][1]);
-    }
+    for (int w = 0; w < sampleLimit; w++) {
+      if (sampleDateTimeStack[w][0] != 0) {
+        if (sampleDateTimeStack[w][2] < 10) f.print("0");//hour
+        f.print((String)sampleDateTimeStack[w][2]);
+        f.print(":");
+        if (sampleDateTimeStack[w][3] < 10) f.print("0");//minute
+        f.print((String)sampleDateTimeStack[w][3]);
 
-    if (tempEn) {
-      f.print(";");
-      f.print((String)sampleDataStack[w][2]);
-      f.print(";");
-      f.print((String)sampleDataStack[w][3]);
-    }
+        if (am2320En) {
+          f.print(";");
+          f.print((String)sampleDataStack[w][0]);
+          f.print(";");
+          f.print((String)sampleDataStack[w][1]);
+        }
 
-    if (analogSensorEn) {
-      f.print(";");
-      f.print((String)((int)sampleDataStack[w][6]));
-    }    
-    
-    f.print("\r");
-}
+        if (tempEn) {
+          f.print(";");
+          f.print((String)sampleDataStack[w][2]);
+          f.print(";");
+          f.print((String)sampleDataStack[w][3]);
+        }
+
+        if (analogSensorEn) {
+          f.print(";");
+          f.print((String)((int)sampleDataStack[w][6]));
+        }
+
+        f.print("\r");
+      }
     }
     f.close();
   }
 }
 
+//void FS_ReadAM2320Setting(void) {
+//  int c = 0;
+//  File f = SPIFFS.open("/2320settings.txt", "r");
+//  if (!f) {
+//    Serial.println("File doesn't exist yet. Creating it");
+//
+//    // open the file in write mode
+//    File f = SPIFFS.open("/2320settings.txt", "w");
+//    if (!f) {
+//      Serial.println("file creation failed");
+//    }
+//    // now write two lines in key/value style with  end-of-line characters
+//    f.println("0.0");
+//    f.println("0.0");
+//  }
+//  String tstr = f.readStringUntil('\n');
+//  tstr.replace("\n", "");
+//  tstr.replace("\r", "");
+//  corram2320t = tstr.toFloat();
+//  //Serial.println(corram2320t);
+//  tstr = f.readStringUntil('\n');
+//  tstr.replace("\n", "");
+//  tstr.replace("\r", "");
+//  corram2320h = tstr.toFloat();
+//  f.close();
+//}
 
-void FS_ReadAM2320Setting(void) {
-  int c = 0;
-  File f = SPIFFS.open("/2320settings.txt", "r");
-  if (!f) {
-    Serial.println("File doesn't exist yet. Creating it");
 
-    // open the file in write mode
-    File f = SPIFFS.open("/2320settings.txt", "w");
-    if (!f) {
-      Serial.println("file creation failed");
-    }
-    // now write two lines in key/value style with  end-of-line characters
-    f.println("0.0");
-    f.println("0.0");
-  } 
-      String tstr = f.readStringUntil('\n');
-      tstr.replace("\n", "");
-      tstr.replace("\r", "");
-      corram2320t = tstr.toFloat();
-      //Serial.println(corram2320t);
-      tstr = f.readStringUntil('\n');
-      tstr.replace("\n", "");
-      tstr.replace("\r", "");
-      corram2320h = tstr.toFloat();
-  f.close();
-}
-
-
-int FS_ReadWiFiSetting(void) {
-  int c = 0;
-  File f = SPIFFS.open("/wifisettings.txt", "r");
-  if (!f) {
-    Serial.println("File doesn't exist yet. Creating it");
-
-    // open the file in write mode
-    File f = SPIFFS.open("/wifisettings.txt", "w");
-    if (!f) {
-      Serial.println("file creation failed");
-    }
-    // now write two lines in key/value style with  end-of-line characters
-    f.println("la2");
-    f.println("Lift1980");
-    f.println("Tenda_FBA7C0");
-    f.println("121314150");
-    f.println("NVRAM WARNING");
-    f.println("Lift80Lift");
-  } else {
-    // we could open the file
-    
-    while (f.available()) {
-      //Lets read line by line from the file
-      String tstr = f.readStringUntil('\n');
-      tstr.replace("\n", "");
-      tstr.replace("\r", "");
-      wifiAp [c][0] = tstr;
-      tstr = f.readStringUntil('\n');
-      tstr.replace("\n", "");
-      tstr.replace("\r", "");
-      wifiAp [c][1] = tstr;
-      c++;
-    }
-  }
-  f.close();
-  return c;
-}
-
+//int FS_ReadWiFiSetting(void) {
+//  int c = 0;
+//  File f = SPIFFS.open("/wifisettings.txt", "r");
+//  if (!f) {
+//    Serial.println("File doesn't exist yet. Creating it");
+//
+//    // open the file in write mode
+//    File f = SPIFFS.open("/wifisettings.txt", "w");
+//    if (!f) {
+//      Serial.println("file creation failed");
+//    }
+//    // now write two lines in key/value style with  end-of-line characters
+//    f.println("la2");
+//    f.println("Lift1980");
+//    f.println("Tenda_FBA7C0");
+//    f.println("121314150");
+//    f.println("NVRAM WARNING");
+//    f.println("Lift80Lift");
+//  } else {
+//    // we could open the file
+//
+//    while (f.available()) {
+//      //Lets read line by line from the file
+//      String tstr = f.readStringUntil('\n');
+//      tstr.replace("\n", "");
+//      tstr.replace("\r", "");
+//      wifiAp [c][0] = tstr;
+//      tstr = f.readStringUntil('\n');
+//      tstr.replace("\n", "");
+//      tstr.replace("\r", "");
+//      wifiAp [c][1] = tstr;
+//      c++;
+//    }
+//  }
+//  f.close();
+//  return c;
+//}
 
 void FS_FileWrite(String Fname, String Data) {
   File f = SPIFFS.open(Fname, "a");
   if (!f) {
-    Serial.println("file open failed");
+    Serial.println("file '" + Fname +"' open failed");
   }
   else
   {

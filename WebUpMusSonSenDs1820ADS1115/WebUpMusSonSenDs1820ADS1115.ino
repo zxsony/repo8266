@@ -19,12 +19,12 @@ const char* host = "esp8266-webupdate";
 //////////////////////
 //#define board8
 //#define debug
-#define DEBUGFS
-//#define debugwifi
-#define debug2320
+//#define DEBUGFS
+#define debugwifi
+//#define debug2320
 //String deviceId = "1";  //1=loc, sound; 2=loc, temp
                         //3=pn, temp; 4=td, temp
-String ver = "v2.5.29";
+String ver = "v2.6.0";
 //////////////////////
 
 
@@ -87,7 +87,7 @@ int sampleCount, sampleLimit, samplePage;
 String wifiAp [10][2];
 int wifiApCount;
 
-String filename = "/data.txt";
+//String filename = "/data.txt";
 
 String sampleFn;
 

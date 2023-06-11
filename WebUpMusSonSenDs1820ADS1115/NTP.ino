@@ -1,4 +1,4 @@
-unsigned long sendNTPpacketlocal(IPAddress& address) {
+void sendNTPpacketlocal(IPAddress& address) {
   memset(packetBuffer, 0, NTP_PACKET_SIZE);
   packetBuffer[0] = 0b11100011;
   packetBuffer[1] = 0;
@@ -26,7 +26,7 @@ void sendReciveUDPlocal(IPAddress& address) {
   delay(150);  
   dataRecive = 0;
   if (Udp.parsePacket()) {
-    //Serial.println("packet received");
+    Serial.println("packet received");
     Udp.read(packetBuffer, NTP_PACKET_SIZE);
 
     unsigned long highWord = word(packetBuffer[40], packetBuffer[41]);
@@ -52,7 +52,7 @@ void sendReciveUDPlocal(IPAddress& address) {
   dataRecive = 0;
 }
 
-unsigned long sendNTPpacket(IPAddress& address) {
+void sendNTPpacket(IPAddress& address) {
   memset(packetBuffer, 0, NTP_PACKET_SIZE);
   packetBuffer[0] = 0b11100011;
   packetBuffer[1] = 0;
@@ -107,6 +107,9 @@ void sendReciveUDP(IPAddress& address) {
 }
 
 void loopUDP() {
+
+  Serial.println ("NTP loop");
+  
   byte ipData [3][4] = {{89, 109, 251, 21}, {216, 229, 0, 179}, {129, 6, 15, 30}};//ntp1.vniiftri.ru, Moscow | Lincoln, Nebraska | NIST, Gaithersburg, Maryland
   //byte ipData [3][4] = {{198, 111, 152, 100}, {216, 229, 0, 179}, {129, 6, 15, 30}};//Carson City, Michigan | Lincoln, Nebraska | NIST, Gaithersburg, Maryland
   dataRecive = 0;
@@ -151,17 +154,17 @@ void loopUDP() {
   }
 
   if (ntpRegion == "Not available"){
-//    Serial.println("Local NTP");
-//    WIFIinitLocalNtp();
-//    IPAddress ipgateway;
-//    ipgateway = WiFi.gatewayIP();
-//    sendReciveUDPlocal(ipgateway);
-//    if (dataRecive) {
-//    ntpRegion = "Gateway";
+    Serial.println("Local NTP");
+    WIFIinitLocalNtp();
+    IPAddress ipgateway;
+    ipgateway = WiFi.gatewayIP();
+    sendReciveUDPlocal(ipgateway);
+    if (dataRecive) {
+    ntpRegion = "Gateway";
     }
-//  }
+  
 
-//  }
-//  else WIFIcheck();
+  }
+  //else WIFIcheck();
   
 }
